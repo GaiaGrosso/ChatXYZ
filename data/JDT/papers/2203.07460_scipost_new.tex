@@ -1,0 +1,636 @@
+% ========================================================================================
+% SciPost LaTeX Template (version 2021-08)
+% [https://scipost.org/SciPostPhys/authoring#manuprep]
+% [https://git.scipost.org/scipost/SciPost_LaTeX_Templates_Submission]
+% slightly adapted/customized by Lorenz Vogel (version 2022-01)
+% [compiler: pdfLaTeX]
+% ========================================================================================
+\documentclass[submission,Phys]{SciPost}
+
+\input{include_settings.tex}   % load customized packages and settings
+\input{include_shortcuts.tex}          % load pre-defined shortcuts
+\graphicspath{{./figs/}}                % define graphics path
+
+\newcommand\snowmass{\begin{center}\rule[-0.2in]{\hsize}{0.01in}\\\rule{\hsize}{0.01in}\\
+\vskip 0.1in Submitted to the  Proceedings of the US Community Study\\ 
+on the Future of Particle Physics (Snowmass)
+\rule{\hsize}{0.01in}\\\rule[+0.2in]{\hsize}{0.01in} \end{center}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{center}{\Large \textbf{
+Machine Learning and LHC Event Generation
+}}\end{center}
+
+\begin{center}
+Anja Butter\textsuperscript{1,2},
+Tilman Plehn\textsuperscript{1},
+Steffen Schumann\textsuperscript{3}, 
+Simon Badger\textsuperscript{4},
+Sascha Caron\textsuperscript{5, 6} \\
+Kyle Cranmer\textsuperscript{7,8},
+Francesco Armando Di Bello\textsuperscript{9},
+Etienne Dreyer\textsuperscript{10},
+Stefano Forte\textsuperscript{11}, \\
+Sanmay Ganguly\textsuperscript{12},
+Dorival Gon\c{c}alves\textsuperscript{13},
+Eilam Gross\textsuperscript{10},
+Theo Heimel\textsuperscript{1},
+Gudrun Heinrich\textsuperscript{14}, \\
+Lukas Heinrich\textsuperscript{15},
+Alexander Held\textsuperscript{16},
+Stefan H\"oche\textsuperscript{17}, 
+Jessica N. Howard\textsuperscript{18},
+Philip Ilten\textsuperscript{19}, \\
+Joshua Isaacson\textsuperscript{17},
+Timo Jan{\ss}en\textsuperscript{3},
+Stephen Jones\textsuperscript{20},
+Marumi Kado\textsuperscript{9,21},
+Michael Kagan\textsuperscript{22},
+Gregor Kasieczka\textsuperscript{23},
+Felix Kling\textsuperscript{24},
+Sabine Kraml\textsuperscript{25},
+Claudius Krause\textsuperscript{26},
+Frank Krauss\textsuperscript{20}, \\
+Kevin Kr{\"o}ninger\textsuperscript{27},
+Rahool Kumar Barman\textsuperscript{13}, 
+Michel Luchmann\textsuperscript{1}, 
+Vitaly Magerya\textsuperscript{14}, \\
+Daniel Maitre\textsuperscript{20},
+Bogdan Malaescu\textsuperscript{2}, 
+Fabio Maltoni\textsuperscript{28,29},
+Till Martini\textsuperscript{30},
+Olivier Mattelaer\textsuperscript{28}, \\
+Benjamin Nachman\textsuperscript{31,32},
+Sebastian Pitz\textsuperscript{1},
+Juan Rojo\textsuperscript{33,34},
+Matthew Schwartz\textsuperscript{35},
+David Shih\textsuperscript{25}, \\
+Frank Siegert\textsuperscript{36}, 
+Roy Stegeman\textsuperscript{11},
+Bob Stienen\textsuperscript{5},
+Jesse Thaler\textsuperscript{37},
+Rob Verheyen\textsuperscript{38}, \\
+Daniel Whiteson\textsuperscript{18}, 
+Ramon Winterhalder\textsuperscript{28}, and
+Jure Zupan\textsuperscript{19}
+\end{center}
+
+\section*{Abstract}
+         {\bf First-principle simulations are at the heart of the high-energy physics research program. They link the vast data output of multi-purpose detectors with fundamental theory predictions and interpretation. This review illustrates a wide range of applications of modern machine learning to event generation and simulation-based inference, including conceptional developments driven by the specific requirements of particle physics. New ideas and tools developed at the interface of particle physics and machine learning will improve the speed and precision of forward simulations, handle the complexity of collision data, and enhance inference as an inverse simulation problem.}
+
+\bigskip\bigskip\bigskip
+
+%\snowmass
+
+\clearpage 
+
+\vspace{10pt}
+\noindent\rule{\textwidth}{1pt}
+\tableofcontents\thispagestyle{fancy}
+\noindent\rule{\textwidth}{1pt}
+\vspace{10pt}
+
+\clearpage
+
+\begin{center}
+{\bf 1} Institut f\"ur Theoretische Physik, Universit\"at Heidelberg, Germany\\
+{\bf 2} LPNHE, Sorbonne Universit\'e, Universit\'e Paris Cit\'e, CNRS/IN2P3, Paris, France \\
+{\bf 3} Institut f\"ur Theoretische Physik, Georg-August-Universit\"at G\"ottingen, Germany \\
+{\bf 4} Physics Department, Torino University and INFN Torino, Italy \\
+{\bf 5} IMAPP, Radboud Universiteit Nijmegen, The Netherlands \\
+{\bf 6} Nikhef Theory Group, Nikhef, Amsterdam, The Netherlands \\
+{\bf 7} Center for Cosmology and Particle Physics, New York University, New York, NY USA \\
+{\bf 8} Center for Data Science, New York University, New York, NY USA \\
+{\bf 9} Universita di Roma Sapienza, Roma, INFN, Italy \\
+{\bf 10} Weizmann Institute of Science, Rehovot, Israel\\
+{\bf 11} Dipartimento di Fisica, Universit\`a di Milano  and INFN Sezione di Milano, Italy\\ 
+{\bf 12} ICEPP, University of Tokyo, Japan \\
+{\bf 13} Department of Physics, Oklahoma State University, Stillwater, OK, USA\\
+{\bf 14} Institut f\"ur Theoretische Physik, Karlsruher Institut f\"ur Technologie, Germany\\
+{\bf 15} Physik-Department, Technische Universit\"at M\"unchen, Germany\\
+{\bf 16} Department of Physics, New York University, New York, NY USA \\
+{\bf 17} Theoretical Physics Division, Fermi National Accelerator Laboratory, Batavia, IL, USA 
+\\
+{\bf 18} Department of Physics \& Astronomy, UC Irvine, Irvine, CA, USA\\
+{\bf 19} Department of Physics, University of Cincinnati, Cincinnati, OH, USA \\
+{\bf 20} IPPP, Physics Department, Durham University, Durham, UK\\ 
+{\bf 21} Universit\'e Paris-Saclay, CNRS/IN2P3, IJCLab, Orsay, France \\
+{\bf 22} Fundamental Physics Department, SLAC National Accelerator Laboratory, USA\\
+{\bf 23} Institut f\"ur Experimentalphysik, Universit\"at Hamburg, Germany \\
+{\bf 24} Deutsches Elektronen-Synchrotron DESY, Germany\\ 
+{\bf 25} Univ. Grenoble Alpes, CNRS, Grenoble INP, LPSC-IN2P3, France  \\
+{\bf 26} NHETC, Dept. of Physics and Astronomy, Rutgers University, Piscataway, NJ, USA \\
+{\bf 27} Department of Physics, TU Dortmund University, Germany \\
+{\bf 28} CP3, Universit\'e Catholique de Louvain, Louvain-la-Neuve, Belgium \\
+{\bf 29} Dipartimento di Fisica e Astronomia, Universit\`a di Bologna, Italy\\
+{\bf 30} Institut f\"ur Physik, Humboldt-Universit\"at zu Berlin, Germany\\
+{\bf 31} Physics Division, Lawrence Berkeley National Laboratory, Berkeley, CA, USA\\
+{\bf 32} Berkeley Institute for Data Science, University of California, Berkeley, CA, USA\\
+{\bf 33} Department of Physics and Astronomy, Vrije Universiteit Amsterdam, The Netherlands \\
+{\bf 34} Nikhef Theory Group, Nikhef, Amsterdam, The Netherlands \\
+{\bf 35} Department of Physics, Harvard University, Cambridge MA, USA  \\
+{\bf 36} Institute of Nuclear and Particle Physics, Technische Universit{\"a}t Dresden, Germany \\
+{\bf 37} Center for Theoretical Physics, MIT, Cambridge, MA, USA \\
+{\bf 38} Department of Physics \& Astronomy, University College London, UK  \\
+\end{center}
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+\label{sec:intro}
+
+The defining goal of particle physics is to understand the fundamental nature of elementary particles and their interactions. The outcome of a particle physics measurement is expressed in terms of a quantum field theory Lagrangian and its parameters. The great experimental strength of collider-based particle physics is the availability of a huge amount of data and measurements in combination with a well-controlled environment. The theoretical and experimental poles are linked through precision simulations, starting from the Standard Model or a hypothetical Lagrangian, generating particle-level events, and eventually simulating the detector. The simulation chain realized by the standard LHC event generators~\cite{Sjostrand:2014zea,Sherpa:2019gpd,Alwall:2014hca,Bellm:2015jjp,Kilian:2007gr} and illustrated in Fig.~\ref{fig:simchain}, should be based on first-principles physics rather than empiric modeling. For these simulations precision and speed are essentially two sides of the same medal. A detailed discussion of these traditional methods can be found in a parallel review, Ref.~\cite{Campbell:2022qmc}. Adding modern machine learning to the numerics toolbox has the potential to provide the simulations needed for the LHC Run~3 and HL-LHC~\cite{Butter:2020tvl}, as well as future energy frontier machines. 
+
+%----------------------------------------------------------
+\begin{figure}[b!]
+\centering
+  \includegraphics[width=0.99\textwidth]{simchain_inv.pdf}
+  \caption{Illustration of the LHC simulation chain. The forward direction is discussed in Secs.~\ref{sec:generators} and~\ref{sec:onestage}, while the inverse simulation is the topic of Sec.~\ref{sec:inverse}.}
+  \label{fig:simchain}
+\end{figure}
+%----------------------------------------------------------
+
+From a fundamental physics perspective there exist three distinctly different kinds of measurements at the LHC. First, basic and purely experimental measurements should be as independent of theory considerations and first-principle simulations as possible, to avoid expiration dates. Their problem is that they provide no information about fundamental physics. These basic measurements benefit from modern machine learning for instance in understanding the data and calibrating the detectors. A second class of measurements is supplemented with a fundamental theory interpretation framework. Examples are well-defined inclusive production rates, like fiducial or total cross sections. They can be compared to predictions from perturbative quantum field theory. When we expect to find agreement with the Standard Model, modern machine learning can help us in using these measurements to extract parton densities or improve our Monte Carlo simulations. A third kind of measurement reflects our goal to further our understanding of fundamental physics by comparing data to predictions from perturbative or non-perturbative quantum field theory. We assume that interesting physics signals hide in specific kinematic regions. Here, we can search for deviations between the Standard Model predictions and experimental results, measure Standard Model parameters or higher-dimensional Wilson coefficients, and aim for anomalies and eventually a proper discovery. Such measurements of all possible features in the vast phase space of LHC collisions require precision simulations, specifically theory-based event generators. We will show how all of these aspects benefit significantly from the application of modern machine learning methods.
+
+The challenges for event generators are, first of all, defined by the increase of the LHC luminosity and the expected advances in experimental precision and reach. Going from the Run~2 dataset of $139~\ifb$ to the projected HL-LHC dataset of $4~\iab$ suggests that experimental uncertainties at and below the percent level will become standard and need to be matched by theory predictions, to allow for any kind of precision measurement. The same increase in rate will allow us to probe more and more exotic kinematic regions, with the hope of finding hints for new particles and interactions. The higher rates and an improved experimental understanding will also allow us to study more and more complex signatures with an increasing multiplicity of backgrounds and potential signals. Each of these aspects poses a challenge to the established event generators, and we will discuss ways modern machine learning can help us meet them in Sec.~\ref{sec:generators}. Next, we will introduce end-to-end (soup-to-nuts) ML-generators, similar in structure to ML-detector simulations in Sec.~\ref{sec:onestage}. Finally, we discuss conceptual benefits from modern machine learning, for instance related to an invertible simulation chain and simulation based inference, in Sec.~\ref{sec:inverse}. Because the main purpose of this report is to show new, ML-driven developments in event generation, we refer to the main event generator Snowmass white paper for a list of references and a detailed discussion of the physics background and the classical approaches.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsubsection*{Executive summary}
+
+%Modern machine learning is driving recent progress in event generation, simulation, and inference for high-energy colliders, as showcased in this contribution to the Snowmass community report. Like all fields of fundamental science with a strong numerical foundation, collider physics is benefiting in a transformative way from new ideas, concepts, and tools developed under the broad umbrella of artificial intelligence/machine learning (AI/ML) research. Concrete improvements in LHC event generation and simulation, as well as new ideas for LHC analysis and inference, are rapidly leading towards particle-physics-specific contributions to applied machine learning. This in turn is inspiring a new generation of high-energy physics researchers bridging theory, experiment, and statistics. To exploit the vast dataset of the coming LHC runs and optimize the design of a possible future collider, we must sustain the extremely fruitful exchange between particle physics and AI/ML research. One way to cultivate and capitalize on these ideas is to create a world-wide research network for AI/ML-related fundamental physics, through targeted funding calls and long-term research structures at laboratories and universities. Such a network would open attractive career paths for young researchers in the high-energy physics community, establish crucial ties between particle physics and AI/ML research, and foster collaborations between academia and industry.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Machine Learning in event generators}
+\label{sec:generators}
+
+Current multi-purpose event generators feature a modular structure, that reflects the factorization property of physics aspects at very different relevant energy scales~\cite{Sjostrand:2014zea,Sherpa:2019gpd,Alwall:2014hca,Bellm:2015jjp,Kilian:2007gr}. While the highest energy transfers, i.e. the hard process and QCD parton showers, can be treated by perturbative methods, phenomenological models are used to account for the hadronization transition, as well as non-trivial secondary interactions. The increase in perturbative precision needed to address the physics challenges posed by current and future collider experiments, adds a sizeable number of more specialized numerical codes to the simulation toolbox. This includes, for example, dedicated codes to construct and evaluate higher-order tree-level or loop amplitudes. Modern machine learning techniques can improve all aspects of event generation, ultimately making it more resource efficient and opening paths to yet more versatile and accurate predictions. This includes important ingredients to precision predictions such as parton densities and fragmentation functions, where neural network (NN) techniques are routinely used already. First steps towards modeling the hadronization process with ML techniques have been presented in~\cite{Ilten:2022jfm}.
+For the tuning of non-perturbative simulation parameters, including an underlying event model, NN-based approaches have recently shown promise~\cite{Lazzarin:2020uvv}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Phase space sampling}
+\label{sec:generators_ps}
+
+%----------------------------------------------------------
+\begin{table}[b!]
+  \centering
+  \begin{small} \begin{tabular}{@{}lllllllll@{}} \toprule
+    & \multicolumn{2}{c}{top decays}
+    & \multicolumn{2}{c}{top-pair production}
+    & \multicolumn{2}{c}{$gg\to 3g$} 
+    & \multicolumn{2}{c}{$gg\to 4g$}\\
+    \cmidrule(r){2-3}\cmidrule(r){4-5}\cmidrule(r){6-7}\cmidrule(r){8-9}
+    Sample  & $\epsilon_{\text{uw}}$ & $E_N$ [GeV] & $\epsilon_{\text{uw}}$ & $E_N$ [fb] & $\epsilon_{\text{uw}}$ & $E_N$ [fb] & $\epsilon_{\text{uw}}$ & $E_N$ [fb]\\ \midrule
+    Uniform & \SI{59}{\percent}  & 0.1679(2)   & \SI{35}{\percent}  & 1.5254(8) & \SI{3.0}{\percent}&  24806(55) & \SI{2.7}{\percent}& 9869(20)\\
+    \Vegas  & \SI{50}{\percent}  & 0.16782(4)  & \SI{40}{\percent}  & 1.5251(1) & \SI{27.7}{\percent}&  24813(23)& \SI{31.8}{\percent}& 9868(10)\\
+    NN      & \SI{84}{\percent}  & 0.167865(5) & \SI{78}{\percent}  & 1.52531(2) & \SI{64.3}{\percent} &  24847(21)& \SI{48.9}{\percent}& 9859(10)\\ \bottomrule
+  \end{tabular} \end{small}
+  \caption{Results for sampling the top decay width, the total cross section of top-pair production and decay in $e^+e^-$ collisions, and $gg\to 3g$ and $4g$ production. Shown are the integral estimate, $E_N$, and the unweighting efficiency, $\epsilon_\text{uw}$, for a standard importance sampler (Uniform), \Vegas, and NN-based optimization~\cite{Bothmann:2020ywa}.}
+  \label{tab:NFMC_results}
+\end{table}
+%----------------------------------------------------------
+
+The core of any scattering event simulation is the assumed hard process configuration or partonic scattering event. These are described by QFT transition amplitudes, where the physics demands of the LHC experiments require us to consider high-multiplicity final states and one- or even two-loop QCD and/or EW corrections. The complexity of the resulting matrix elements and the dimensionality of their phase space severely challenge the integration of cross sections and the generation of partonic momentum configurations. Modern NN-techniques are ideally suited to assist in these tasks. The standard technique used so far is based on importance sampling, employing mappings $\vec{y}:V\to U \subseteq \mathbb{R}^d$ for phase space integrals 
+%
+\begin{align}
+I = \int_V\mathrm{d}^dx\,f(x)=\int_U\mathrm{d}^dy\,\left.\frac{f(x)}{g(x)}\right\vert_{x\equiv x(y)} \qquad \text{with} \quad
+\left\vert\frac{\partial y(x)}{\partial x}\right\vert=g(x)\; .
+\end{align}
+%
+It can be chosen such that $f/g\approx \text{const}$, to reduce the variance of the Monte Carlo integral estimate. However, for complex matrix elements and high-dimensional phase spaces it is often not possible to find a single function $g$ that approximates the target function $f$ sufficiently well. Therefore, event generators use a multi-channel approach with independent mappings $\vec{y}_i$ for each channel $i$. Defining a total density $g(x) = \sum_i \beta_i\,g_i(x)$, with $\sum_i \beta_i = 1$ and $0\le\beta_i\le1$, where $\beta_i$ are the channel weights, the phase space integral can be parametrized as
+%
+\begin{align}
+    I &= \int_V\mathrm{d}^d x\,f(x)
+    =\sum_i \int_V\mathrm{d}^d x\,\beta_i\,g_i(x)\,\frac{f(x)}{g(x)}
+    =\sum_i\int_{U_i}\mathrm{d}^d y_i\,\beta_i\,\left.\frac{f(x)}{g(x)}\right\vert_{x\equiv x(y_i)}\; .
+    \label{eq:multi-channel-standard}
+\end{align}
+%
+Two ML-based approaches to phase space integration and event generation can be distinguished. The first directly hooks into existing phase space integrators and uses trainable maps given for example by bijective normalizing flows to redistribute input random variables to the mapping functions $\vec{y}_i$ and better adapt to the integrand~\cite{bendavid,Klimek:2018mza,Bothmann:2020ywa,Gao:2020vdv,Gao:2020zvv,Chen:2020nfb,Pina-Otey:2020hzm}. After an initial adaptation phase these integrators can efficiently be used for generating weighted or unweighted events. However, the very expressive NN-transformations can also deal with non-factorizable phase space structures and correlations.
+Promising results in terms of efficiency improvements and speed gains have been reported, see for example Tabs.~\ref{tab:NFMC_results} and~\ref{tab:NFMC_results.2}. However, in particular for high-multiplicity processes with non-trivial topologies the effective gains when comparing to the established methods can fall below unity, cf. Tab~\ref{tab:NFMC_results.2}. Therefore, next steps will be to better combine NN-based approaches with multi-channel integrators~\cite{Bothmann:2020ywa,Gao:2020zvv}. For example, one can allow the channel weights to be phase space dependent, $\beta_i\to\alpha_i(x)$, and solely start from the condition $\sum_i \alpha_i(x) = 1$ and $0\le\alpha_i(x)\le1$,
+%
+\begin{align}
+    I &= \int_V\mathrm{d}^d x\,f(x)
+    =\sum_i \int_V \mathrm{d}^d x\,\alpha_i(x)\,f(x)
+    =\sum_i \int_{U_i}\mathrm{d}^d y_i\,\left.\alpha_i(x)\,\frac{f(x)}{g_i(x)}\right\vert_{x\equiv x(y_i)}\; .
+    \label{eq:multi-channel-mg}
+\end{align}
+%
+In fact, Eqs.~\eqref{eq:multi-channel-standard} and~\eqref{eq:multi-channel-mg} are mathematically equivalent, connected by $\alpha_i(x)=\beta_i\, g_i(x)/g(x)$. In NN-optimized event generation, Eq.\eqref{eq:multi-channel-mg} splits the optimization task into learning appropriate phase space mappings for each channel and training another network to find optimal weights $\alpha_i(x)$ to connect all channels. This separation has two advantages: (i) possible missing correlations between the different channels can be described and recovered by the phase-space dependent channel weights, and (ii) the second network allows for a more flexible parametrization as it does not need to be bijective.
+
+%----------------------------------------------------------
+\begin{table}[b!]
+  \centering
+  \begin{small} \begin{tabular}{l@{\hspace*{3mm}}l|C{15mm}C{15mm}C{15mm}C{15mm}C{15mm}|C{15mm}C{15mm}}\toprule
+    \multicolumn{2}{l|}{unweighting eff. $\epsilon_\text{uw}$} & \multicolumn{5}{c|}{LO QCD}
+    & \multicolumn{2}{c}{NLO QCD (RS)} \\[1mm]
+    \multicolumn{2}{l|}{process/sampling}
+    & $n=$0 & $n=$1 & $n=$2 & $n=$3 & $n=$4 & $n=$0 & $n=$1 \\[1mm]\hline
+    $W^++n\;{\rm jets}$
+    & \textsc{Sherpa} \vphantom{$\int_A^{B^C}$} & $2.8\cdot10^{-1}$ & $3.8\cdot10^{-2}$ & $7.5\cdot10^{-3}$ & $1.5\cdot10^{-3}$ & $8.3\cdot10^{-4}$ & $9.5\cdot10^{-2}$ & $4.5\cdot10^{-3}$ \\
+    & NN\vphantom{$\int_A^{B^C}$} & $6.1\cdot10^{-1}$ & $1.2\cdot10^{-1}$ & $1.0\cdot10^{-3}$ & $1.8\cdot10^{-3}$ & $8.9\cdot10^{-4}$ & $1.6\cdot10^{-1}$ & $4.1\cdot10^{-3}$ \\
+    & Gain\vphantom{$\int_A^{B^C}$} & 2.2 & 3.3 & 1.4 & 1.2 & 1.1 & 1.6 & 0.91 \\\hline
+    $Z/\gamma^*+n\;{\rm jets}$
+    & \textsc{Sherpa} \vphantom{$\int_A^{B^C}$} & $3.1\cdot10^{-1}$ & $3.6\cdot10^{-2}$ & $1.5\cdot10^{-2}$ & $4.7\cdot10^{-3}$ & & $1.2\cdot10^{-1}$ & $5.3\cdot10^{-3}$ \\
+    & NN\vphantom{$\int_A^{B^C}$} & $3.8\cdot10^{-1}$ & $1.0\cdot10^{-1}$ & $1.4\cdot10^{-2}$ & $2.4\cdot10^{-3}$ & & $1.8\cdot10^{-3}$ & $5.7\cdot10^{-3}$ \\
+    & Gain\vphantom{$\int_A^{B^C}$} & 1.2 & 2.9 & 0.91 & 0.51 & & 1.5 & 1.1 \\\bottomrule
+    \end{tabular} \end{small}
+    \caption{Unweighting efficiencies for $V$+jets production at the LHC. `\textsc{Sherpa}' relies on multi-channel importance sampling using \Vegas; `NN' uses a normalizing flow; `Gain' shows the improvement of NN over \textsc{Sherpa}. Results from Ref.~\cite{Gao:2020zvv}.}
+    \label{tab:NFMC_results.2}
+\end{table}
+%----------------------------------------------------------
+
+A second approach to ML-assisted phase space sampling is based on directly learning the phase space distribution of events from input training samples, either weighted or unweighted. Solutions employ autoregressive flows~\cite{Verheyen:2020bjw},  generative adversarial networks (GANs)~\cite{Butter:2019cae,DiSipio:2019imz,Otten:2019hhl,Choi:2021sku}, or variational autoencoders (VAEs)~\cite{Otten:2019hhl}. This motivates R\&D to improve training through differentiable programming; by merging matrix element codes with automatic differentiation~\cite{JMLR:v18:17-468}, i.e. the automatic generation of derivatives of programs that is the backbone of neural networks software frameworks. The gradients of matrix elements can be evaluated and used as additional information for training generative models. Initial studies using differentiable matrix elements from \textsc{MadJax} have explored extending normalizing flow training with schemes uniquely enabled by the ability to automatically compute matrix element gradients~\cite{HeinrichKagan:2022}, and show promise in terms of improving modeling and reducing the needed scale of simulated datasets for training.
+
+Closely related activities attempt to facilitate faster event unweighting and reweighting methods using NN generative models~\cite{Backes:2020vka,Winterhalder:2021ave} or fast to evaluate NN surrogates for the transition amplitudes~\cite{Danziger:2021eeg}. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Scattering Amplitudes}
+\label{sec:generators_amp}
+
+Perturbative precision calculations use interpolation methods to reduce the evaluation time for expensive loop amplitudes, defining a task where appropriately designed neural networks can be expected to outperform standard methods~\cite{Bishara:2019iwh,Badger:2020uow,Aylett-Bullock:2021hmo,Maitre:2021uaa,Danziger:2021eeg}. The challenge in NN-based surrogate models for integrands and amplitudes is to ensure that all relevant features are indeed encoded in the network at sufficient precision and to establish a reliable uncertainty treatment of the network training. 
+
+%----------------------------------------------------------
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.46\textwidth]{timing-ensemble.pdf}
+    \hspace*{0.06\textwidth}
+    \includegraphics[width=0.46\textwidth,page=1]{Snowmass.pdf}
+    \caption{Left: comparison of the evaluation times for loop-induced amplitudes for $gg\to \gamma\gamma+$ jets. NN-interpolation times include the averaging over ensembles for the uncertainty estimate. Figure from Ref.~\cite{Aylett-Bullock:2021hmo}. Right: precision $\Delta^\text{train} = |\mathcal{M}|_\text{NN}^2/|\mathcal{M}|_\text{train}^2-1$ for the process $gg\to \gamma\gamma j$ using a Bayesian network with boosted training, ordered by the size of the amplitude. Figure from Ref.~\cite{Badger_future}.}
+    \label{fig:nnamps-timing}
+\end{figure}
+%----------------------------------------------------------
+
+%----------------------------------------------------------
+\begin{figure}[b!]
+    \includegraphics[width=0.98\textwidth]{FAMEfull.png}
+    \caption{Accuracy for the full model from Ref.~\cite{Maitre:2021uaa}  for tree-level $e^+e^-\to 5$ jets amplitudes. Figure adapted from Ref.~\cite{Maitre:2021uaa}.}
+    \label{fig:FAMEfull}
+\end{figure}
+%----------------------------------------------------------
+
+A relevant test case are loop-induced amplitudes such as those for
+%
+\begin{align}
+gg\to ZZ
+\qquad \text{and} \qquad 
+gg\to \gamma\gamma +\text{jets} \; . 
+\end{align}
+%
+The application of simple, gradient boosted machines to $gg\to ZZ$ highlights that fast interpolation times can lead to significant improvements in overall simulation times, if reliable models can be trained on fewer points than the original Monte Carlos. To control the features of the amplitude relevant for differential cross sections, separating soft and collinear regions enables an ensemble of networks to reliably model full one-loop amplitudes for $e^+e^-\to \leq 4$ jets~\cite{Badger:2020uow}. In Fig.~\ref{fig:nnamps-timing} this scaling is shown for high-multiplicity scattering described by the \textsc{NJet} generator for $gg\to \gamma\gamma+$ jets. Simulations for hadron colliders show overall improvements of around a factor $N_\text{inference}/N_\text{training}$~\cite{Aylett-Bullock:2021hmo} can be achieved. The right panel of Fig.~\ref{fig:nnamps-timing} shows the achievable precision on the $\gamma \gamma j$ loop amplitude from a single Bayesian network with boosted training to improve the precision~\cite{bnn_early3,deep_errors,Bollweg:2019skg,Kasieczka:2020vlh}.
+
+The reliability of the trained network is particularly at risk in divergent regions. However, these are precisely the phase space regions where the soft and collinear behavior of the amplitudes is universal and well known. Building the infrared factorization properties into the NN-based model can lead to substantial improvements for the tree-level $e^+e^-\to$ jets amplitude. Figure~\ref{fig:FAMEfull} shows that adopting a factorization-aware parametrization the achievable precision is brought down to the per-mille level for 5-jet production~\cite{Maitre:2021uaa}. While the shown precision for this process does not translate into a clear improvement of higher-order LHC predictions, it illustrates how physics-informed network architectures can significantly improve the network precision as the key criterion for an application in the LHC simulation chain. Perhaps of even greater interest would be the use of a single trained model to integrate over a wide range of kinematic cuts, jet algorithms, PDF sets, scale choices, which could enable a further order of magnitude in overall performance.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Loop integrals}
+\label{sec:generators_int}
+
+Amplitudes beyond the leading order contain loop integrals, and machine learning can improve the calculation of (multi-)loop integrals by optimizing the integrands in Feynman parameter space~\cite{Winterhalder:2021ngy}. When an analytic solution to these integrals is not feasible, they must be evaluated numerically. Before attempting a numerical evaluation, the poles of the integrand need to be controlled. In dimensional regularization, ultraviolet and infrared poles can be factorized efficiently with sector decomposition. After factorizing these poles, integrable singularities related, for example, to thresholds, remain. Such poles, located on the real axis in Feynman parameter space, can be avoided by a deformation of the integration contour into the complex plane.
+An automated procedure to do this has already been implemented in standard tools like \secdec, \textsc{Fiesta}, and  \pysecdec. 
+The deformation of the integration contour is not unique and can be performed in many ways. In fact, the numerical precision of the integration can vary by orders of magnitude depending on the chosen contour.
+
+%------------------------------------------------------------
+\begin{figure}[t]
+  \includegraphics[page=1,width=0.495\textwidth]{triangle2L.pdf}
+  \includegraphics[page=1,width=0.495\textwidth]{elliptic2L.pdf}
+  \caption{Relative integration error for sector one of a 2-loop  triangle integral (left) and a 2-loop box integral known to contain elliptic functions (right) using the standard \pysecdec algorithm (green), the ML-assisted $\Lambda$-glob algorithm (blue) and including an additional normalizing flow (red). The lower panel shows the ratios to the standard method. The figures are taken from Ref.~\cite{Winterhalder:2021ngy}.}
+  \label{fig:triangle_elliptic}
+\end{figure}
+%------------------------------------------------------------
+
+For standard integrals, the contour deformation procedure implemented in \pysecdec works fast and usually produces satisfactory contours in practice. However, for more complicated integrals and in specific phase-space regions, the chosen contour is sub-optimal and can be optimized significantly, see Fig.~\ref{fig:triangle_elliptic}. In this case, ML-assisted, or more specifically, NN-assisted algorithms, offer great potential to amplify the precision. Like in the neural importance sampling methods~\cite{Bothmann:2020ywa,Gao:2020vdv,Gao:2020zvv,Verheyen:2020bjw} for phase-space integrals, normalizing flows can be used to find a better parametrization of the integration domain. As these contour integrals need to satisfy certain boundary conditions, originating, for instance, from the Landau equations and Cauchy’s theorem, the NN setup needs to be extended to obey these constraints. Furthermore, the usage of complex-valued floats can entail the necessity to construct own implementations for objects like gradients of complex determinants occurring during training and optimization.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Parton shower}
+\label{sec:generators_shower}
+
+The parton shower is an essential element of particle physics simulations. It describes the evolution of particles between the hard scale of the collision $\sim 100$~GeV to the hadronization scale $\Lambda_\text{QCD}$. This evolution is typically modeled as a Markov process where partons evolve semi-classically, radiating gluons as they move with probabilities determined only by properties of the parton splitting and perhaps one or two spectator partons in the event. Although the semi-classical approximation can be justified in the limit where the daughter particles are emitted at small angles with respect to the mother, parton showers are used well outside of this regime. The use of parton showers is thus justified not by physics but by necessity: computing the full distribution from first principles is computationally intractable. This limitation is an opportunity for machine learning; perhaps an improved parton shower could be learned rather than built.
+
+The simulation of parton showers offers an interesting structure compared to other generative tasks. When simulating entire collision events, as discussed in Sec.~\ref{sec:onestage}, commonly a representation encoding a small and often fixed number of 4-vectors is chosen. Simulating showers all the way down to calorimeter sensors, or with calorimeter sensors themselves, yields a much larger number of particles in the final state. However, the output nodes of a generative model can still be identified with different cells of the physical detector and therefore allow architectures that for example use convolutional layers.
+
+%------------------------------------------------------------
+\begin{figure}[t]
+\centering
+  \includegraphics[page=1,width=0.895\textwidth]{JuniprRNN.pdf}
+  \caption{A promising approach to learning parton showers is to use a structure inspired by the semi-classical approximation as a backbone for a general probability estimator. In the \textsc{Junipr} approach, a recurrent neural network is used to emulated the Markov-process aspect of a parton shower. Figure taken from Ref.~\cite{juniprbinary}.}
+  \label{fig:junipr}
+\end{figure}
+%------------------------------------------------------------
+
+Within the semi-classical approximation and even though the probability function at each branching in the shower is relatively simple, the overall distribution of particles produced is quite complex. It would be seriously challenging to learn this final distribution without some domain knowledge of its structure~\cite{Lai:2020byl}. One approach is to scaffold a learnable model over a semi-classical framework~\cite{juniprshower,juniprbinary}, as sketched in Fig.~\ref{fig:junipr}. Additionally, network architectures based on sets or graphs explicitly encoding permutation symmetry of the final state particles have been investigated~\cite{shower,locationGAN,monkshower,Dohi:2020eda,Orzari:2021suh,Tsan:2021brw}.
+
+An alternative way of improving parton shower with ML-methods might be to stick to the fundamental splitting structure and measure the QCD splitting kernels in low-level observables. As before, the challenge of generating many particles covering several orders of magnitude in energy is taken care of by the usual Monte Carlo method. A modified and shower-specific form of the splitting kernels can be extracted from a combination of QCD predictions and data using ML-based inference~\cite{Bieringer:2020tnw}. While this approach has practical advantages, it is limited by the applicability of the simple splittings picture.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Parton distribution functions}
+\label{sec:generators_pdf}
+
+%----------------------------------------------------------
+\begin{figure}[t]
+\centering
+  \includegraphics[width=0.55\textwidth]{plot_pdfreplicas_s.pdf}
+  \caption{Comparison between two results for the strange-quark PDF: one where overfitting is clearly present, and one where this is not the case. Figure taken from Ref.~\cite{NNPDF:2021njg}.}
+  \label{fig:charm_pdf}
+\end{figure}
+%----------------------------------------------------------
+
+Parton distribution functions (PDFs), encoding the structure of colliding protons,
+are vital for the calculation of hard scattering cross sections at the LHC and appear in several
+stages of the event simulation chain, in particular they guide the initial state parton showers and affect the underlying event activity. The determination of PDFs is a classic pattern recognition problem: it is known that an underlying law exists (the true analytic form of the PDFs, as determined by QCD in the non-perturbative regime) but its explicit form  is not known, and it must be inferred from discrete data (the cross-sections of PDF-dependent hard processes), that moreover are correlated to it indirectly and in a convoluted way. In comparison to more standard pattern recognition problems, it has two peculiarities. First,  the pattern -- the set of PDFs --- is a probability, rather than a deterministic outcome. Second, due to the noisy nature of the input, which is affected by both experimental and theoretical uncertainties, with a complex correlation pattern, the final deliverable is a probability distribution of possible results. Hence, one is delivering a probability distribution of probability distributions. 
+
+The way to approach this problem as a machine learning challenge was first suggested long ago~\cite{Forte:2002fg}: the basic idea is to deliver a Monte Carlo ensemble of machine learning models, such as neural networks, that provide the desired representation of a probability of probabilities. The successful implementation of this idea has led to the NNPDF family of proton PDF determinations~\cite{Ball:2010de,NNPDF:2014otw,NNPDF:2021uiq,NNPDF:2021njg} as well as to variants in the context of polarised PDF~\cite{Nocera:2014gqa} and nuclear PDF~\cite{AbdulKhalek:2022fyi,AbdulKhalek:2020yuc} global analyses.
+%
+The current implementation frontier, which has led
+to the recent NNPDF4.0 determination, involves a suite of contemporary machine learning methods and tools, specifically cross-validation to avoid overtraining, hyperoptimization~\cite{Carrazza:2019mzf} combined with $K$-folding for the automatic selection of the methodology, feature scaling of the input for the optimization of the neural networks used as basic underlying model~\cite{Carrazza:2021yrg}, and GAN-enhanced compression for final efficient delivery~\cite{Carrazza:2015hva,Carrazza:2021hny}.
+
+The current main challenge remains the maximal optimization of the extraction of available information while avoiding overfitting, and the generalization to cases in which information is scarce or altogether absent, such as extrapolation to kinematic regions where there are no data. This is the physically most interesting case, as these are the regions where new physics is being searched for, and also a challenge at the frontier of machine learning. While several machine learning tools have been implemented with the aim of preventing overfitting, confirming whether the PDF resulting of a fit is indeed free of overfitting still relies -- at least in part -- on the fitter's accumulated knowledge of PDFs. To illustrate this point, Fig.~\ref{fig:charm_pdf} shows a comparison of the strange-quark PDF $xs(x,Q)$ at $Q=1.65$ GeV, both for a good fit and a clearly overfitted alternative. The development of reliable  quantitative measures of the degree of overfitting is a challenge, both within the context of PDF determination and more in general in machine learning, and it is a  topic of ongoing research.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Fragmentation functions}
+\label{sec:generators_frag}
+
+%----------------------------------------------------------
+\begin{figure}[t]
+\centering
+  \includegraphics[width=0.34\textwidth,angle=-90]{NNFF.pdf}
+  \caption{Fragmentation functions of up (left) and charm quarks (right) into charged pions as a function of the time-like momentum fraction $z$, comparing the results of two approaches (MAP and NNFF) based on machine learning techniques. Figure taken from Ref.~\cite{Khalek:2021gxf}.}
+  \label{fig:NNFF}
+\end{figure}
+%----------------------------------------------------------
+
+Fragmentation functions (FFs) are the time-like equivalent of PDFs and encode the probabilities associated to the transition between partons produced in the hard-scattering  and specific types of hadrons. Being based on the perturbative QCD factorization framework, FFs represent an alternative strategy to model partonic hadronization as compared to the  phenomenological models available in most MC event generators. FFs can be determined from a global analysis of hard-scattering data from electron-positron collisions, semi-inclusive deep inelastic scattering, and proton-proton collisions (RHIC and LHC) with identified final-state hadrons.
+
+A phenomenological analysis of FFs requires introducing a parametrization for their initial-scale ($Q_0$) dependence with the momentum fraction $z$, $zD_i^{(h)}(z,Q_0)$, where $i$ is a partonic index and $(h)$ a hadronic label. To remove theory bias and model-dependence in  the determination of FFs, machine learning techniques can be adopted~\cite{Bertone:2017tyb,Bertone:2018ecm,Khalek:2021gxf,Soleymaninia:2022alt}. Feed-forward neural networks are deployed as universal unbiased interpolants for $zD_i^{(h)}(z,Q_0)$, whose weight and threshold parameters are obtained from a log-likelihood maximization by comparison with experimental data. This approach can be combined with the Monte Carlo replica method, originally deployed for PDFs~\cite{DelDebbio:2004xtd}, to estimate and propagate the uncertainties from the input data to the output FFs.  The basic strategy is to generate $N_\text{rep}$ replicas which sample the probability density associated to the data, and then train a separate neural network to each of these replicas. The spread of the resulting networks (i.e. 68\%~CL intervals) provides then a robust estimate of the uncertainties associated to the FFs.
+
+Fig.~\ref{fig:NNFF} displays a comparison between FFs determined in two approaches (MAP and NNFF) based on machine learning techniques. We show the FFs associated with the transition of up and charm quarks into charged pions ($\pi^++\pi^-$) as a function of the time-like momentum fraction $z$. The bands represent the corresponding 68\%~CL ranges. It is worth emphasizing that the resulting shapes, given the outcome of the NNs, are completely driven by the data, with no specific models (more or less inspired by QCD) assumed. The combination of the FFs $zD_i^{(h)}(z,Q_0)$ obtained in this manner with higher-order perturbative QCD calculations provides precise and accurate predictions for hard-scattering processes including identified hadrons in the final state, which are important for many key phenomenological applications.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{End-to-end ML-generators}
+\label{sec:onestage}
+
+In addition to applying a wide range of machine learning tools to improve the modules of classic event generators, we can train generative neural networks to directly generate events, at parton level and with or without detector effects~\cite{Butter:2020tvl}. End-to-end or, better, soup-to-nuts ML-generators have to be developed together with the established generators and serve as studies for phase space generators, enable inverted simulations, provide datasets for phenomenological analyses, and allow us to efficiently ship event samples. Their advantages include training on data combined with simulations, manipulation of event samples~\cite{Butter:2019eyo}, or post-processing of MC data for example to unweight events~\cite{Verheyen:2020bjw,Backes:2020vka,Danziger:2021eeg}. Finally, they define useful benchmarks for conceptual work on uncertainty estimates for generative neural networks. 
+
+The work horses behind ML-generators are GANs, VAEs, optimal-transport-based probabilistic autoencoders, normalizing flows, and their invertible network (INN) variant. Given the interpolation properties of neural networks and the benefits of their implicit bias in the applications described in Sec.~\ref{sec:generators}, we can quantify the amplification of statistics-limited training data through generative networks~\cite{Butter:2020qhk,Bieringer:2022cbs}. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Fast generative networks}
+\label{sec:onestage_fast}
+
+%----------------------------------------------------------
+\begin{figure}[b!]
+    \includegraphics[width=0.49\textwidth]{mtt.pdf}
+    \includegraphics[width=0.49\textwidth]{pttt.pdf}
+    \caption{Distributions of the invariant mass (left) and transverse momentum (right) of the $t\bar{t}$ system in $pp\to t\bar{t}$ generated using MC@NLO. The true distribution (red) is compared with the normalizing flow distributions excluding (blue) or including (green) negative event weights. Figure from Ref.~\cite{Stienen:2020gns}.}
+    \label{fig:nf-negative-weights}
+\end{figure}
+%----------------------------------------------------------
+
+%----------------------------------------------------------
+\begin{figure}[t]
+\centering
+  \includegraphics[width=0.95\textwidth]{jointAndMarginals_OTUS.pdf}  
+  \caption{Visualization of the transformation from parton-level theory-space to reconstructed data-space, $\mathcal{Z} \rightarrow \mathcal{X}$. Left: learned transformation of OTUS's decoder, $p_D(x \mid z)$. Right: true transformation from simulated samples, for comparison. Colors in the $\mathcal{X}$ projection indicate the source bin in $\mathcal{Z}$ for a given sample. Figure from Ref.~\cite{Howard:2021pos}.}
+  \label{fig:jointAndMarginals_OTUS}
+\end{figure}
+%----------------------------------------------------------
+
+Theory-driven ML-generators at the parton level~\cite{Butter:2019cae,Butter:2021csz} can be combined with experiment-driven fast detector simulations~\cite{calogan1,calogan2,fast_accurate,aachen_wgan1,aachen_wgan2,ATLASsimGAN,Belayneh:2019vyx,Buhmann:2020pmy,Buhmann:2021lxj,Chen:2021gdz,Krause:2021ilc,Krause:2021wez} into single generative networks~\cite{dutch,gan_datasets,DijetGAN2,ArjonaMartinez:2019ahl,Alanazi:2020klf,Howard:2021pos}, provided we have sufficient control over the network and its uncertainties. Single, soup-to-nuts simulation networks are inspired by the fundamental goal of the detection process, namely to reconstruct parton-level information as accurately as possible.
+
+Comparing different generative network architectures, we start with highly expressive VAEs. They can be trained to generate events at the parton level, without or with fast detector simulation, by maximizing a lower bound of the data likelihood through variational inference (ELBO). The model consists of a decoder $p(x|z)$ which maps from a latent space $\mathcal{Z}$ to the phase space $\mathcal{X}$, and an encoder $q(z|x)$ which is a variational approximation to the inverse of $p(x|z)$. In practice, it is difficult to simultaneously optimize the separate components of the ELBO and the VAE performance can be improved by weighting the KL-divergence in the loss function term by a factor $\beta$. The B-VAE~\cite{Otten:2019hhl} is characterized by the limit $\beta \ll 1$ and a strong preference for the reconstruction loss.  After optimization, the Gaussian latent distribution is replaced by a buffer which consists of the latent distribution derived from training events. This model simultaneously achieves a highly-optimized reconstruction loss, but with a closely-matched and non-Gaussian latent distribution. While VAEs are very expressive probabilistic models, the approximate nature of the ELBO and the need to balance the two components of the loss function can become limiting factors.
+
+Similarly, GANs can extract and reproduce the phase space density of LHC events. While technically the difference between training on events without or with detector effects is negligible, parton-level events are more challenging when it comes to sharp kinematic features like Breit-Wigner mass peaks. GANs generically do not achieve the necessary precision for such features, so they have to be enhanced, for example with a targeted MMD loss~\cite{Butter:2019cae}. The main challenge of GANs is the precision they can achieve in the underlying phase space density while finding a Nash equilibrium.
+
+Finally, normalizing flows avoid some of the limitations of the above architectures for LHC event generation~\cite{Stienen:2020gns,Bellagente:2021yyh,Butter:2021csz}. At the cost of some flexibility, they offer a direct evaluation of the likelihood without having to resort to variational inference. They start from a latent space $\mathcal{Z}$ and apply a series of bijective transforms, with tractable Jacobian, to the phase space $\mathcal{X}$. While the expressivity of the model may in some cases be limited, the advantage of a tractable likelihood is significant. Flows can be trained on weighted events, including negative weights, through a simple modification of the loss~\cite{Stienen:2020gns}. Figure~\ref{fig:nf-negative-weights} illustrates their performance applied to $pp \to t\bar{t}$ events at the parton level, including shower evolution, generated with MC\@@NLO. In addition, normalizing flows come with significant advantages in controlling their performance and quantifying uncertainties, as discussed in the next section. Their invertible structure is useful for many LHC-applications, including anomaly detection or related density estimation tasks~\cite{Caron:2021wmq,Hallin:2021wme,Nachman:2020lpy,Buss:2022lxw}.
+
+An attractive application of soup-to-nuts networks can be targeted using Optimal Transport-based probabilistic autoencoders~\cite{Howard:2021pos}. Their structural advantage is that they learn the mapping from parton-level information in theory space, $\mathcal{Z}$, to detected and reconstructed objects in data space, $\mathcal{X}$, without requiring paired event samples, $\{z, x\}$. The probabilistic autoencoder's latent space is identified with a physically meaningful representation of parton-level theory-space information, so the encoder and decoder networks define a simulator mapping, $\mathcal{Z} \rightarrow \mathcal{X}$, and an unfolding mapping, $\mathcal{X} \rightarrow \mathcal{Z}$. Properties of the OT-based method encourage the encoder and decoder to be conditional mappings, effectively sampling from the probability distributions $p_\text{E}(z|x)$ and $p_\text{D}(x|z)$, respectively. Over many samples, these distributions will marginalize to the appropriate theory-space and data-space priors, $p(z)$ and $p(x)$, respectively. Alternative methods to encode an unfolding mapping in neural networks are discussed in Sec.~\ref{sec:inverse}.
+
+Despite having no training pair information, OTUS's learned mappings exhibit physical-behavior, even picking up on invariant masses which were withheld during training. This suggests that further development in this direction should produce physically meaningful mappings, even if relations are missed or unknown, and therefore not included in the training process.  On the other hand, providing known relations as inductive biases on the data inputs, network architectures, or loss functions will likely improve performance. Figure~\ref{fig:jointAndMarginals_OTUS} depicts the joint distribution and marginals of OTUS' trained simulator as well as the true simulator for one test-case. Despite OTUS only having information about marginal-matching during training, the decoder network learns a mapping which is qualitatively similar to the true simulator.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Control and precision}
+\label{sec:onestage_precision}
+
+%----------------------------------------------------------
+\begin{figure}[t]
+\centering
+  \includegraphics[width=0.5\textwidth]{gen_errors.pdf}
+  \caption{Illustration of a complete control and uncertainty treatment for generative networks applied to LHC event generation and simulation. Figure from Ref.~\cite{Butter:2021csz}.}
+  \label{fig:3_gen_errors}
+\end{figure}
+%----------------------------------------------------------
+
+If we use neural networks to encode theory predictions for the LHC, we need to ensure that all relevant phase space features are described with the required precision~\cite{Nachman:2019dol}. For neural networks, this problem can be split into two distinct tasks: first, we need control over the relevant phase space features, so the network does not interpolate over relevant, but narrow phase space regions. Second, we have to estimate the precision with which the network has learned the underlying phase space density. 
+
+Neural networks work much like a fit and not like an interpolation in the sense that they do  not reproduce the training data faithfully and instead learn a smooth approximation~\cite{Butter:2020qhk,Bieringer:2022cbs}. This is where we can gain some intuition for a NN-uncertainty treatment. For a fit, uncertainties on the training data are crucial information in the loss function. We then monitor the fit quality and ensure that the fit is reliable over the entire phase space. 
+
+To guarantee that all relevant features are encoded in a generative network, we can follow the GAN inspiration and train a simple discriminator network to identify and quantify deviations between training and generated data. As a post-processing step such a discriminator can be used to reweight the events from the generative network~\cite{Diefenbacher:2020rna,Winterhalder:2021ave,Butter:2021csz}. In the GAN spirit we can incorporate the discriminator into the generator training, either through adversarial training searching for a Nash equilibrium, or through alternative approaches for a normalizing flow generator. Such a joint training will improve the generator, provide an uncertainty estimate, and prepare any remaining information in the discriminator for reweighting, as illustrated for $Z$+jets production at the parton level in Fig.~\ref{fig:3_gen_errors}.
+
+Once we know that the neural network describes all features, we determine how well it does. This can be done with Bayesian networks, where the learned network weights are replaced by learned network weight distributions~\cite{bnn_early3,deep_errors}. Bayesian network approaches have been shown to describe uncertainties in regression~\cite{Kasieczka:2020vlh} and classification~\cite{Bollweg:2019skg} tasks, and the concept can be expanded to generative networks~\cite{Bellagente:2021yyh}. For generative networks we can assign a training-related uncertainty in the underlying phase space density to the (unit) weight of each event. In Fig.~\ref{fig:3_gen_errors} we see, for instance, the increasing uncertainty in the kinematic tail, driven by a lack of training data.
+
+We often know systematic or theoretical limitations of describing certain kinematic regimes. In that case we augment the training data, representing this uncertainty through an additional parameter in event weights. We train the generative network conditionally on this parameter, either in a deterministic or a Bayesian setup, and generate events either for a given parameter or sampling over it. Again, this approach is illustrated in  Fig.~\ref{fig:3_gen_errors}, where $a$ directly affects the $p_T$-distribution of the leading jet and enters many other observables through kinematic correlations. We see that its effect is larger than the uncertainty from the Bayesian network for the individual $a$-values. This first attempt of a comprehensive uncertainty treatment for generative networks will allow us to build confidence in the applications of generative networks to LHC simulation and inference.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Inverse simulations and inference}
+\label{sec:inverse}
+
+Monte Carlo simulations based on first principles have allowed us to properly understand essentially all aspects of LHC data. The price to pay for an extremely fast and reliable forward Monte Carlo simulation chain is that the corresponding inverse simulation is not feasible in practice. ML-based simulations can be built symmetrically, for instance INNs encode a bijective mapping between two physics spaces linking different levels of the simulation chain illustrated in Fig.~\ref{fig:simchain}~\cite{Datta:2018mwd,Bellagente:2020piv}. Similarly, we can relate different levels of the simulation chain through a reweighting procedure working on the full respective phase spaces and accounting for all correlations~\cite{Andreassen:2019cjw}. Moreover, as ML-based simulations are often differentiable, we can use their gradients to probe and learn about distributions on phase space~\cite{Vandegar:2020yvw}. Finally, we can construct generative inverse simulations with conditional versions of the respective forward generative networks~\cite{cinn,Bellagente:2019uyp,Bellagente:2020piv}. This last approach is based on progress with soup-to-nuts ML-generators and their essentially identical network architectures.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Particle reconstruction}
+\label{sec:inverse_pflow}
+
+The first stage of the inverse problem uses the set of energy deposits in the detector to reconstruct the set of particles present at the first interaction with the detector, that is, following hadronization. In its fullest sense, reconstruction also involves the prediction of the particles' properties, in particular, their class and momenta. The difficulty of this task stems from the busy LHC environment caused by pileup interactions and the inherently collimated signatures associated with jets. Traditional particle flow (PF) algorithms rely on parameterized schemes for merging and splitting to disentangle overlapping calorimeter cell clusters as well as track-based subtraction to infer the contribution from neutral particles.
+
+A series of publications~\cite{DiBello:2020bas,Pata:2021oez,Qasim:2021hex} have established the potential for ML-based reconstruction to go beyond traditional PF algorithms. In Ref.~\cite{DiBello:2020bas}, particle reconstruction was recast as a computer vision problem using state-of-the-art ML architectures including U-net, graph neural network (GNN) and DeepSets. A simplified dataset was used comprising overlapping pairs of charged and neutral pions in a 6-layer calorimeter block. In comparison to a traditional PF algorithm, the ML models regress the component of neutral energy better by a factor of two to four in terms of resolution. The study also finds significant improvements via a super-resolution approach (see also Ref.~\cite{Baldi:2020hjm}), where the network is trained to predict a corresponding calorimeter signature with higher granularity.
+
+This proof of concept has been extended to particle reconstruction in more realistic environments resembling multiple pileup interactions in a full-coverage simulated detector~\cite{Pata:2021oez,Qasim:2021hex}. In both cases, GNN architectures are employed for their ability to handle the complexity of detector data: variable numbers of input and target entities, lack of ordering, irregularity of detector components, and sparsity of ``pixels''. Moreover, GNNs are able to leverage the spatial relationships between calorimeter cells alongside their input features to optimize the prediction tasks.
+
+Based on these developments, it can already be anticipated that ML methods will take a key role in particle reconstruction at future runs of the LHC, especially to handle HL-LHC conditions. GNN-based models in particular show potential to outperform current PF algorithms for particle identification and regression while opening new possibilities such as super-resolution and resolving neutral particles inside of jets. Finally, the learned deep latent representation of detector information, which underlies the prediction tasks, should serve as a more expressive input format for both event classification and downstream tasks in the inverse problem.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Detector unfolding}
+\label{sec:inverse_det}
+
+%----------------------------------------------------------
+\begin{figure}[t]
+  \includegraphics[width=0.49\textwidth]{tau2.pdf}
+  \includegraphics[width=0.49\textwidth]{tau21.pdf}
+  \caption{An illustration of classifier-based (OmniFold) and density-based (cINN) unfolding for the two-dimensional space of $N$-subjettiness variables $\tau_1$ and $\tau_2$.  The right plot shows that since the unfolding is done simultaneously and unbinned, we can produce a measurement of the widely-used $N$-subjettiness ratio for free. Figure from Ref.~\cite{Arratia:2021otl}.}
+  \label{fig:unfold}
+\end{figure}
+%----------------------------------------------------------
+
+While the physical processes behind an LHC collision are described by fundamental physics and are therefore universal, the observed data depend in an intimate way on the technical details of the detector. Detector effects like phase space coverage, detection thresholds, particle reconstruction, efficiencies, or calibration induce not only resolution smearing in the measurements, but can lead to systematic deviations between the properties of particles reaching the detector and the objects reconstructed from actually measured data. For individual experiments, these detector effects differ greatly and can only be estimated by the collaboration. It is therefore essential for future interpretations of a measurement to unfold detector effects so that we can compare measurements by different experiments to each other and to theory predictions. 
+
+Traditional approaches to unfolding are based on matrices connecting binned particle-level distributions at truth level with histograms of corresponding detector-level observables. While the folding or convolution of detector effects with kinematic distributions at particle level is possible with Monte Carlo simulations, the inverse direction often suffers from instabilities and scales poorly for high-dimensional phase spaces. The limitation to low-dimensional representations requires an unwanted  pre-selection of interesting observables. Finally, the matrix-based approach requires fixed bin sizes, which limits the re-optimization options for future analyses.
+
+ML-approaches establish high-dimensional and binning-independent unfolding. We can distinguish two fundamentally different concepts~\cite{Arratia:2021otl}: a classification-based approach to reweight a Monte Carlo simulation with the learned likelihood ratio of data and simulation~\cite{Andreassen:2019cjw}; and a complementary approach that learns directly the probability density at particle-level~\cite{Bellagente:2020piv}.  Figure~\ref{fig:unfold} illustrates that both approaches can perform unbinned unfolding in multiple dimensions.
+
+Classification-based approaches start by learning the likelihood ratio between data and simulation at reconstruction level~\cite{Andreassen:2019cjw, Andreassen:2021zzk, Komiske:2021vym}. Using matched event pairs at the truth and reconstruction levels, the resulting weights are pulled to the particle level. Next, a classifier learns the likelihood ratio of the weighted and unweighted distributions at particle level to replace an event-based weight with a generalized weighting function. After several iterations of weight updates, the algorithm converges to an unfolded distribution which is compatible with the observed measurement.
+    
+Density-based approaches build on generative networks that predict probability configurations of truth-level events given a detector-level measurement. They are trained on pairs of reconstruction- and particle-level events from Monte Carlo simulations, to learn a direct mapping between both levels. Unfolding built on generative adversarial networks has been shown to work on kinematic distributions~\cite{Datta:2018mwd, Bellagente:2019uyp}. Event-wise unfolding requires a meaningful probabilistic treatment, which can be achieved with conditional normalizing flows~\cite{Bellagente:2020piv,Vandegar:2020yvw}, the kind of generative networks which also allows for the uncertainty treatment discussed in Sec.~\ref{sec:onestage_precision}. This unfolding method yields calibrated probability distributions for each measured event. It admits multiple approaches; one approach frames unfolding in terms of learning a conditional density of particle-level quantities conditioned on reconstructed inputs~\cite{Bellagente:2020piv}, while another approach frames unfolding as an empirical Bayes / maximum marginal likelihood / data-informed prior learning problem~\cite{Vandegar:2020yvw}.
+
+Because classification-based and density-based unfolding techniques have distinct strengths and weaknesses, the natural next step will be to combine the two methods to benefit from both.  While there is an extensive R\&D program required to integrate both methodologies and to achieve precision, these tools are starting to be applied to data analysis in collider physics~\cite{H1:2021wkz}.  Looking ahead, it is clear that future versions of these tools will play an important role in the data analysis of future colliders.  Unfolded differential cross sections are one of the main data products from collider experiments.  By performing the unfolding with as much information as possible, we ensure that the measurements achieve the maximal precision, making the best use of the data.  Furthermore, high-dimensional and unbinned unfolding ensures that these data products are `future proof' in the sense that binning and even observables can be chosen post-hoc~\cite{Arratia:2021otl}.  This enables downstream data analysis long after the data were published, including when new theoretical insights are available.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Unfolding to parton level}
+\label{sec:inverse_parton}
+
+%----------------------------------------------------------
+\begin{figure}[t]
+  \includegraphics[width=0.48\textwidth,page=17]{isr_alljets_test.pdf}
+  \includegraphics[width=0.49\textwidth,page=12]{isrstacked.pdf}
+  \caption{Unfolded parton-level distributions for the process $pp \to Z_{\ell \ell} W_{jj}$+jets using a cINN. The unfolding covers detector effects as well as additional jet radiation. Figure from Ref.~\cite{Bellagente:2020piv}.}
+  \label{fig:4_toparton}
+\end{figure}
+%----------------------------------------------------------
+
+Once we control ML-unfolding of detector effects, we can target other parts of the simulation chain shown in Fig.~\ref{fig:simchain} and invert them for a given LHC analysis. To probe the kinematics of a hard scattering process we can use neural networks to unfold QCD jet radiation and heavy particle decays to study the production kinematics of top quarks, electroweak gauge bosons, or the Higgs without binning and with full correlations. Such measurements are standard in top physics and provide the ideal input to global SMEFT analyses. Once we know the parton-level configurations for a given observed event, we can use NN-techniques to evaluate observables like CP-sensitive angular correlations in their original reference frames.
+
+The inversion of QCD radiation or decays relies on the same classification or generative networks as detector unfolding. For instance, we can train a normalizing flow to map random numbers to the parton-level phase space, under the condition of a given detector-level event. The underlying model is encoded in the forward simulation chain used to train the network. Part of it is the assumed hard process, including the number of jets which are part of the hard scattering and do not get unfolded. When analyzing an event and sampling into parton-level phase space, we extract a probability distribution of parton-level configurations~\cite{Bellagente:2020piv}, which we can use to define observables suitable for standard analyses.
+
+One challenge for such analyses are combinatorics. For the hard scattering $q\bar{q} \to Z_{\ell \ell} W_{jj}$ and up to two additional QCD jets we ask how well cINN-unfolding extracts the $W$-kinematics. In the left panel of Fig.~\ref{fig:4_toparton} we illustrate how the network reproduces the momentum of the decaying $W$-boson. The relation between the up to four jets and the two partonic quarks from the $W$-decay is learned by the network. In the right panel of Fig.~\ref{fig:4_toparton} we show the reconstructed $W$-mass stacked for different numbers of jets. The network resolves the underlying combinatorics such that the $W$-widths for the different jet multiplicities are identical, all by by accessing correlations combined with the truth information from the forward simulation. This corresponds to results from a systematic study which shows that deep networks outperform classical approaches to solving the combinatorics in the reconstruction of top-quark final states significantly~\cite{Erdmann:2019evj}.
+
+High-level observables encoded into neural networks will find their way into standard experimental analyses. They are motivated by existing top-sector measurements, and using NN-techniques will simplify their use considerably. Moreover, the comprehensive uncertainty treatment discussed Sec.~\ref{sec:onestage_precision} and the merged classification-based~\cite{Andreassen:2019cjw} and density-based techniques from Sec.~\ref{sec:inverse_det} can be applied to any part of an inverted or unfolded simulation chain. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{MadMiner}
+\label{sec:inference_mad}
+
+The relation between data $x$ and physics parameters $\theta$ is, fundamentally, described by the likelihood function or normalized fully differential cross section, which we can predict in a factorized form,
+%
+\begin{align}
+  p(x|\theta)
+% = \frac{d \sigma(x |\theta)}{d \sigma(\theta)}
+  = \frac{1}{\sigma(\theta)} \frac{\diff \sigma(x|\theta)}{\diff x} \; . 
+  \label{eq:likelihood}
+\end{align}
+%
+While we can predict this likelihood at the detector level using the standard, forward simulation tools, we can only compute it in a closed form at the parton level. This challenge in the relation of simulations and inference is where neural networks might lead to transformative progress. 
+
+Inspired by the standard simulation chain we can assume that the likelihood of Eq.\eqref{eq:likelihood} approximately factorizes into the form~\cite{Brehmer:2018kdj, Brehmer:2018eca}
+%
+\begin{align}
+  p(x|\theta)
+  = \int\!\diff z_d \; \int\!\diff z_s \; \int\!\diff z_p \;
+  \underbrace{p(x|z_d) \, p(z_d|z_s) \, p(z_s|z_p) \, p(z_p|\theta)}_{p(x,z|\theta)} \,.
+  \label{eq:latent}
+\end{align}
+%
+Here we integrate over latent variables $z$, where $z_d$ characterize the detector effects, $z_s$ the parton shower and hadronization, and $z_p$ the partonic phase space including helicities, charges, and flavors, etc. Given the typically large number of latent variables, it is unrealistic to integrate over them or evaluate the joint-likelihood $p(x,z|\theta)$. However, it is possible to calculate the joint likelihood ratio relative to a reference point in terms of the ratio of squared matrix elements from parton-level generators~\cite{Brehmer:2018hga, Brehmer:2018kdj,Brehmer:2018eca, Stoye:2018ovl,Brehmer:2019xox},
+%
+\begin{align}
+  r(x,z|\theta) &= \frac {p(x,z|\theta)} {p(x,z|\theta_\text{ref})}
+  = \frac {p(z_p|\theta)} {p(z_p|\theta_\text{ref})}
+  \sim \frac {|\matel{}|^2(z_p|\theta)} {|\matel{}|^2(z_p|\theta_\text{ref})} \; \frac {\sigma(\theta_\text{ref})} {\sigma(\theta)} \; .
+  \label{eq:joint_llr}
+\end{align}
+%
+The starting point to new ML-methods is to construct functionals in terms of the joint likelihood ratio $r(x,z|\theta)$, which are minimized by the true likelihood or likelihood ratio function~\cite{Cranmer:2015bka, Baldi:2016fzo}. The result of this training are neural networks that approximate the true likelihood ratio $r(x|\theta)$. Given such a neural network, established statistical techniques can be used to construct confidence limits in parameter space. 
+
+%----------------------------------------------------------
+\begin{figure}[t!]
+  \includegraphics[width=0.47\textwidth]{plot_limits_01_RateHistMl.pdf}
+  \includegraphics[width=0.49\textwidth]{CP_phase_combined_68CL.pdf}
+  \caption{Expected sensitivity of a MadMiner based analysis for $t\bar{t}H$ production, probing SMEFT coefficients (left) and the CP-structure of the top Yukawa coupling (right). Figures taken from Ref.~\cite{Brehmer:2019xox} and Ref.~\cite{Barman:2021yfh}, respectively.}
+  \label{fig:madminer}
+\end{figure}
+%----------------------------------------------------------
+
+Note that here simulation-based inference provides the primary statistical model, i.e.\ the  probability model $p(x|\theta, \nu)$ that describes the dependence on the data $x$, the parameters of interest $\theta$, and the nuisance parameters $\nu$, even when the data is high-dimensional and traditional modeling approaches are inadequate. The publication of the trained network in a re-usable form, as discussed below, can thus be of great benefit for an optimal use of experimental results~\cite{Cranmer:2021urp}.  This approach is separate from tools like  DNNLikelikood~\cite{Coccaro:2019lgs}, which aims at approximating likelihoods derived from traditional approaches to model building, using libraries like RooFit.
+
+Instead of the full likelihood function, one can also use the score $t(x|\theta) = \nabla_\theta \log p(x|\theta)$ to define statistically optimal observables at the detector level. This approach is motivated by an expansion of the log likelihood ratio around $\theta_\text{ref}$,
+%
+\begin{align}
+  \log r(x|\theta) = \log r(x|\theta_\text{ref}) + t(x|\theta_\text{ref}) \; (\theta - \theta_\text{ref}) + \cdots 
+\end{align}
+%
+For parameter points close enough to $\theta_\text{ref}$ the score components are the sufficient statistics, so for measuring $\theta$ knowing $t(x|\theta_\text{ref})$ is as powerful as the full likelihood. Since the score is defined through the likelihood function, it is also intractable. However, similarly to the approach discussed above, we can train a neural network on a suitable loss function such that it will converge to the score. The trained network will now represent the optimal observable. In a next step, the likelihood can be determined for instance with simple histograms of the score components~\cite{Brehmer:2019xox, Brehmer:2020zwh}. This approach requires only minor changes to established analysis pipelines. Alternatively, the scores can be used to evaluate the Fisher Information and set limits based on the Cramer-Rao bound~\cite{Brehmer:2019xox}. One challenge with training using the score is that the relevant gradient information of the matrix elements must be accessible for training the neural network, but this information is typically only accessible for a subset of parameters with analytic dependence that facilitates easy gradient estimation. One approach to enable score based training for any parameter is through differentiable programming; when matrix elements are merged with automatic differentiation frameworks, the required gradients can be computed automatically with relatively small additional computational overhead. Case studies using differentiable matrix elements from \textsc{MadJax} for score based training successfully trained networks for inference on parameters that were inaccessible without differentiable matrix elements~\cite{HeinrichKagan:2022}.
+
+The previously outlined inference strategy has been fully automated in the MadMiner tool~\cite{Brehmer:2019xox,MadMiner_code}. The increase in physics sensitivity relative to a total rate or single kinematic distribution is illustrated in Fig.~\ref{fig:madminer}. In the left panel we consider $t\bar{t}H$ production to constrain the two SMEFT Wilson coefficients $c_u$ and $c_G$. In the right panel we consider the same process to constrain CP-violation in the top-Higgs coupling, as parameterized by the magnitude $\kappa_t$ and CP-phase $\alpha$ of the top Yukawa coupling~\cite{Bahl:2021dnc, Barman:2021yfh}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matrix element method}
+\label{sec:inference_mem}
+
+Inverting the entire simulation chain in Fig.~\ref{fig:simchain} allows us to extract the transition amplitude for an observed event and relate it to the theory prediction. This so-called matrix element method (MEM) can be used to estimate fundamental physics parameters from individual events and has, for instance, been applied for measure the top mass. Being defined on the single-event level, it is in particular suitable for low-statistics signals, where an optimal exploitation of all kinematic features is critical.  
+
+The MEM relies on our ability to extract the likelihood for detector-level events as a function of a model parameter $\theta$, as an ML-application through density-based unfolding or an inverted simulation. Extending the discussion in Sec.~\ref{sec:inference_mad}, the transition amplitude as a function of detector-level phase space is unknown, but it can be calculated at the parton level. The two phase spaces can be related by transfer functions $T(\vec{x},\vec{z})$, probabilities to observe parton-level configurations $\vec{z}$ as detector-level signatures $\vec{x}$, as part of the forward simulation. In the $N$-event likelihood they appear as
+%
+\begin{align}
+  \mathcal{L(\theta)}
+  =\prod\limits_{i=1}^N p(\vec{x}^{(i)}|\theta) 
+  =\prod\limits_{i=1}^N\frac{1}{\sigma_\text{fid}(\theta)}
+  \left. \frac{\diff^l\sigma(\theta)}{\diff x_1...\diff x_l} \right|_{\vec{x}^{(i)}}
+  =\prod\limits_{i=1}^N\frac{1}{\sigma_\text{fid}(\theta)}\int \diff^mz~ 
+ \frac{\diff^m\sigma(\theta)}{\diff z_1...\diff z_m}~T(\vec{x}^{(i)},\vec{z}) \; .
+\label{eq:memlikeli}
+\end{align}
+%
+The dimensionality of the parton-level and detector-level phase spaces is different. For instance, longitudinal neutrino momenta are unobservable, while additional jets have to be included with higher-order QCD corrections. Existing approaches model the transfer functions heuristically, and for non-trivial cases the numerical convolution is impossible. The form of Eq.\eqref{eq:memlikeli} indicates ways of enhancing the accuracy of the matrix element method: first, higher-order corrections can be included at parton level, for instance using the MEM\@@NLO program. Second, general and highly non-Gaussian transfer functions can account for parton shower, hadronization, detector resolution, acceptance, and efficiency, as well as a possible mismatch between theoretically described and actually measured quantities, event by event.
+
+The transfer function is defined as a probability density $T(\vec{x},\vec{z}) = p(\vec{x}|\vec{z},\theta)$. This allows us to learn it directly from simulated data using a conditional normalizing flow or INN as a density estimator. Because the matrix element spans several orders of magnitude and the transfer function usually is a narrow peak in phase space, the integral in Eq.\eqref{eq:memlikeli} is numerically challenging for a regular Monte-Carlo integration. However, we know from Bayes' theorem that the integrand becomes trivial when the parton level samples are drawn from the distribution $p(\vec{z} | \vec{x}, \theta)$. In analogy to Secs.~\ref{sec:inverse_det} and~\ref{sec:inverse_parton}, the partonic configurations $\vec{z}$ for a given detector event $\vec{x}^{(i)}$ can be sampled by another conditional INN. Then the likelihood can be expressed as
+%
+\begin{align}
+  \mathcal{L(\theta)} = \prod\limits_{i=1}^N \frac{1}{\sigma_\text{fid}(\theta)}
+  \XXLangle
+  \frac{\partial \vec{z}(\vec{r}; \vec{x}^{(i)},\theta)}{\partial \vec{r}} \; 
+  \left[ \frac{\diff^m\sigma(\theta)}{\diff z_1...\diff z_m} T(\vec{x}^{(i)},\vec{z}) \right]_{\vec{z}(\vec{r}; \vec{x}^{(i)},\theta)}
+  \XXRangle_{\vec{r} \sim p(\vec{r})} \; .
+\end{align}
+%
+This way, density estimation of the transfer function in combination with density-based unfolding will allow us to make optimal use of the statistical power of the MEM, exploiting the full and correlated event kinematics event by event for critical LHC observables like the top mass, the Higgs self-coupling, or CP-violating phases.
+
+%For an ML-based inverse simulation, $\vec x \to \vec z$, we can assume that every detector-level event comes from some parton-level configuration, including an efficiency, so it is easiest to approximate the transfer function by a factorized form $T(\vec{x},\vec{z}) = p(\vec{z} | \vec{x}) \; \epsilon (\vec{x})$. The normalization $\epsilon(\vec{x})$ could in principle also depend on $\theta$, just like the fiducial cross section. With the factorized transfer function, Eq.\eqref{eq:memlikeli} becomes
+%
+%\begin{align}
+%\mathcal{L(\theta)} %=\prod\limits_{i=1}^NP(\theta|\vec{x}_i)
+%    &= \prod\limits_{i=1}^N\frac{\epsilon(\vec{x}^{(i)})}{\sigma_\text{fid}(\theta)}\int  \diff^mr\;\left| \frac{\partial(z_1,\ldots,z_m)}{\partial(r_1,\ldots,r_m)} \right|~p(\vec{z} | \vec{x}^{(i)}) ~ 
+% \frac{\diff^m\sigma(\theta)}{\diff z_1...\diff z_m} \notag\\
+%    &\equiv \prod\limits_{i=1}^N\frac{\epsilon(\vec{x}^{(i)})}{\sigma_\text{fid}(\theta)} \left\langle \; 
+%    \frac{\diff^m\sigma(\theta)}{\diff z_1...\diff z_m} \right\rangle_{ \vec{z} \sim p(\vec{z} | \vec{x}^{(i)})} \; .
+%\label{eq:masterlikeli}
+%\end{align}
+%
+%The convolution integral is now reduced to an expectation value of the differential cross section with respect to the probability density $p(\vec{z}|\vec{x})$. In analogy to Sec.~\ref{sec:inverse_det} or Sec.~\ref{sec:inverse_parton}, the partonic configurations $\vec{z}$ for a given detector event $\vec{x}^{(i)}$ can be sampled according to $p(\vec{z} | \vec{x})$ by a conditional normalizing flow or INN. This way, density-based unfolding will allow us to make optimal use of the statistical power of the MEM, exploiting the full and correlated event kinematics event by event for critical LHC observables like the top mass, the Higgs self-coupling, or CP-violating phases.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Synergies, transparency and reproducibility}
+
+A key paradigm in the development of simulation tools for high-energy collider experiments
+is publicly accessible open source software. The versioning of code releases and the reproducibility of predictions is vital for a reliable analysis and interpretation of collider data. As we have seen in the previous sections, ML-methods are entering all aspects of the simulations chain at high pace. They range from initial proof-of-concept applications to well established use cases with largely consolidated techniques, for example in the determination of parton densities.
+
+Machine learning models efficiently encode arbitrary decision functions of a given set of inputs, and thus offer a chance to easily exchange complex relations. This might correspond to the value of a scattering matrix element given a set of momenta, or probability models from simulation-based inference, like MEM or MadMiner. The sharing of neural networks used for various generative or discriminative tasks will be of central importance and should be further extended. This will allow researchers to critically examine and build upon previous results more easily, enable synergies between different use cases, and facilitate reproducibility of results.
+
+Successfully sharing a machine learning model entails two challenges: (i) sharing the model itself, including architectures, software versions, and weights; and (ii) sharing data it can be used on. Exchanging models is technically relatively straightforward and several corresponding tools exist, for example \href{https://github.com/onnx}{Open Neural Network Exchange (ONNX)}. It allows the exchange of neural networks and BDTs between training frameworks. 
+
+Suitable input data poses the more difficult problem. On the side of results by large collaborations, this adds additional weight to the ongoing move towards publishing open data along with  measurements. Containerization, as enabled by software tools like \href{https://www.docker.com/}{Docker} can be useful in bundling the correct versions of different software packages used for data processing and machine learning in a coherent fashion.
+
+An opportunity exists in the realm of phenomenological studies based on the \textsc{Delphes} detector simulation~\cite{deFavereau:2013fsa}. Here a common specification on how quantities are translated into the inputs to machine learning algorithms might --- together with publishing the ML models --- boost sharing and meaningful exchange. Another interesting angle are generative models. As these do \emph{not} need data to evaluate, sharing the architecture and weights is already sufficient. Generative networks themselves can even be used as an efficient alternative way of sharing simulated data.
+
+Publication of ML models for their reuse is not yet standard in the particle physics community. Examples where trained networks have been published in ONNX format for future reuse are the DNNLikelihood~\cite{coccaro_andrea_2019_3567822}, a package for cross-disciplinary training of discriminator networks~\cite{Benato:2021olt}, and the ATLAS search for R-parity-violating supersymmetry~\cite{ATLAS:2021fbt,hepdata.104860.v1/r3}, the latter also being available in the ATLAS \href{https://gitlab.cern.ch/atlas-sa/simple-analysis}{SimpleAnalysis} framework. However, detailed documentation for instance of the input variables is missing. Further development is strongly encouraged for, e.g., the purpose of analysis preservation~\cite{LHCReinterpretationForum:2020xtr,snowmass:preservation}, and in general for the implementation of the Findable, Accessible, Interoperable, and Reusable (FAIR) principles for scientific data management~\cite{FAIR-paper} of  ML models. An example for a dataset with special emphasis on these aspects can be found in Ref.~\cite{Chen:2021euv}. Making the newly developed simulation and analysis tools, along with the required data, accessible to other scientists and future users forms an essential element of open and thriving science.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Outlook}
+
+As a field combining vast datasets with excellent, first-principle simulations, particle physics is benefiting tremendously from developments in data science and machine learning. While new AI-inspired methods will not magically solve all challenges in LHC simulations and analysis, they are providing a crucial and transformative contribution to our numerical toolbox. Moreover, given the quality of the LHC datasets, simulations, and simulation-based analysis methods, we expect particle physics to eventually contribute to broader machine learning research.
+
+Event generation, or the simulation of signals for the LHC detectors from QFT Lagrangians, is the main link between experimental and theoretical particle physics. It has stringent requirements when it comes to first principles vs modeling, control, precision, speed, and flexibility. In this review we have shown that even within the physics-motivated modular structure of standard event generators, there is no aspect that cannot be improved through modern machine learning. This includes phase space sampling, scattering amplitudes, loop integrals, parton showers, parton densities, and fragmentation. Some of these ML-applications have a long history and are accepted as standard approaches, other ML-based improvements of physics modules are currently under rapid development and are finding their way into standard generators. All of them will be key to address the needs for example of the HL-LHC.
+
+In addition to ML-enhanced event generators, an interesting application of generative neural networks are ML-generators at parton level and fast ML-detector simulations. They provide an excellent testing ground for phase space generators, precision networks, and inverted simulations. This includes conceptual developments in the field of generative networks, driven by LHC-specific requirements of controlling precision-generative networks as numerical tools and providing a full range of uncertainties. They allow us to define, produce, and encode datasets for phenomenological studies and serve as a compression for data entering experimental analyses.
+
+The main conceptual advantage of ML-event generation is that simulations with generative networks are symmetric: given a fundamental physics model we can predict the probability distributions of LHC events over phase space, or we can predict the probability distributions of model parameters given observed LHC events. Different ML-approaches to simulation-based inference include classification-based methods, conditional generative networks as a direct inversion, or indirect ways of learning likelihood ratios. In combination, they will allow us to systematically use unfolding or inverted simulations at the HL-LHC, from particle identification and detector unfolding all the way to an event-wise matrix element method analysis.
+
+Finally, there are many simulation-related questions in fundamental physics, where AI-methods allow us to make significant progress. Examples going beyond immediate applications to event generation include symbolic regression~\cite{Butter:2021rvz}, sample and data compression~\cite{Carrazza:2021hny,Butter:2022lkf}, detection of symmetries~\cite{Betzler:2020rfg,Krippendorf:2020gny,Barenboim:2021vzh,Desai:2021wbb}, and many other fascinating new ideas and concepts.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Acknowledgments}
+
+Anja Butter, Gudrun Heinrich, and Tilman Plehn are supported by the Deutsche Forschungsgemeinschaft under grant 396021762 – TRR 257 Particle Physics Phenomenology after the Higgs Discovery. Lukas Heinrich is supported by the Excellence Cluster ORIGINS, which is funded by the Deutsche Forschungsgemeinschaft under Germany’s Excellence Strategy - EXC-2094-390783311. Alexander Held is supported by the U.S. National Science Foundation (NSF) Cooperative Agreement OAC-1836650. Stefan H{\"o}che and Joshua Isaacson are supported by the Fermi National Accelerator Laboratory (Fermilab), a U.S. Department of Energy, Office of Science, HEP User Facility. Fermilab is managed by Fermi Research Alliance, LLC (FRA), acting under Contract No. DE--AC02--07CH11359. Jessica N. Howard is supported by the U.S. National Science Foundation under the grant DGE-1839285. Michael Kagan is supported by the US Department of Energy (DOE) under grant DE-AC02-76SF00515. Gregor Kasieczka and Felix Kling are supported by the Deutsche Forschungsgemeinschaft under Germany’s Excellence Strategy -- EXC 2121 Quantum Universe -- 390833306. Sabine Kraml acknowledges support by the IN2P3 master project Th\'eorie -- BSMGA and the joint ANR-FWF project PRCI SLDNP grant no.~ANR-21-CE31-0023. Claudius Krause and David Shih are supported by DOE grant DOE-SC0010008. Rahool Kumar Barman and Dorival Gon\c{c}alves thank the U.S.~Department of Energy for the financial support under grant number DE-SC 0016013. Benjamin Nachman is supported by the U.S. Department of Energy, Office of Science under contract DE-AC02- 05CH11231. Tilman Plehn is supported by the Deutsche Forschungsgemeinschaft under Germany's Excellence Strategy EXC 2181/1 - 390900948 (the Heidelberg STRUCTURES Excellence Cluster). Steffen Schumann acknowledges support from the German Federal Ministry of Education and Research (BMBF, grant 05H21MGCAB) and the German Research Foundation (DFG, project number 456104544). Rob Verheyen is supported by the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (grant agreement No. 788223, PanScales). Ramon Winterhalder is supported by FRS-FNRS (Belgian National Scientific Research Fund) IISN projects 4.4503.16. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{SciPost-bibstyle-arxiv}
+\bibliography{scipost}
+\end{document}

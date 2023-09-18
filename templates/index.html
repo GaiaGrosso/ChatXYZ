@@ -14,7 +14,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:image" content="{{ url_for('static', filename='jessminator.png') }}">
+    <meta property="og:image" content="{{ url_for('static', filename='oppie.png') }}">
     <meta property="og:image:width" content="400">
     <meta property="og:image:height" content="400">
 
@@ -121,7 +121,7 @@
     <form method="POST" class="query-box">
         <div class="container">
             <h1>
-                <a href="{{ url_for('home') }}">ChatJesseT</a>
+                <a href="{{ url_for('home') }}">OppenhAImer</a>
             </h1>
             <p>Type your question below.
             </p>
@@ -134,7 +134,7 @@
                 </div>
             </div>
             <div id="result">
-                <img src="{{ url_for('static', filename='jessminator.png') }}">
+                <img src="static/oppie.png">
                 <div id="loading-indicator" style="display: none;">
                     <img src="static/energyflowanimation.gif" alt="Thinking..." width="100">
                 </div>
@@ -143,7 +143,7 @@
                     <p><span class="query">Question:</span><em>{{ query }}</em></p>
                     <p>{{ result | safe }}</p>
                     {% else %}
-                    <p>Welcome to ChatJesseT! <br> Please enter your question above, and I'll do my best to answer it.
+                    <p>Welcome to OppenhAImer! <br> Please enter your question above, and I'll do my best to answer it.
                     </p>
                     {% endif %}
                 </div>

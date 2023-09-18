@@ -1,0 +1,578 @@
+\documentclass[prl,twocolumn,superscriptaddress,longbibliography,preprintnumbers,floatfix,nofootinbib]{revtex4-1}
+
+\usepackage{url}
+\usepackage{xspace}
+\usepackage{dsfont}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[caption=false]{subfig}
+\usepackage[colorlinks=true,citecolor=blue]{hyperref}
+\usepackage{multirow}
+\usepackage{hhline}
+
+%Comments
+\usepackage{color}
+\definecolor{mit-red}{rgb}{0.64,.12,0.2}
+\definecolor{darkred}{rgb}{1.0,0.1,0.1}
+\definecolor{darkgreen}{rgb}{0.1,0.7,0.1}
+\definecolor{darkblue}{rgb}{0.1,0.1,1.0}
+\newcommand{\Rikab}[1]{\textbf{\color{mit-red}[#1 --Rikab]}}
+\newcommand{\jdt}[1]{\textbf{\color{darkblue}[#1 --jdt]}}
+\newcommand{\BN}[1]{\textbf{\color{darkred}[#1 --BN]}}
+\newcommand{\review}[1]{{\color{darkgreen}#1}}
+
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+% Referencing conventions
+\DeclareRobustCommand{\Sec}[1]{Sec.~\ref{sec:#1}}
+\DeclareRobustCommand{\Secs}[2]{Secs.~\ref{sec:#1} and \ref{sec:#2}}
+\DeclareRobustCommand{\App}[1]{App.~\ref{app:#1}}
+\DeclareRobustCommand{\Apps}[2]{Apps.~\ref{app:#1} and \ref{app:#2}}
+\DeclareRobustCommand{\Tab}[1]{Table~\ref{tab:#1}}
+\DeclareRobustCommand{\Tabs}[2]{Tables~\ref{tab:#1} and \ref{tab:#2}}
+\DeclareRobustCommand{\Fig}[1]{Fig.~\ref{fig:#1}}
+\DeclareRobustCommand{\Figs}[2]{Figs.~\ref{fig:#1} and \ref{fig:#2}}
+\DeclareRobustCommand{\Eq}[1]{Eq.~(\ref{eq:#1})}
+\DeclareRobustCommand{\Eqs}[2]{Eqs.~(\ref{eq:#1}) and (\ref{eq:#2})}
+\DeclareRobustCommand{\Ref}[1]{Ref.~\cite{#1}}
+\DeclareRobustCommand{\Refs}[1]{Refs.~\cite{#1}}
+
+
+% Program names
+\newcommand{\GaussianAnsatz}{{Gaussian Ansatz}\xspace}
+
+
+% Equation shortcuts
+\newcommand{\eqn}[1]{\begin{align}#1\end{align}}
+\newcommand{\eqna}[1]{\begin{align}\begin{aligned}#1\end{aligned}\end{align}}
+
+% Typesetting shortcuts
+\def\cL{\mathcal{L}}
+\def\cJ{\mathcal{J}}
+\def\alphas{\texttt{TimeShower:alphaSvalue}}
+\def\lund{\texttt{StringZ:aLund}}
+\def\strange{\texttt{StringFlav:probStoUD}}
+\def\pT{p_{\text{T}}}
+\def\PID{\text{PID}}
+\def\ndf{\text{ndf}}
+
+
+
+\setcounter{secnumdepth}{2}
+
+
+% Program names
+\newcommand{\Pythia}{{\sc Pythia}\xspace}
+\newcommand{\Herwig}{{\sc Herwig}\xspace}
+\newcommand{\FastJet}{{\sc FastJet}\xspace}
+\newcommand{\DCTR}{{\sc Dctr}\xspace}
+\newcommand{\OmniFold}{{\sc OmniFold}\xspace}
+\newcommand{\Keras}{{\sc Keras}\xspace}
+\newcommand{\TensorFlow}{{\sc TensorFlow}\xspace}
+\newcommand{\Adam}{{\sc Adam}\xspace}
+
+
+
+\begin{document}
+
+\title{Learning Uncertainties the Frequentist Way:\\  Calibration and Correlation in High Energy Physics }
+
+\preprint{MIT-CTP 5431}
+
+\author{Rikab Gambhir}
+\email{rikab@mit.edu}
+\affiliation{Center for Theoretical Physics, Massachusetts Institute of Technology, Cambridge, MA 02139, USA}
+\affiliation{The NSF AI Institute for Artificial Intelligence and Fundamental Interactions}
+
+\author{Benjamin Nachman}
+\email{bpnachman@lbl.gov}
+\affiliation{Physics Division, Lawrence Berkeley National Laboratory, Berkeley, CA 94720, USA}
+\affiliation{Berkeley Institute for Data Science, University of California, Berkeley, CA 94720, USA}
+
+\author{Jesse Thaler}
+\email{jthaler@mit.edu}
+\affiliation{Center for Theoretical Physics, Massachusetts Institute of Technology, Cambridge, MA 02139, USA}
+
+\affiliation{The NSF AI Institute for Artificial Intelligence and Fundamental Interactions}
+\begin{abstract}
+%
+Calibration is a common experimental physics problem, whose goal is to infer the value and uncertainty of an unobservable quantity $Z$ given a measured quantity $X$.
+%
+Additionally, one would like to quantify the extent to which $X$ and $Z$ are correlated.
+%
+In this paper, we present a machine learning framework for performing frequentist maximum likelihood inference with Gaussian uncertainty estimation, which also quantifies the mutual information between the unobservable and measured quantities.
+%
+This framework uses the Donsker-Varadhan representation of the Kullback-Leibler divergence---parametrized with a novel \GaussianAnsatz---to enable a simultaneous extraction of the maximum likelihood values, uncertainties, and mutual information in a single training.
+%
+We demonstrate our framework by extracting jet energy corrections and resolution factors from a simulation of the CMS detector at the Large Hadron Collider.
+%
+By leveraging the high-dimensional feature space inside jets, we improve upon the nominal CMS jet resolution by upward of 15\%.
+%
+\end{abstract}
+
+
+\maketitle
+
+
+% % ###################################
+% % ########## INTRODUCTION ##########
+% % ##################################
+
+
+One of the most foundational tasks in high energy physics (HEP) is the inference of an unobservable quantity given a  measured quantity, which is often referred to as \textit{calibration}.
+%
+For example, the kinematic properties of a given particle must be reconstructed from signatures registered in various detector elements.
+%
+This inference task can be challenging when the reconstruction requires high-dimensional inputs.
+%
+Machine learning (ML) is a natural tool for performing high-dimensional reconstruction, and there has been significant progress in utilizing ML methods for estimating the energies of various objects, including
+photons~\cite{CMS:2020uim},
+muons~\cite{Kieseler:2021jxc},
+single hadrons~\cite{Belayneh:2019vyx,ATL-PHYS-PUB-2020-018,Akchurin:2021afn,Akchurin:2021ahx,Polson:2021kvr,Pata:2021oez},
+and sprays of hadrons (jets)~\cite{ATL-PHYS-PUB-2018-013,ATL-PHYS-PUB-2020-001,CMS:2019uxx,Haake:2018hqn,Haake:2019pqd,Baldi:2020hjm,Komiske:2017ubm,ATL-PHYS-PUB-2019-028,Maier:2021ymx,Kasieczka:2020vlh,ArjonaMartinez:2018eah} at colliders;
+kinematic reconstruction in deep inelastic scattering~\cite{Diefenthaler:2021rdj,Arratia:2021tsq};
+and neutrino energies in a variety of experiments~\cite{Liu:2020pzv,EXO:2018bpx,Baldi:2018qhe,Abbasi:2021ryj,IceCube:2020yct,Carloni:2021zbc}.
+%
+Further ideas can be found in \Ref{Feickert:2021ajf}.
+
+
+Abstractly, the calibration task can be described as quantifying the relationship between two random variables $X\in\mathbb{R}^M$ and $Z\in\mathbb{R}^N$.
+%
+Here, $X$ is the measured quantity and $Z$ is the unobservable (``latent'') quantity.%
+%
+\footnote{Throughout this paper, upper case letters represent random variables and lower case letters represent realizations of those random variables.}
+%
+A reconstruction technique produces a function $\hat{z}:\mathbb{R}^M\rightarrow\mathbb{R}^N$, which is determined by minimizing a loss functional over sample data (real or synthetic).
+%
+While ML methods are effective even when $M$ and $N$ are large, most existing methods have the undesirable property of being prior dependent~\cite{priordependence}.
+%
+This means that $\hat{z}$ depends on the probability density $p(z)$ used during training.
+%
+As a result, the calibration is not universal and caution must be taken when applying it to different event samples. 
+
+
+Furthermore, some calibration methods simply produce a \textit{point estimate}, with no estimation of the corresponding uncertainty.
+%
+In the HEP context, this uncertainty is usually called the \textit{resolution}.
+%
+Quantifying the reconstruction resolution is relevant for a variety of purposes, including
+the computation of significance variables~\cite{CMS:2019ctu,Nachman:2013bia} and
+background estimation~\cite{ATLAS:2012qgw,ATLAS:2021kxv}.
+%
+Various ML approaches for resolution determination have been recently studied for HEP~\cite{Sirunyan:2019wwa,Cheong:2019upg,Bollweg:2019skg,Bellagente:2021yyh,1806026,Araz:2021wqm,Kronheim:2021hdb}, but they typically require additional training or model complexity.
+%
+See \Ref{https://doi.org/10.48550/arxiv.2107.03920} for a complementary approach to frequentist inference.
+
+
+In this paper, we introduce a simple ML framework for calibration that simultaneously estimates the following quantities:
+%
+\begin{enumerate}
+    \item A prior-independent maximum-likelihood calibration, $\hat{z}(x)=\argmax_z p(x|z)$;
+    \item A Gaussian resolution around $\hat{z}(x)$, $\hat{\sigma}_z(x)$;
+    \item The log-likelihood ratio, $\log \frac{p(x|z)}{p(x)}$; and
+    \item The mutual information between $X$ and $Z$, $I(X;Z)$.
+\end{enumerate}
+%
+To extract $\hat{z}(x)$ and $\hat{\sigma}_z(x)$ in a single training, we use a novel \textit{\GaussianAnsatz} to parametrize the log-likelihood ratio with an interpretable network architecture.
+%
+Mutual information is a powerful statistic for quantifying the (non-linear) correlation between two random variables, and it appears due to our choice of loss function.
+%
+After describing the \GaussianAnsatz construction, we illustrate the above features in a case study involving jet reconstruction at the Large Hadron Collider (LHC).
+
+
+Our calibration method builds upon the  Mutual Information Neural Estimator (MINE) introduced in \Ref{belghazi2018mine}.
+%
+With MINE, the Donsker-Varadhan representation~\cite{Donsker1975AsymptoticEO} of the Kullback-Leibler divergence~\cite{kullback1951information} is used to estimate $I(X;Z)$ by training a network to minimize a particular loss functional.
+%
+We first show that a network minimizing this loss functional yields the likelihood $p(x|z)$, which in principle contains all the information necessary for frequentist inference.
+%
+Performing this inference in practice, though, involves difficult optimization tasks, which are even more difficult if one wants to extract the resolution.
+%
+With the \GaussianAnsatz, we parametrize the MINE network such that the inferred value, and especially the resolution, are easy to extract after ML training.
+
+
+
+The starting point for our calibration method is the concept of mutual information (MI), defined as:
+%
+\begin{align}
+    \label{eq:MI_definition}
+    I(X;Z) = \int\text{d}x\,\text{d}z\, p(x,z) \log\frac{p(x,z)}{p(x)\,p(z)} ,
+\end{align}
+%
+where $p$ denotes the probability density of the respective random variable.
+%
+This equation has the property that $I(X;Z)=0$ if and only if $X$ and $Z$ are independent, which is equivalent to $p(x,z)=p(x)\, p(z)$.
+%
+Therefore, the MI quantifies the interdependence between $X$ and $Z$. 
+
+
+The MI is a special case of the Kullback-Leibler (KL) divergence, $D_{\text{KL}}(P||Q)$, when $P=P_{XZ}$ is the joint probability distribution of $X$ and $Z$ (i.e.~$p(x,z)$), and $Q=P_X\otimes P_Z$ is the product of the marginals (i.e.~$p(x)\,p(z)$).
+%
+It is well known that the KL divergence can be cast in the Donsker-Varadhan (DV) representation~\cite{e5879cd3d84b462abf51f06791e5ba28}:
+%
+\begin{align}
+    D_{\text{KL}}(P||Q) = \sup_{T \in \mathcal{T}}\Big\{\mathbb{E}_P\left[T\right] - \log\left( \mathbb{E}_Q\left[e^T\right]  \right)   \Big\}\,,
+\end{align}
+%
+where $\mathbb{E}_\bullet$ represents the expectation value over probability density $\bullet$, and the supremum is over the space of functions $\mathcal{T}$ such that both expectations are finite.
+
+
+Following the MINE construction in \Ref{belghazi2018mine}, we use the DV representation to build an estimator for the mutual information from a finite dataset.
+%
+For functions $T:\mathbb{R}^M \times \mathbb{R}^N \to \mathbb{R}$, we can place a lower bound on $I(X;Z)$ by minimizing a loss functional $\mathcal{L}_{\rm DVR}$ over $T \in \mathcal{T}$:
+%
+\begin{align}
+\label{eq:mine}
+    I(X;Z) \geq - \inf_{T\in\mathcal{T}} \mathcal{L}_{\rm DVR}[T]\,,
+\end{align}
+%
+where the DV representation (DVR) loss is:
+%
+\begin{equation}
+    \label{eq:DV_loss}
+    \mathcal{L}_{\rm DVR}[T] = -\Big(\mathbb{E}_{P_{XZ}}\left[T\right] - \log\left( \mathbb{E}_{P_X\otimes P_Z}\left[e^T\right]  \right) \Big)\,.
+\end{equation}
+%
+Given a finite dataset of $(x,z)$ pairs, the expectations in \Eq{DV_loss} can be estimated from sample averages.
+%
+To estimate the second term, one can simply shuffle the $x$'s and $z$'s, as done in \Ref{belghazi2018mine}.
+%
+The space of functions $\mathcal{T}$ can be parametrized by neural networks, in which case the DVR loss functional can be minimized using standard gradient descent.
+%
+As long as $\mathcal{T}$ is sufficiently expressive, the bound in \Eq{mine} will be saturated, so the minimum loss is an estimate of $-I(X;Z)$.%
+%
+\footnote{
+%
+Other loss functionals exist that are capable of providing lower bounds on MI.
+%
+For example, if we write the $f$-divergence representation of the KL divergence~\cite{nowozin2016fgan,Nguyen_2010}, the corresponding loss functional is a variation of the maximum likelihood classifier (MLC) loss \cite{DAgnolo:2018cun,DAgnolo:2019vbw,nachman2021e}:
+%
+\begin{align}
+    \mathcal{L}_{\rm MLC}[T] = - \Big(\mathbb{E}_{P_{XZ}}\left[T \right] -  \mathbb{E}_{P_X\otimes P_Z}\left[e^T - 1\right]\Big).
+    %- \int dy \, \big[p(y)\, (T(y) - 1) - q(y) \, \log T(y)\big]\,.
+\end{align}
+%
+Numerical  and analytic studies \Ref{belghazi2018mine, ruderman2012tighter}, as well as our own empirical studies, show that the DVR loss has better numerical convergence properties than the MLC loss.}
+
+
+Taking the functional derivative of the DVR loss functional with respect to $T$, we see that the supremum of $\mathcal{L}[T]$ is obtained when:
+%
+\begin{align}
+    \label{eq:T_result}
+    T(x,z) =  \log\frac{p(x|z)}{p(x)} + c\,,
+\end{align}
+%
+where $c$ is any constant that we can set to zero without loss of generality.%
+%
+\footnote{In practice, we determine and then subtract $c$ numerically by noting that the second term of \Eq{DV_loss} is an estimate of $c$ in the asymptotic limit.}
+%
+Therefore, if the MINE is well trained, we can use $T$ as an estimate of the log-likelihood density ratio.
+%
+As with most machine learning applications, this requires that the space of neural networks $\mathcal{T}$ is sufficiently expressive, that there is enough training data, and that the gradient descent algorithm successfully finds the minimum of \Eq{DV_loss}.
+%
+Given this, we can then perform maximum likelihood inference given $x$:
+\begin{align}
+    \hat{z}(x) &= \argmax_{z}\,T(x,z). \label{eq:argmax}
+\end{align}
+%
+Crucially, this inference strategy for $z$ is independent of the prior $p(z)$, which is a property desirable for calibration tasks.
+%
+Unlike for standard regression~\cite{priordependence}, the learned estimate $\hat{z}$ does not depend on the distribution of $z$ samples in the training set.%
+%
+\footnote{If desired, one could do Bayesian inference and obtain the posterior $p(z|x)$ by adding the prior $\log p(z)$ to $T(x,z)$.}
+
+
+If $X$ does not contain complete information about $Z$, then there will be uncertainty in our inference of $z$.
+%
+Assuming the likelihood $p(x|z)$ is well approximated by a Gaussian density, the uncertainty in the inference is given by the covariance matrix:
+%
+\begin{align}
+    \left[\hat{\sigma}_{z}^2(x)\right]_{ij} = - \left[ \frac{\partial^2 T(x,z)}{\partial z_i \, \partial z_j}  \right]^{-1}\biggr\rvert_{z=\hat{z} }\,, \label{eq:second_derivative}
+\end{align}
+%
+which is again prior independent.
+
+
+So far, we have shown that the MINE network can be used to perform frequentist inference. While $T$ itself depends on the prior $p(z)$, the inference $\hat{z}$ and resolution $\hat{\sigma}_z$ do not.
+%
+However, both the maximum likelihood estimate in \Eq{argmax} and the local resolution in \Eq{second_derivative} are difficult to evaluate numerically.
+%
+In the case of maximization, the learned $T$ may be highly non-convex and the true maxima difficult to find using gradient descent.
+%
+In the case of the second derivative, its evaluation is numerically sensitive to the choice of activation function in the MINE network.
+%
+For example, if one uses the common Rectified Linear Unit (ReLU) activation function or its variants, then all analytic second derivatives of the network are zero. 
+
+
+In order to facilitate a numerical estimate of the maximum likelihood and local resolution, we introduce the following \GaussianAnsatz parametrization for $T$:
+%
+\begin{align}
+\label{eq:gaussian_ansatz}
+    T(x,z) &= A(x) + \big(z-B(x)\big)\cdot D(x) \nonumber\\&\quad + \frac{1}{2} \big(z-B(x)\big)^T \cdot C(x,z) \cdot \big(z-B(x)\big)\,,
+\end{align}
+%
+where $A:\mathbb{R}^N\xrightarrow{}\mathbb{R}$ , $B:\mathbb{R}^N\xrightarrow{}\mathbb{R}^M$,  $C:\mathbb{R}^N\times\mathbb{R}^M\xrightarrow{}\text{Sym}(M, \mathbb{R})$, and  $D:\mathbb{R}^N\xrightarrow{}\mathbb{R}^M$ are each neural networks.
+%
+We call this the \GaussianAnsatz, since it resembles the logarithm of a Gaussian likelihood density.
+%
+Unlike a Gaussian likelihood, though, the \GaussianAnsatz is highly expressive, and is in fact a universal function approximator.
+%
+Specifically, any function $f(x,z)$ that admits a Taylor expansion in $z$ around $B(x)$ can be expanded in this form.
+%
+The functions $A(x)$ and $D(x)$ capture the zeroth and first order dependencies of $f$ on $z$, respectively.
+%
+The function $C(x,z)$ captures any quadratic or higher dependence of the Taylor expansion of $f$ on $z$.
+
+
+The \GaussianAnsatz enables an elegant strategy to extract \Eqs{argmax}{second_derivative}.
+%
+Since the optimal $T(x,z)$ is bounded from above, we can take $D(x)$ to be everywhere zero without loss of expressivity.
+%
+In this case, $T$ will achieve critical values at $z = B(x)$.
+%
+Moreover, if $C(x, B(x)) < 0$, then these critical values will be (local) likelihood maxima:
+%
+\begin{equation}
+        \hat{z}(x)  = B(x).     \label{eq:y_ML} \\
+\end{equation}
+%
+While the \GaussianAnsatz does not necessarily protect against local maxima, it does yield a numerical estimate of the local resolution:
+%
+\begin{equation}
+    \hat{\sigma}_{z}^2(x)   = - \big[C(x,B(x))\big]^{-1}. \label{eq:cov_ML}
+\end{equation}
+%
+Moreover, the (negative) loss of the \GaussianAnsatz with respect to the functional in \Eq{DV_loss} will be a lower bound for the mutual information $I(X;Z)$, which is saturated in the asymptotic limit of an infinitely large network with infinite data.
+
+
+The \GaussianAnsatz is therefore capable of estimating---from a single dataset of $(x,z)$ pairs and a single training---the maximum likelihood inferred value of $z$ given $x$, the local resolution on that inference, and the mutual information between $X$ and $Z$.
+%
+This can be achieved without having to perform any additional optimization problems, derivative estimations, or postprocessing beyond the single matrix inversion in \Eq{cov_ML}.
+%
+In practice, we find it convenient to start the training with non-zero $D(x)$ to aid the convergence of the model, and then numerically force $D \to 0$ through an increasing $L_1$ regularization.
+%
+This helps the model achieve a global, rather than local, minimum.
+
+
+We now demonstrate the \GaussianAnsatz on an experimental collider physics task: determining jet energy corrections (JECs) and resolutions (JERs)~\cite{Khachatryan_2017}.
+%
+(At the LHC, one typically calibrates transverse momenta $p_T$ instead of energies, but the terms JECs and JERs are still used.)
+%
+Jets are collimated sprays of particles that are produced ubiquitously in high-energy collisions.
+%
+One does not have access to the ``true'' jet energy, however, because its constituent particles are filtered through a complicated and nonlinear detector response.
+
+
+Assuming one has a good detector model, though, one can \emph{generate} truth-level quantities (GEN, corresponding to $Z$) and then \emph{simulate} the detector response (SIM, corresponding to $X$).
+%
+Performing a \emph{simulation-based calibration}, one can infer the ``true'' jet energy from a set of measured particle momenta in a jet.
+%
+The multiplicative JEC factor is then defined such that the inferred jet momenta is:
+%
+\begin{equation}
+\label{eq:JEC_def}
+\hat{p}_{T} \equiv \text{JEC} \times p_{T,\text{SIM}}\approx p_{T,\text{GEN}}.
+\end{equation}
+%
+JEC factors are often further refined through a \emph{data-based calibration} using well-understood control samples, though this is separate from the procedure considered here.
+%
+The JER factor arises because the inferred and generated $p_T$ values in \Eq{JEC_def} are not identical.
+%
+The JER is typically expressed as a fractional quantity:
+%
+\begin{equation}
+\label{eq:JER_def}
+\hat{\sigma}_{p_{T}} = \text{JER} \times p_{T,\text{SIM}}.
+\end{equation}
+%
+In the language of statistics, the JER is a type of ``uncertainty'', since it represents the limited information about $Z$ contained in $X$.
+%
+In the HEP context, though, this quantity is instead called a ``resolution''; see \Ref{priordependence} for further discussion.
+
+
+The JEC factor is a function of the measured quantities, primarily the detector-level jet $p_T$ and pseudorapidity $\eta$.
+%
+The JEC can be obtained from fits to simulation \cite{2011jes,CMS:2016lmd, ATLAS:2017bje,ATLAS:2014hvo,ATLAS:2019oxp} using a technique called numerical inversion~\cite{Cukierman_2017}.
+%
+The JER can be also determined in simulation by fitting the peak region of the detector response $\hat{p}_T/p_{T,\text{SIM}}$ to a Gaussian distribution.  
+%
+Here, we consider an alternate (and arguably simpler) approach to JEC and JER extraction.
+
+
+For our case study, we use the \GaussianAnsatz to improve upon the JEC factors provided by the CMS experiment in their 2011 public data release~\cite{cmspressrelease}.
+%
+We use the same 2011 CMS Open Simulation~\cite{cernopendata} samples as in \Ref{Komiske_2020}, which are based on dijets generated in \textsc{Pythia 6}~\cite{Sj_strand_2006} with a \textsc{Geant4}-based~\cite{AGOSTINELLI2003250} simulation of the CMS detector.
+%
+This dataset was translated from the original CMS AOD (analysis object data) ROOT-based format into an easier-to-use MIT Open Data (MOD) HDF5 format~\cite{komiske_patrick_2019_3340205}.
+%
+Each SIM event consists of a list of particle flow candidates (PFCs), which are the reconstructed four-momentum and particle identification (PID) for each measured particle.
+%
+The PFCs are clustered into jets, using the anti-$k_t$ jet algorithm with $R = 0.5$~\cite{Cacciari:2005hq,Cacciari_2008,Cacciari:2011ma}.
+%
+For each jet, truth-level GEN jet information is also provided, as well as the CMS-prescribed JEC.
+%
+CMS-prescribed JERs are estimated using \Ref{Khachatryan_2017}.
+
+
+We select jets whose GEN transverse momentum is in the range $p_T \in [500,1000]$ GeV.
+%
+The lower bound of $500$ GeV is to avoid any turn-on effects due to the $p_{T, \text{SIM}} > 375$ GeV cut applied to the dataset as a whole.
+%
+We require that the GEN pseudorapidity satisfies $|\eta| < 2.4$, and that jets are at least ``medium'' jet quality~\cite{CMS:2010xta}.
+%
+The latent variable of interest is $Z = p_{T,\text{GEN}}$, and the measured quantity $X = X_{\text{SIM}}$ depends on the choice of ML architecture.
+%
+All momenta are divided by a fixed scale of $1000$ GeV, so that the data values are roughly $\mathcal{O}(1)$.
+%
+In total, $5\times10^{6}$ jets are used for training, across the whole $p_T \in [500,1000]$ GeV range. 
+
+
+We consider four different ML models, of increasing sophistication:
+%
+\begin{enumerate}
+    %
+    \item \textit{DNN}:
+    %
+    The input $X$ consists only of the overall jet kinematic properties, with $X = (p_T, \eta, \phi)_\text{SIM}$, which is the same information used in the CMS calibration procedure in \Ref{Khachatryan_2017}.
+    %
+    Each of the functions $A$, $B$, $C$, and $D$ are constructed as fully connected neural networks, with three hidden layers of size 64 and ReLU activations.
+    %
+    \item \textit{EFN}:
+    %
+    The input $X$ consists of the entire set of PFC three-momenta from the jet.
+    %
+    Each of the functions $A$, $B$, $C$, and $D$ are constructed as Energy Flow Networks (EFNs)~\cite{Komiske_2019}.
+    %
+    EFNs are permutation-invariant functions of point clouds, inspired by the Deep Sets formalism~\cite{NIPS2017_f22e4747}.
+    %
+    They take the form $f(\{\Vec{p}_i\}) = F\left(\sum_i p_{Ti} \Phi(\eta_i,\phi_i)\right)$, which exhibits manifest infrared and colinear (IRC) safety.
+    %
+    For each EFN, the $\Phi$ and $F$ functions consist of three hidden layers of respective sizes $(50,50,64)$ with ReLU activations.
+    %
+    Since $C$ is a function of both $X$ and $Z$, the $Z$ is appended as an input to the $F$ function.
+    %
+    \item \textit{PFN}: The same input features as the EFN, but inserted into a Particle Flow Network (PFN)~\cite{NIPS2017_f22e4747,Komiske_2019}, which does not impose IRC safety.
+    %
+    PFNs take the form $f(\{\Vec{p}_i\}) = F\left(\sum_i  \Phi(p_{T_i}, \eta_i,\phi_i)\right)$. 
+    %
+    \item \textit{PFN-PID}: The same as the PFN model, but in addition to the 3-momenta of each PFC, the reconstructed PID is included as an input feature.
+    %
+    We follow the PID labeling scheme of \Ref{Komiske_2019} for photon, charged hadron, etc.
+    %
+\end{enumerate}
+%
+Each of these models is trained for 200 epochs using the \Adam optimizer \cite{kingma2017adam}, with a learning rate of $\alpha = 10^{-4}$ and a batch size of 2048.
+%
+All model parameters are given an $L_2$ regularization loss with weight $\lambda_2 = 10^{-6}$.
+%
+The $D$ network is given an overall $L_1$ regularization loss of $\lambda_D = 10^{-3}$ to slowly force it to zero by the end of the training. 
+%
+Every 50 epochs, $\alpha$ is reduced by a factor of 5 and $\lambda_D$ is increased by a factor of 10.
+%
+To aid the numerical convergence, each model is pretrained with a mean squared error loss, $\mathcal{L}_{\text{pre}}[B,C] = \mathbb{E}_{P_{XZ}} \big[ (B(x)-z)^2 + (C(x,z) +  \text{cov}(X,Z))^2 \big]$.
+
+\begin{table}[t]
+    \centering
+    \def\arraystretch{1.8}
+    \begin{tabular}{r @{$\quad$} c @{$\quad$} c @{$\quad$} c @{$\quad$}   }
+    \hline\hline
+      Model  & Mean $\hat{p}_T$ [GeV] & Mean $\hat{\sigma}_{p_T}$ [GeV] & $I(X;Z)$ \\
+      \hline
+      DNN & $698 \pm 37.7$ & $35.7 \pm 2.1$ & 1.23 \\
+      EFN  & $695 \pm 37.3$ & $32.6 \pm 2.3$ & 1.26 \\
+      PFN  & $697 \pm 36.9$ & $32.5 \pm 2.5$ & 1.27 \\
+      PFN-PID  & ${695 \pm 35.1}$ & $\mathbf{30.8 \pm 3.6}$ & \textbf{1.32} \\
+      \hline
+      CMS 2011 & $695 \pm 38.4$ & $36.9 \pm 1.7$ & --  \\
+
+    \hline\hline
+    \end{tabular}
+    \caption{\GaussianAnsatz results for the four ML models, compared to the CMS 2011 baseline~\cite{Khachatryan_2017}.
+    %
+    On a test dataset of GEN jets with $p_T \in [695,705]$ GeV, we show the inferred $\hat{p}_T$, its resolution $\hat{\sigma}_{p_T}$, and the learned mutual information between $X = X_{\text{SIM}}$ and $Z = p_{T,\text{GEN}}$.
+    %
+    The $\pm$ values correspond to the standard deviation of the $\hat{p}_T$ and $\hat{\sigma}_{p_T}$ distributions across the test set, and bold face indicates the best resolution and highest mutual information.
+    }
+    \label{tab:JEC-results}
+\end{table}
+
+
+
+In \Tab{JEC-results}, we show the results of the training in a narrow bin of $p_{T, \text{GEN}} \in [695,705]$ GeV.
+%
+If our models yield unbiased estimators of the GEN $p_T$, then the inferred $\hat{p}_T$ distribution should be centered near 700 GeV, which it is for all models.
+%
+Adding more information to the model should not decrease the mutual information, and if useful, that information should improve the resolution.
+%
+We see indeed that the resolution improves with increasing model sophistication, as does the mutual information $I(X;Z)$.
+%
+The resolution from the DNN, which uses the same information as the CMS procedure, is marginally better than the nominal CMS 2011 jet resolution from \Ref{Khachatryan_2017}.
+%
+The PFN-PID model exhibits the best resolution, which is roughly 15\% better on average than the CMS baseline.
+
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=1.0\columnwidth]{uncertainty_hist.pdf}
+    \caption{
+    Learned JER distribution for the four models, compared to the CMS 2011 baseline.
+    %
+    The dataset is the same as in \Tab{JEC-results}.
+    %
+    On average, the PFN-PID exhibits 15\% better resolution (i.e.~smaller values) than the CMS default.}
+    \label{fig:JEC-sigma}
+\end{figure}
+
+
+In \Fig{JEC-sigma}, we show the distribution of $\hat{\sigma}_{p_T}$ in the same $p_{T, \text{GEN}} \in [695,705]$ GeV bin.
+%
+As the model sophistication increases, the resolution increases (i.e.~the $\hat{\sigma}_{p_T}$ shift downward).
+%
+The non-Gaussian behavior of the ML models is expected, since these models are exploiting additional information beyond the $p_T$.
+%
+In principle, the resolution should never degrade by adding more information, but we do find a long right tail for the PFN-PID model due to incomplete ML convergence.%
+%
+\footnote{We verified that the tail shrinks and the resolution improves with increasing training statistics, but we were limited by machine memory considerations.}
+%
+We conclude that the measured PFC momenta, along with the PIDs, contain useful information for jet energy calibration that is lost when only considering the total jet momentum.
+
+
+In this paper, we presented an extension of the MINE framework, the \GaussianAnsatz, capable of simultaneously
+%
+performing frequentist inference,
+extracting Gaussian uncertainties,
+and quantifying mutual information between random variables.
+%
+All of these tasks are performed in a single training, with no additional postprocessing.
+%
+Using this ML framework, we were able to take advantage of the full jet particle information in the CMS Open Simulation to improve the measured jet resolution by approximately $15\%$.
+%
+Studies by the ATLAS collaboration have used sequential calibration on a handful of observables to improve their resolution~\cite{ATLAS:2017bje,ATLAS:2014hvo,ATLAS:2019oxp}, and the Gaussian Ansatz may allow for further improvements by allowing for simultaneous calibrations of any number of input features.
+%
+We look forward to further developments in ML-based calibration and correlations methods in HEP and beyond.
+
+
+\section*{Code and Data}
+
+The code for the general-use \GaussianAnsatz framework can be found at \url{https://github.com/rikab/GaussianAnsatz}.
+%
+The code and data for the jet energy calibration study, in particular, are available at \url{https://github.com/rikab/GaussianAnsatz/tree/main/JEC}.
+
+\section*{Acknowledgments}
+
+We would like to thank Patrick Komiske for helpful discussions about EFNs and PFNs, Govert Nijs for helpful discussions on numerics and convergence, and Jennifer Roloff for helpful discussions about jet calibrations.
+%
+We are grateful to Phiala Shanahan and Andrew Pochinsky for providing access to the Wombat cluster for some of the calculations undertaken in this work.
+%
+RG and JT are supported by the National Science Foundation under Cooperative Agreement PHY-2019786 (The NSF AI Institute for Artificial Intelligence and Fundamental Interactions, \url{http://iaifi.org/}), and by the U.S. DOE Office of High Energy Physics under grant number DE-SC0012567.
+%
+BN is supported by the U.S. Department of Energy (DOE), Office of Science under contract DE-AC02-05CH11231.
+\textbf{}
+\bibliography{refs,HEPML}
+
+\end{document}
+

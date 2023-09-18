@@ -176,3 +176,7 @@ data/db/embeddings.npy
 data/db/system_prompt.txt
 data/db/context_prompt.txt
 data/db/*prompt.txt
+
+
+# OPENAI API KEY
+key.py

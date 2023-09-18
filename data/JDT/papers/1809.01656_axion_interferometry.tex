@@ -1,0 +1,284 @@
+\documentclass[aps,prd,nofootinbib,twocolumn,superscriptaddress,preprintnumbers,letterpaper, longbibliography]{revtex4-1}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epsfig}
+\usepackage[colorlinks=true
+,urlcolor=blue
+,anchorcolor=blue
+,citecolor=blue
+,filecolor=blue
+,linkcolor=red
+,menucolor=blue
+,linktocpage=true
+,pdfproducer=medialab
+,pdfa=true
+]{hyperref}
+\usepackage{comment}
+\usepackage{color}
+\usepackage{cleveref}
+\usepackage{multirow}
+\usepackage{capt-of}
+\usepackage{siunitx}
+\DeclareSIUnit\electronvolt{e\kern-.05em V}
+
+\usepackage{graphicx}
+\usepackage{gensymb}
+\usepackage[caption=false]{subfig}
+\usepackage{slashed}
+%\usepackage{tikz-feynman}
+\usepackage{tabularx}
+\usepackage{blindtext}
+% \usepackage[normalem]{ulem}
+\usepackage[utf8]{inputenc}
+%\usepackage{ulem}
+
+%\newcommand\me[1]{{\textbf{{\color{red}(ME: #1)}}}}
+% \newcommand\hl[1]{{\textbf{{\color{blue}(HL: #1)}}}}
+% \newcommand{\hl}[1]{\textcolor[RGB]{170,0,0}{(HL: #1)}}
+%\newcommand\be[1]{{\textbf{{\color{magenta}(BE: #1)}}}}
+%\newcommand\jdt[1]{{\textbf{{\color{green}(JDT: #1)}}}}
+
+%%%%%%%%%%%%%%%%%
+\def\polarc{horizontal }
+\def\polars{vertical }
+\def\Polarc{Horizontal }
+\def\Polars{Vertical }
+\def\polarcly{horizontally }
+\def\polarsly{vertically }
+\def\Polarcly{Horizontally }
+\def\Polarsly{Vertically }
+\def\Ec{E_0^\rightarrow}
+\def\Ep{E_+^\uparrow}
+\def\Em{E_-^\uparrow}
+\def\Epm{E_\pm^\uparrow}
+\def\Ein{E_{0,\text{in}}^\rightarrow}
+\def\rc{r_\rightarrow}
+\def\rs{r_\uparrow}
+\def\tc{t_\rightarrow}
+\def\ts{t_\uparrow}
+
+\def\Ref{Ref.~}
+
+%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\preprint{MIT-CTP/5048}
+
+\title{
+    Searching for Axion Dark Matter with Birefringent Cavities
+}
+
+\author{Hongwan Liu}
+\email{hongwan@mit.edu}
+\affiliation{Center for Theoretical Physics, Massachusetts Institute of Technology, Cambridge, MA 02139, U.S.A.}
+
+\author{Brodi D. Elwood}
+\email{bdelwood@mit.edu}
+\affiliation{Massachusetts Institute of Technology, Cambridge, MA 02139, U.S.A.}
+
+\author{Matthew Evans}
+\email{m3v4n5@mit.edu}
+\affiliation{Massachusetts Institute of Technology, Cambridge, MA 02139, U.S.A.}
+
+\author{Jesse Thaler}
+\email{jthaler@mit.edu}
+\affiliation{Center for Theoretical Physics, Massachusetts Institute of Technology, Cambridge, MA 02139, U.S.A.}
+
+\begin{abstract} 
+Axion-like particles are a broad class of dark matter candidates which are expected to behave as a coherent, classical field with a weak coupling to photons. 
+Research into the detectability of these particles with laser interferometers has recently revealed a number of promising experimental designs. Inspired by these ideas, we propose the Axion Detection with Birefringent Cavities (ADBC) experiment, a new axion interferometry concept using a cavity that exhibits birefringence between its two, linearly polarized laser eigenmodes. This experimental concept overcomes several limitations of the designs currently in the literature, and can be practically realized in the form of a simple bowtie cavity with tunable mirror angles. Our design thereby increases the sensitivity to the axion-photon coupling over a wide range of axion masses. 
+
+\end{abstract}
+
+
+\maketitle
+%
+\textit{Introduction}. The QCD axion is a well-motivated solution to the strong $CP$ problem which also provides a natural dark matter candidate~\cite{Peccei:1977hh,Peccei:1977ur,Weinberg:1977ma,Wilczek:1977pj,Preskill:1982cy,Abbott:1982af,Dine:1982ah}, particularly in the \SI{}{\micro\eV} to \SI{10}{\milli\eV} range~\cite{Graham:2015ouw}. More generally, however, dark matter could be made up of light, pseudoscalar axion-like particles (ALPs). These are generically predicted in string theory, and can have masses much less than a \SI{}{\micro\eV}~\cite{Jaeckel:2010ni,Svrcek:2006yi,Arvanitaki:2009fg,Acharya:2010zx,Cicoli:2012sz}. For brevity, we will often use the word ``axion'' to refer to any such ALP dark matter candidate.  
+
+ALP dark matter would behave as a coherent, classical field $a$, and may couple weakly to photons through the following interaction term: 
+%
+\begin{alignat}{1}
+    \mathcal{L} \supset -\frac{1}{4} g_{a\gamma\gamma} a F_{\mu\nu} \tilde{F}^{\mu\nu}.
+    \label{eqn:axion_EM_interaction}
+\end{alignat}
+%
+Such an interaction has motivated a large range of experimental searches for ALPs converting into photons (and vice versa) in the presence of a static magnetic field~\cite{Sikivie:1983ip,Wilczek:1987mv}. This includes proposed and ongoing searches for unexpected modifications to the amplitude, phase, or polarization of propagating light~\cite{Cameron:1993mr,Tam:2011kw,DellaValle:2015xxa}, light-shining-through-walls experiments~\cite{Chou:2007zzc,Robilliard:2007bq,Ehret:2010mh,Betz:2013dza,Ballou:2014myz,Ballou:2015cka}, the conversion of axion oscillations into electromagnetic waves~\cite{Horns:2012jf,Chaudhuri:2014dla,Kahn:2016aff,TheMADMAXWorkingGroup:2016hpc,Foster:2017hbq,Chaudhuri:2018rqn,Du:2018uak,Baryakhtar:2018doz,Ouellet:2018beu,Ouellet:2019tlz}, and axion helioscopes~\cite{Anastassopoulos:2017ftl,Armengaud:2014gea}. Among these, past and ongoing experiments~\cite{Cameron:1993mr,DellaValle:2015xxa,Chou:2007zzc,Robilliard:2007bq,Ehret:2010mh,Betz:2013dza,Ballou:2014myz,Ballou:2015cka,Horns:2012jf,Du:2018uak,Ouellet:2018beu,Anastassopoulos:2017ftl} have steadily improved constraints on $g_{a\gamma\gamma}$, and have even begun probing couplings that are relevant to the QCD axion~\cite{Du:2018uak}. 
+
+Laser interferometry without a strong, static magnetic field has also been shown to be an effective way of searching for axions~\cite{Melissinos:2008vn,DeRocco:2018jwe,Obata:2018vvr}. The interaction term in Eq.~(\ref{eqn:axion_EM_interaction}) causes a difference in phase velocity between left- and right-handed circularly polarized light, and an appropriately designed high-finesse Fabry-Perot cavity can be used to accumulate the resulting phase difference. These studies have shown how to exploit the exquisite sensitivity of interferometry to small phase differences to obtain new limits on low mass axions.
+
+Despite their ingenuity, these designs face two key limitations. First, they are limited by the non-ideal behavior of optical elements. The introduction of a beam splitter~\cite{Melissinos:2008vn} or quarter-wave plates~\cite{DeRocco:2018jwe} inside a cavity leads to losses and imperfect phase shifts between polarization modes that accumulate with each pass of laser light in the cavity. The authors of \Ref\cite{Obata:2018vvr} attempted to overcome this difficulty by using a bowtie cavity; however, circularly polarized light is not in general a bowtie eigenmode, as reflection off any surface at a nonzero angle of incidence does not preserve circular polarization. These difficulties would have to be addressed for an actual realization of these proposals.
+
+Second, and more importantly, these proposed experiments rely on the coherent build-up of the phase difference over the entire light storage time in the cavity. The sensitivity of these experiments starts to deteriorate once the axion oscillation period becomes comparable to the storage time, i.e.\ when $m_a \ell \sim 1/\mathcal{F}$, where $\ell$ is the length of the cavity, $\mathcal{F}$ is the finesse, and $m_a$ is the mass of the axion. Increasing $\mathcal{F}$ therefore restricts the experimental sensitivity to lower axion masses, even though a large value of $\mathcal{F}$ is desirable to maximize a possible axion signal. 
+
+In this paper, we propose a new axion interferometry experimental design that simultaneously overcomes both of these limitations. The presence of ALP dark matter results in a rotation of \polarcly polarized laser light propagating with frequency $\omega_0$ in a cavity, causing a small, \polars polarization to develop in the frequency sidebands $\omega_0 \pm m_a$. We exploit the fact that oblique reflection generally results in a phase difference between different linear polarizations to design a cavity that is resonant at $\omega_0$ in the \polarc (carrier) polarization, and $\omega_0 \pm m_a$ in the \polars (signal) polarization. The signal sidebands can then be detected using conventional interferometry techniques. Our design is sensitive to axion masses $m_a \lesssim 1/\ell$ independent of the finesse of the cavity, significantly improving the reach in $m_a$ without compromising on the strength of the axion signal. All of this can be achieved by a simple, practical cavity design requiring only that light reflect off multiple mirrors at oblique angles. 
+
+\vspace{0.2cm}
+\textit{Axions and Light Polarization}. Consider two orthogonal, circular polarizations of a laser beam (denoted by $\circlearrowright$ and $\circlearrowleft$) propagating with frequency $\omega_0$ and wavenumber $k_0$ in the presence of an axion field $a(t) = a_0 \cos(m_a t - k_a z)$, starting at some time $t_0$. The axion momentum is $k_a = m_a v$, where $v \sim 10^{-3}$ is the typical dark matter velocity at the Earth. We will only be interested in $m_a \ell \lesssim 1$, so that $k_a \ell \ll 1$, allowing us to neglect spatial gradients in the axion field.
+
+The interaction term in Eq.~(\ref{eqn:axion_EM_interaction}) leads to the following dispersion relation for the two polarizations:
+%
+\begin{alignat}{1}
+    - \omega_0^2 + k_0^2 = \pm k_0 g_{a\gamma\gamma} \frac{\partial a}{\partial t} \,.
+\end{alignat}
+%
+After some time $t_{\circlearrowright, \circlearrowleft}$, each polarization travels a distance $\ell$, given by
+%
+\begin{alignat}{1}
+    \ell = \int_{t_0}^{t_0 + t_{\circlearrowright, \circlearrowleft}} \left[ 1 \mp \frac{G}{\omega_0} \cos(m_a t) \right] \, dt \,,
+    \label{eqn:polarization_travel_time}
+\end{alignat}
+%
+where $G \equiv g_{a\gamma\gamma} \sqrt{2 \rho_\text{DM}}/2$, and $\rho_\text{DM} = m_a^2 a_0^2/2$ is the local density of dark matter. Equating the result from each polarization on the right-hand side of Eq.~(\ref{eqn:polarization_travel_time}), and working out the phase difference between the two polarizations $\Delta \alpha \equiv \omega_0 (t_{\circlearrowright} - t_{\circlearrowleft})$ to first order in $G/m_a$, we obtain  
+%
+\begin{alignat}{1}
+    \Delta \alpha \simeq \frac{iG}{m_a} \left[ e^{i m_a t_0} \left(e^{i m_a \ell} - 1\right) + e^{-i m_a t_0} \left(1 - e^{-i m_a \ell} \right)\right]\, .
+    \label{eqn:phase_difference}
+\end{alignat}
+%
+Eq.~(\ref{eqn:phase_difference}) makes it clear that the axion field takes a carrier wave with frequency $\omega_0$ and generates signal sidebands with frequencies $\omega_0 \pm m_a$. 
+
+This phase difference between circular polarizations is equivalent to a rotation of linearly polarized light. Writing the complex electric field in each circular polarization as a vector $(E^\circlearrowright,\, E^\circlearrowleft)$ and keeping track of the relative phase difference only, the translation matrix over a distance $\ell$ can be expressed as $\text{diag}(e^{i \Delta \alpha/2},\, e^{-i \Delta \alpha/2})$. The circular polarizations are related to the linear polarizations via $E^{\circlearrowright,\circlearrowleft} = E^\rightarrow \mp i E^\uparrow$, so that in the linear polarization basis $(E_\uparrow, E_\rightarrow)$, the matrix for translation is 
+%
+\begin{alignat}{1}
+    P = \begin{pmatrix}
+        \cos \frac{\Delta \alpha}{2} & - \sin \frac{\Delta \alpha}{2} \\
+        \sin \frac{\Delta \alpha}{2} & \cos \frac{\Delta \alpha}{2} 
+    \end{pmatrix} \simeq \begin{pmatrix}
+        1 & - \frac{\Delta \alpha}{2} \\
+        \frac{\Delta \alpha}{2} & 1 
+    \end{pmatrix} \,.
+    \label{eqn:2x2_translation_matrix}
+\end{alignat}
+%
+\vspace{0.2cm}
+
+\textit{Axion Interferometry.} The basic principle of axion interferometry is summarized in Fig.~\ref{fig:axion_interferometry_cartoon}. A carrier wave with electric field $\Ec$ in the \polarc polarization is injected into a cavity that is tuned to be resonant in the \polarc polarization at the laser carrier frequency $\omega_0$. As the field propagates in the presence of axions, signal sidebands in the \polars polarization are generated, with frequencies $\omega_0 \pm m_a$. The amplitude of the sidebands can be enhanced using an appropriately tuned high-finesse Fabry-Perot cavity. At each end of the cavity, a reflection occurs at a mirror with some real reflectivity coefficient, and a phase difference $\Delta \varphi_{1,2}$ between horizontally and vertically polarized light.
+%
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.34]{axion_interferometry_cartoon.pdf}
+    \caption{Summary of axion interferometry. A \polarcly polarized laser fed into a cavity with reflectivities $r_{1,2}$ and a relative phase shift between horizontally and vertically polarized light $\Delta \varphi_{1,2}$ at each end leads to the generation of frequency sidebands in the \polars polarization.}
+    \label{fig:axion_interferometry_cartoon}
+\end{figure}
+%
+
+In order to distinguish between the two sidebands, we split the \polars signal polarization into its two frequency components by writing the electric field in the cavity as the complex column vector $\mathbf{E}_\text{cav} = (\Em,\, \Ec,\, \Ep)$. The subscripts indicate that the components have different frequencies $(\omega_0 - m_a,\, \omega_0,\, \omega_0 + m_a)$, respectively. The transfer matrix for translation in our 3-component notation follows from Eq.~(\ref{eqn:2x2_translation_matrix}):
+%
+\begin{alignat}{1}
+    T \simeq \begin{pmatrix}
+        e^{-i m_a \ell} & \frac{iG}{2m_a}(e^{-i m_a \ell} - 1) & 0 \\
+        0 & 1 & 0 \\
+        0 & \frac{iG}{2m_a} (1 - e^{i m_a \ell}) & e^{i m_a \ell}
+    \end{pmatrix}.
+    \label{eqn:3x3_translation_matrix}
+\end{alignat}
+%
+%
+
+For reflection at either end, we can write the transfer matrix as $R_{1,2} = r_{1,2} \, \, \text{diag} \left(e^{i \Delta \varphi_{1,2}},\,\, 1,\,\, e^{i \Delta \varphi_{1,2}} \right)$. The signal field in the cavity is then given by the solution to the following equation~\cite{Maggiore:1900zz}:
+%
+\begin{alignat}{1}
+    \mathbf{E}_\text{cav} = t_1\, \mathbf{E}_0 + R_1 T R_2 T \, \mathbf{E}_\text{cav} \,,
+    \label{eqn:E_cav}
+\end{alignat}
+%
+where $\mathbf{E}_0 = (0, \Ein, 0)$ is the electric field of the laser fed into the cavity, and $t_X = \sqrt{1 - r_X^2}$ is the field amplitude transmission coefficient. 
+
+Axion interferometry shares many parallels with conventional microwave cavity experiments like ADMX~\cite{Du:2018uak}. In both, the axion converts a frequency mode pumped to a large energy density (a DC magnetic field in microwave cavities, $\omega_0$ in our set-up) into another mode related to the original by $m_a$ (a standing electromagnetic mode of frequency $m_a$ in microwave cavities, and the signal sidebands $\omega_0 \pm m_a$ in our set-up). This conversion between electromagnetic modes is a generic property of ALPs coupled to photons through Eq.~(\ref{eqn:axion_EM_interaction}), as studied more generally in \Ref\cite{Goryachev:2018vjt}. 
+
+The parallel extends to the power stored in both cavities. In the laser cavity, the power stored in the signal sidebands within the cavity is $P_\pm \propto |\Epm|^2 w^2$, where $w$ is the laser beam width. Solving Eq.~(\ref{eqn:E_cav}) gives $P_\pm \sim g_{a\gamma\gamma}^2 (\rho_\text{DM}/m_a) E_0^{\rightarrow 2} V Q_\pm$, where $V \sim w^2 \ell$ is the volume encompassed by the beam, and $Q_\pm$ is a quantity dependent on the geometry of the cavity, and is analogous to the quality factor for microwave cavities. This reproduces the scaling of the signal power produced in ADMX, with $E_0^\rightarrow = B_0^\rightarrow$ for the laser. 
+
+\vspace{0.2cm}
+\textit{Birefringent Cavities}. We now turn our attention to the importance of the phase difference between horizontally and vertically polarized light in the cavity, $\Delta \varphi_{1,2}$. Birefringence in a cavity has been used by the PVLAS experiment~\cite{DellaValle:2015xxa} to look for axion-induced changes in the polarization of a propagating laser beam in the presence of a large, static magnetic field due to the Primakoff effect. In contrast, our set-up relies on light transitioning between polarizations due to the absorption or emission of axions. 
+
+In Ref.~\cite{Melissinos:2008vn}, a single beam passes through a polarizing beam splitter so that each beam propagates over a different path length along two different, perpendicular arms, effectively introducing birefringence between the two polarizations. However, a cavity with two perpendicular arms and a beam splitter at its center is unlikely to have a high finesse. More recent work has always ensured that $\Delta \varphi_1 = \Delta \varphi_2 \simeq 0$ either by using quarter-wave plates in front of mirrors with near-zero transmission~\cite{DeRocco:2018jwe}, or by performing two reflections at each end of the cavity, separated by an optical path length that is much shorter than the cavity length~\cite{Obata:2018vvr}. The signal generated by the axion builds constructively as long as the axion field value does not change significantly during the storage time, i.e.\ $m_a \mathcal{F} \ell \ll 1$. Once $m_a \sim 1/(\mathcal{F} \ell)$, the cavity loses sensitivity to the axion signal. 
+
+An equivalent way of understanding the loss of sensitivity without birefringence is to observe that setting $\Delta \varphi_{1,2} = 0$ means that light in both polarizations is resonant at the laser frequency $\omega_0$. The full-width half-maximum of the cavity transmission band is $\delta \lambda \sim 1/(\mathcal{F} \ell)$, and so we must have $m_a \ll \delta \lambda \sim 1/(\mathcal{F} \ell)$ in order for the signal sidebands (produced by axion-driven polarization modulation) to lie within the transmission band. 
+
+Now consider the birefringent case where $\Delta \varphi_{1,2} = \Delta \varphi \neq 0$ (we take $r_2 = 1$ in the following discussion for simplicity). When the resonance condition in the signal polarization $m_a \ell = |\Delta \varphi|$ is met, the signal polarization builds constructively in the cavity. With a phase shift of $\Delta \varphi = \pm \pi/2$, the cavity is resonant at $m_a = \pi/(2\ell)$, the maximum mass reach, for the sidebands $\omega_0 \pm m_a$. Axion masses up to this maximum value can be scanned by increasing $\Delta \varphi$ in steps from 0 to $\pi/2$. Since a larger finesse $\mathcal{F}$ is desirable for producing a large signal field, this represents a significant improvement in axion mass reach without affecting the sensitivity in coupling. Although higher frequency resonances exist for each choice of $\Delta \varphi$, the axion field value at these higher frequencies oscillates more than once over the cavity length $\ell$, suppressing the sensitivity by $\text{sinc}(m_a \ell)$~\cite{Maggiore:1900zz}. 
+%
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.31]{experimental_setup_ed17.pdf}
+    \caption{Schematic of the ADBC experiment. The red optical path is that of the input and cavity, while the blue optical path is read-out. The beam enters at $A$ and is read out after $C$. Two sets of mirrors $A$, $C$ and $B$, $D$ can be rotated to change the angle of incidence $\theta$ while roughly maintaining cavity alignment and length. To produce an electrical signal, the leakage fields from mirror $C$ pass through a half-wave plate ($\lambda/2$) before reflecting off a polarizing beam splitter (PBS) and arriving at a photodetector (PD).
+\label{fig:design}}
+\end{figure}
+%
+
+\vspace{0.2cm}
+\textit{Experimental Set-up}. 
+\label{experimentalsetup}
+Fig.~\ref{fig:design} gives a schematic of the proposed Axion Detection with Birefringent Cavities (ADBC) experiment, featuring a practical cavity design with the necessary birefringence. The Fresnel equations~\cite{hecht2016optics} show that orthogonal, linear polarizations reflecting off a dielectric surface at an oblique angle of incidence $\theta$ in general develop a relative phase shift $\Delta \varphi$. By rotating the mirrors to adjust the angles of incidence, we can thus tune the cavity birefringence to make the axion-induced, vertically polarized sidebands resonant in our cavity at $m_a \ell = |\Delta \varphi|$.
+
+The proposed design consists of two sets of two mirrors spaced \SI{2}{m} apart, with each set acting as a retroreflector that can pivot independently.  The angle between the mirrors in a set should be fixed at slightly less than $90\degree$, so that the angles of incidence are roughly $\theta$ and $90\degree - \theta$.  This allows us to vary the angle of incidence while roughly maintaining optical path-length and cavity alignment. The short dimension of the cavity (e.g.\ $\ell_{DB}$) is of order \SI{10}{cm}. One set, $A$ and $C$, will be taken as our input and output ports respectively, so that the optical path goes in the order $ADBC$. 
+
+The Fresnel equations show that the reflectivity of the horizontal polarization will be lower than the vertical. Placing the carrier in the horizontal polarization (lower finesse) therefore reduces the accumulation of experimental noise in the cavity, while simultaneously placing the signal in the vertical polarization (higher finesse) leads to a larger signal-to-noise ratio (SNR). 
+
+To prevent appreciable leakage of the carrier from the cavity, the cavity should be optimally coupled, meaning the transmissivity of $A$ in the carrier polarization, $\tc^A$, must be matched to the total losses in the cavity. This would almost entirely eliminate any reflection off $A$.  To allow a significant signal field to be read out, we also need $\ts^C$ to be larger than the total losses from the other mirrors. However, the Fresnel equations force $\tc > \ts$, and as a result, cavity loss for the carrier will be dominated by $\tc^C$, leaving us with $\tc^A \simeq \tc^C$.
+To maintain high finesse in the signal and carrier, all other transmissivities should be smaller than the cavity optical loss.
+
+
+To maximize the axion mass reach, the mirrors should cover as much of the range $0 \leq \Delta \varphi \leq \pi/2$ as possible. $\Delta \varphi$ increases with more oblique angles of incidence, but large optical surfaces are required near grazing incidence.
+
+\vspace{0.2cm}
+\textit{Experimental Sensitivity}. 
+\label{experimentalsensitivity} The sensitivity of ADBC to $g_{a\gamma\gamma}$ is ultimately dependent on the finesse of the cavity $\mathcal{F}_\uparrow$ and $\mathcal{F}_\rightarrow$ in each polarization, and on $t_{\rightarrow,\uparrow}^C$, for which we will use benchmark values of $\mathcal{F}_\uparrow = 2.25 \times 10^5$, $\mathcal{F}_\rightarrow = 2700$, $t_\uparrow^C = 0.0037$, and $t_\rightarrow^C = 0.030$ (recall that $t_X$ is the \textit{amplitude} transmission coefficient). These finesse values are typical of mirrors used in the LIGO cavity and other experimental studies~\cite{Isogai:2013ic}. The reach in axion mass is determined by $\Delta \varphi$, which in turn depends on the mirror properties. We find that a range of  $0 < \Delta \varphi \lesssim \pi/5$ can typically be probed over a $6\degree$ range in the angle of incidence $\theta$, with $\theta \lesssim 65\degree$. Over this small range of angles, the finesse of the cavity does not vary significantly in either polarization, and we have adopted the smallest values in this range for simplicity. 
+
+The signal field inside the cavity can be found by solving this cavity's equivalent of Eq.~(\ref{eqn:E_cav}) for $\mathbf{E}_\text{cav}$. For simplicity, we neglect the translation matrix for the short legs (i.e.\ $\ell_{DB}$ and $\ell_{CA}$), and take the same matrix $R$ for both sets of mirrors.
+The reflection matrix has the form $R = \text{diag} (\rs e^{i \Delta \varphi}, \, \, \rc,  \,\, \rs e^{i \Delta \varphi})$, with $\rc^2$ and $\rs^2$ being the product of the reflectivities of all four cavity mirrors. These quantities are related to the finesse by $\mathcal{F}_{\uparrow, \rightarrow} \simeq \pi/(1 - r_{\uparrow,\rightarrow}^2)$.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.58]{ADBC_reach_compressed.pdf}\caption{
+    Expected ADBC limits on the axion coupling $g_{a\gamma\gamma}$. The limits for a phase shift of 0 (blue, dashed), $\pi/90$ (orange, dashed), $\pi/15$ (green, dashed) and $\pi/5$ (red, dashed) are shown. The integrated limits obtained by scanning through a phase shift of 0 to $\pi/5$ are shown for a 2 m cavity with 10 kW laser power in the cavity (purple) and for a 40 m cavity with 1 MW laser power in the cavity (brown), with a total integration time of 30 days. The envelope of the reach can be extended in both the 2 m (purple, dotted) and 40 m cavities (brown, dotted) to higher axion masses if the optics were improved to scan up to $\Delta \varphi = \pi/2$. Limits from CAST~\cite{Anastassopoulos:2017ftl} (black) and ABRACADABRA-10cm~\cite{Ouellet:2018beu} (black, dotted), together with projected limits from ALPS-II~\cite{Bahre:2013ywa} (gray, dot-dashed) and IAXO~\cite{Irastorza:1567109} (gray, dashed) are shown for comparison. These results have no dependence on the polarizer angle $\varepsilon$, since the SNR in Eq.~(\ref{eqn:SNR}) is independent of $\varepsilon$.}
+    \label{fig:ADBC_reach}
+\end{figure}
+% 
+The signal sidebands emerging from the cavity are read out using a heterodyne detection scheme. The carrier and signal are passed through a half-wave plate with its fast axis rotated by a small angle $\varepsilon$ away from vertical, after which a polarizing beam splitter (PBS) is used to isolate the vertical polarization for readout by a photodetector. This mixes a small amount of the DC (carrier) electric field component, which is proportional to $\varepsilon$, into the AC (signal sideband) electric field component. The DC field acts as a local oscillator with frequency $\omega_0$, while the sidebands oscillate at a frequency $\omega_0 \pm m_a$; this produces a power modulation at the frequency corresponding to the axion mass. If the phase difference is tuned so that $\Delta \varphi = m_a \ell$, the cavity is resonant in the vertical (signal) polarization at a frequency sideband $\omega_0 - m_a$, giving an output AC power at the heterodyne readout of
+\begin{alignat}{1}
+	P_\text{AC} &= 4 \sqrt{2} G \varepsilon P_\text{cav} \frac{\sin \left(m_a \ell/2 \right)}{m_a}  \frac{t^C_\rightarrow  t^C_\uparrow}{1 - r_\uparrow^2} \,,
+    \label{eqn:ACPower}
+\end{alignat}
+where we have assumed that all reflectivity coefficients are approximately 1. The sensitivity is estimated by finding the value of $g_{a\gamma\gamma}$ that sets the SNR to 1, with~\cite{Budker:2013hfa}
+\begin{alignat}{1}
+	\text{SNR} = \frac{P_\text{AC}}{S_\text{shot}^{1/2}} (T \tau)^{1/4} \,, 
+    \label{eqn:SNR}
+\end{alignat}
+ where $S_\text{shot} = 2 P_\text{DC} \omega_0$ is the laser shot noise power spectral density with the DC power given by $P_\text{DC} = (2 \varepsilon t^C_\rightarrow)^2 P_\text{cav}$, $T$ is the integration time for this step in $\Delta \varphi$, $\tau \equiv 2\pi/(m_a v^2)$ is the coherence time of the axion field, and we assume $T \gg \tau$. The expression for the SNR in Eq.~(\ref{eqn:SNR}) is independent of $\varepsilon$; this is consistent with the fact that shot noise power always scales as the square root of the carrier power regardless of the amount of filtering performed, and is contrary to the result obtained in Ref.~\cite{Melissinos:2008vn}. 
+
+Relative intensity noise (RIN) in our set-up is generated with the same polarization as the carrier and is orthogonal to our signal; it can be easily reduced by adjusting $\varepsilon$, balancing the photodetectors used to measure the signal, and using the transmitted carrier intensity to cancel this source of noise. RIN can also change the length of the cavity, but this can be suppressed with a high-bandwidth feedback loop.  
+
+Another source of noise in our set-up is laser technical noise, which leads to finite laser frequency width and decreases the sensitivity of ADBC as $m_a \to 0$. In order to probe axion masses down to $m_a \sim 10^{-13}$ eV, technical noise must be subdominant to shot noise down to $\nu_a \sim $ 10--100 Hz. ADBC will adopt many of the same techniques used by the LIGO Collaboration to achieve isolation at these frequencies~\cite{Cook:2012tu}. A LIGO-like suspension system mounted on a rotating platform will be used for both pairs of mirrors. Since only a single beam is used in a cavity which is held on resonance via feedback to $\omega_0$, radiation pressure and other displacement noises are less relevant. Thermal noise in the mounted optics, for instance, will dominate over other non-technical noises (e.g.\ quantum radiation pressure noise),
+with an estimated magnitude of~\cite{Gonzalez1994}
+%
+\begin{alignat}{1}
+    S_{\Delta \varphi}^{1/2} \sim \frac{d \Delta \varphi}{d \theta} \frac{S_x^{1/2}}{\ell_{DB}} \sim 10^{-14} \frac{\SI{100}{Hz}}{\nu_a}\,.
+    \label{eqn:thermal_noise}
+\end{alignat}
+%
+This places requirements on the experimental design for small values of $m_a$ where $G/m_a \sim S_{\Delta \varphi}^{1/2}$ ($g_{a\gamma\gamma} \sim 10^{-14}\,\si{GeV^{-1}}$ at $m_a \sim 10^{-13}\,\si{eV}$).
+
+Several steps can be taken to ascertain that a signal is indeed due to the presence of axion dark matter. First, the axion always produces a signal for both $\Delta \varphi = \pm m_a \ell$, even though the configuration of the mirrors may be very different in each case. Second, we can tune the cavity so that $\Delta \varphi_1 + \Delta \varphi_2 = 2 m_a \ell$, but with $\Delta \varphi_1 \neq \Delta \varphi_2$, where $\Delta \varphi_{1,2}$ are the phase differences generated at mirrors $A,C$ and $B,D$ respectively. With such a tuning, $P_\text{AC} \propto 1 + \cos(m_a \ell - \Delta \varphi_2)$. This dependence arises only due to the off-diagonal entries in the translation matrix $T$ shown in Eq.~(\ref{eqn:3x3_translation_matrix}), and serves as an explicit check that the signal is produced from the conversion of laser power from the carrier to the signal polarization.
+
+The expected sensitivity for a \SI{2}{\meter}, $P_\text{cav} = \SI{10}{\kilo\watt}$ and a \SI{40}{m}, $P_\text{cav} = \SI{1}{\mega\watt}$ version of ADBC is given in Fig.~\ref{fig:ADBC_reach}. The \SI{2}{\meter} benchmark can currently be achieved in the laboratory, while the \SI{40}{\meter} version is similar in size to the \SI{40}{\meter} LIGO prototype at Caltech~\cite{Abramovici:1996dz} or the Fermilab Holometer~\cite{Chou:2015sle}, using an optical configuration similar to Advanced LIGO~\cite{TheLIGOScientific:2014jea}.  In order to cover the range $0 < m_a \lesssim \pi/(5\ell)$, the experiment must be run a number of times given by $\mathcal{F}_\uparrow/5 \sim 5 \times 10^{4}$, each with a different value of $\theta$.
+$\mathcal{F}_\uparrow/5$ is chosen so that the peak of each resonance in $m_a$ falls on the half-maximum for the previous resonance, starting from $m_a = 10^{-13}$~eV. Given a total integration time of $T_\text{tot} = $ 30 days, we integrate each step for $T = \max(N_\ell \, \tau, \text{ 1 sec})$, where $N_\text{2\,m} = 35$ and $N_\text{40\,m} = 4$. This choice is equivalent to allocating the integration time logarithmically among bins of $m_a$, as recommended by Ref.~\cite{Chaudhuri:2018rqn}, and in agreement with Refs.~\cite{Chaudhuri:2014dla,Kahn:2016aff}. The envelope of the sensitivity to $g_{a\gamma\gamma}$ can be obtained analytically from Eq.~(\ref{eqn:SNR}), giving
+\begin{alignat}{2}
+	g_{a\gamma\gamma} &> && \,\, \SI{6.13e-11}{\per\giga\eV} \frac{N_\ell^{-1/4}}{\text{sinc}(m_a \ell/2)} \nonumber \\
+    & && \times \left(\frac{\SI{0.3}{\giga\eV \per \centi\meter\cubed}}{\rho_\text{DM}} \frac{\SI{10}{\kilo\watt}}{P_\text{cav}} \frac{\SI{1.064}{\micro\meter}}{\lambda_0} \right)^{1/2} \nonumber \\
+    & && \times \left( \frac{\SI{2}{\meter}}{\ell} \frac{10^{-3}}{t_\uparrow^C} \frac{10^5}{\mathcal{F}_\uparrow} \right) \sqrt{\frac{m_a}{\SI{e-13}{\eV}}} \,\,,
+\end{alignat}
+with $\lambda_0$ being the laser wavelength. For a given $m_a$, adding up the SNR in quadrature from every step may improve the reach by up to a factor of 2. A  \SI{40}{m} cavity with a circulating laser power of \SI{1}{MW} in the cavity improves upon CAST limits~\cite{Anastassopoulos:2017ftl} by almost four orders of magnitude for  $m_a \sim 10^{-13}$ eV. Ultimately, full-sized versions of ABRACADABRA~\cite{Kahn:2016aff,Ouellet:2018beu,Ouellet:2019tlz} and DM-Radio~\cite{Chaudhuri:2014dla,Battesti:2018bgc} may eventually cover much of the parameter space shown in Fig.~\ref{fig:ADBC_reach}. ADBC can, however, serve as a powerful complementary search to these experiments, relying on a completely different strategy in looking for axions. In particular, ADBC's ability to obtain two separate resonances at $\Delta \varphi = \pm m_a \ell$ is a striking experimental signature that would bolster any potential evidence for axions in other experiments.
+
+\vspace{0.2cm}
+\textit{Conclusion.}
+We proposed a new axion interferometry experimental design that exploits the birefringence of a bowtie cavity in order to generate axion-modulated, vertically polarized sidebands from a horizontally polarized laser beam carrier. This design is practical to implement and can improve on the reach of previous interferometry designs from $m_a \sim 1/(\mathcal{F} \ell)$ up to $m_a \sim 1/\ell$, with the sensitivity improving with finesse. The sensitivity and mass range of our experiment can both be improved by a careful design of the mirrors used in the cavity, so that the cavity is optimally coupled with minimal loss, and the phase shift at each end extends to $\Delta \varphi = \pi/2$. We look forward to implementing this design and beginning the search for axions with the ADBC experiment.
+
+\vspace{0.2cm}
+\textit{Acknowledgments}. The authors would like to thank Anson Hook, Yonatan Kahn, Kaicheng Liang, and Benjamin Safdi for helpful discussions. The work of HL and JT was supported by the Office of High Energy Physics of the U.S. Department of Energy (DOE) under grant DE-SC-0012567.
+
+%
+\bibliography{axion_interferometry}
+%
+\end{document}

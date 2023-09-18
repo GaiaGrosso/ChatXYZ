@@ -1,0 +1,274 @@
+Once detector data has been processed and higher-level objects have been constructed, the next step in a HEP analysis is using statistical techniques to extract the signal of interest and suppress background as much as possible. Thus, efficient classification tools are crucial in HEP data analyses. Classification algorithms are not limited to the discrimination events of interest (signal) from other processes (background). In addition, reconstructed particles also undergo a process of classification to be assigned a label or identification according to their type and kinematic properties. Jets need to be classified according to their origin. 
+
+Classification tasks are usually addressed with Multivariate Analysis Techniques (MVA).
+Current physics analyses employ analytic methods like the Matrix-Element Method~\cite{Artoisenet2013}, as well as Boosted Decision Trees (BDTs) and Neural Networks (NN).
+In this section, new approaches to classification tasks based on different quantum computing architectures and algorithms are reviewed, which may yield better performance than their classical counterparts.
+
+\subsection{Quantum annealing applications}
+\label{sec:anneal}
+
+One of the main and first quantum computing models used for classification in HEP is quantum annealing.
+In this binary approach, each discriminating variable $x_i$ is transformed into a weak classifier $c_i$, and has an associated spin $s_i$.
+A strong classifier is then built, which is the linear combination of all weak classifiers and spins.
+The classification is then expressed in terms of the optimal set of spins minimizing the energy of a fully connected Ising Hamiltonian.
+This set of spins is found after an iterative annealing process where qubits are strongly coupled in a chain to represent a spin $s_i$.
+Correlations among the discriminating variables are possible via the $c_i \cdot c_j$ coupling terms in the Hamiltonian, and are rendered further present via operations among them, which are then transformed in weak classifiers.
+Fixing variable scheme and a cutoff on the coupling terms are used to reduce the size of the Ising model to be encoded on the annealer.
+This approach is followed in Ref.~\cite{Mott2017} where the signal from Higgs boson decays is separated from the background.
+In this work, quantum annealing achieves a better result for a small number of training events but is outperformed by classical machine learning (ML) tools for a large number of events.
+The basic approach of quantum annealing for classification \cite{Mott2017} is further enhanced in Ref.~\cite{qamlz}, where the procedures of \textit{zooming} and \textit{augmentation} are applied.
+While the zooming shifts and narrows the region of search in the space of spins, the augmentation multiplies the number of binary weak classifiers $c_i$ based on the shape of each variable $x_i$, effectively providing better discrimination.
+These two steps significantly improve the result of the Higgs classification problem; however, they are still outperformed by classical ML approaches.
+The principle of zoomed and augmented annealing is applied to the new classification problem of supersymmetric top quark versus SM events~\cite{Bargassa2021}.
+Here, the choice of the discriminating variables is based on a metric incorporating the full statistical and systematic uncertainties of a counting experiment in HEP.
+This results in a relatively reduced (only 17) but well-performing set of discriminating variables.
+Different such sets of variables are tested with different augmentation schemes.
+Finally, in order to place the quantum-based classifier on a footing as equal as possible to the classical Boosted Decision Trees (BDT), the discriminating variables are decorrelated by being passed through a principal component analysis before being fed to the quantum annealer.
+The study of Ref.~\cite{Bargassa2021} achieves a classification that is at least as good as the best-known classical ML tool, here the BDT. It has to be noted that this result is attained for a rather large number of events in the training sample ($5\cdot10^4$), which is the typical size of samples used in HEP, and for which the first quantum based classifications are outperformed by classical approaches.
+The results of Ref.~\cite{Mott2017,qamlz,Bargassa2021} are all obtained with the Chimera graph of D-Wave.
+If a chain is broken within this device, the measure of the qubit chain is performed through a majority vote, which can lead to the selection of non-optimal sets of spins, and therefore to a possible loss of discriminating information.
+This is a limitation of these first-generation quantum annealers.
+A larger number of couplers in future machines will render each chain more stable and less prone to be broken, which will, in turn, allow more effective use of the discriminating information.
+
+Quantum annealing can also be used to identify the topology of a signal event, where there is no hypothesis about the latter and where the mass of the new particles is inferred from their decay products.
+Ref.~\cite{kim2021} looks at cases where two new objects would be produced at an LHC collision, with each decaying in a number of known particles.
+The problem to solve is combinatorial, where the correct association of two groups of observed particles has to be made to reconstruct the invariant mass of the new particles.
+The spin $s_i$ indicates whether a particle $i$ is the decay product of one or the other new particle.
+The kinematic constraints of the new particles are formulated in the Ising Hamiltonian, which is encoded on a Pegasus graph of D-Wave, and whose energy is minimized.
+The energy landscape of such a problem is complicated, and classical annealing will have a local minimum problem.
+The combinatorial problem solved by quantum annealing reaches an accuracy higher than a classical algorithm for three different processes, thus indicating a quantum advantage.
+
+The study in Ref.\cite{matchev2020} also uses an Ising Hamiltonian-based approach to perform a model-independent search for physics beyond the SM.
+The kinematic space is partitioned in bins $i$, where the difference between the simulated SM prediction and observed data is measured, and where each spin $s_i$ can either be aligned (\textit{i.e.} of the same sign) or anti-aligned with the measured difference.
+The Hamiltonian is expressed such that the ground state energy of the system is a measure of the goodness-of-fit.
+Linear spin terms in the Hamiltonian are only sensitive to the difference mentioned above in each bin $i$.
+On the other hand, $s_i \cdot s_j$ terms capture the interaction between neighboring bins, therefore being sensitive to spatial correlations between different kinematic regions, which in turn helps to differentiate between random noise and new physics signals.
+This work relies on simulated annealing as a method for minimizing the energy of the Hamiltonian.
+Toy experiments are generated where signal-plus-background and background hypotheses are tested.
+The goodness-of-fit of different approaches is tested in terms of true- versus false-positive rates. Both with one- and two-dimensional toy experiments, the goodness-of-fit test statistic based on this quantum algorithm performs better than classical methods.
+It has to be noted that this improved capacity to detect an anomaly versus an expectation is free on any assumption on the signal, and is thus model-independent.
+
+The work presented in Ref.~\cite{caldeira2020restricted} explores a classification application of importance in cosmology, a galaxy morphology classification by training Restricted Boltzmann Machines (RBMs) in a quantum annealing device.
+RBMs are, generally speaking, generative models and will be discussed in this context in Section~\ref{sec:quantum_gen_mods}.
+In the classical setting, an RBM is a stochastic neural network that can learn a probability distribution over its set of inputs.
+The study in Ref.~\cite{caldeira2020restricted} found that for small datasets and limited numbers in training repetitions, quantum annealing-based RBMs performed very well and outperformed the alternative classical algorithms studied, namely logistic regression and gradient boosted trees.
+However, outside of these rather special training scenarios, RBMs (regardless of the classical or quantum nature of the training algorithm) did not outperform the gradient boosted tree algorithm.
+
+\subsection{Variational quantum circuits}
+\label{sec:vqc}
+
+Variational Quantum Circuits (VQCs) are hybrid quantum-classical algorithms aiming to harness the strength and scalability of both computational paradigms.
+In this architecture, classical computers are used for optimization and quantum computers for specific complicated tasks, such as calculating expectation values. 
+
+A VQC can be viewed as a Quantum Neural Network (QNN) where the encoded quantum state goes through a circuit with different layers of gates that depend on parameters that will minimize a loss function through training.
+In a VQC, once an initial state has been prepared through the encoding of classical data into a quantum state, a series of unitary transformations are applied through a circuit with layers that depend on trainable parameters $\vec{\theta}$ and act serially, mimicking the forward pass of a neural network, as first noted in~\cite{Abbas2021}.
+As a classifier, a VQC can be trained from labeled data to classify new samples or, in a generative setting, to model correlations in the input data.
+Recent studies have reported the application of variational architectures in the field of classification~\cite{Benedetti2019}, function approximation~\cite{Mitarai2018}, generative machine learning~\cite{dallaire2018quantum, zoufal2021variational}, metric learning~\cite{quantumembeddings}, deep-reinforcement learning~\cite{var_deeplearning} and sequential learning~\cite{qrnn}.
+
+In the gate-based quantum computing model, variational algorithms are implemented using quantum circuits composed of a network of single and two-qubit operations, with rotation angles serving as variational parameters.
+The implementation of a VQC usually takes place in three steps:
+
+\begin{enumerate}
+    \item First, an initial state is prepared using a feature map or unitary transformation $U_{\phi}(\vec{x})$ to encode the classical input data $\vec{x}$, into a quantum state.
+    The input feature vectors become the rotational gates' arguments and remain fixed during the circuit evaluation.
+    Some standard techniques include angle and amplitude encoding; see Ref.~\cite{jlazar2021} for more complex approaches.
+    \item The second block of unitaries is a parameterized quantum circuit or variational form.
+    It is given by $U(\vec{\theta})$ parameterized by gate angles $\theta$ and includes alternating layers of entangling and rotation gates.
+    Each layer consists of a sub-circuit that depends on trainable parameters and an entanglement sub-circuit.
+    The learnable parameters $\vec{\theta}$ will be optimized through gradient-based methods. For example, the commonly used gradient-based optimizer is Adam~\cite{adam_opt}.
+    \item Then, a quantum measurement is performed on a subset (or all) of qubits to retrieve the information.
+    If we run the circuit once and perform a single quantum measurement, it will yield a binary string, and it generally differs from what we will get if we prepare the circuit again and perform another quantum measurement due to the stochastic nature of quantum systems.
+    However, if we prepare the same circuit and perform the quantum measurement several times, we will get the expectation values on each qubit.
+    Furthermore, different bases can be used for the measurement.
+    In most cases, the expectation value of the $\sigma_Z$ Pauli operator is used to obtain measurements on the computational basis.
+\end{enumerate}
+
+%####################################################################
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/VQC.png}
+    %\resizebox{\linewidth}{!}{\input{Sections/VQCcircuit}}
+    \caption{Schematic diagram of the main component in a Variational Quantum Circuit (VQC): (1) An encoding unitary $U_{\phi}(\vec{x})$, (2) a parameterized circuit with variational parameters with alternating layers of rotational ($U_{rot}(\vev{\theta})$) and entangling ($U_{ent}$) gates, repeated \emph{l} times, and, (3) a measurement and post-processing section.}
+    \label{fig:vqc_circuit}
+\end{figure}
+%####################################################################
+
+
+In most cases, as we will see in some of the HEP applications discussed below, the VQC performance is evaluated by looking at the Receiver Operating Characteristics (ROC) curve and the Area Under the Curve (AUC). In what follows, applications of VQCs to the classification of HEP experimental datasets will be discussed.
+%It has to be noted that most of VQC based classifications covered in this section are at the level of proof of principle, should-it be by number of features used, or number of events used for training.
+
+The work in Ref.~\cite{Terashi2021} studies the classification of chargino-pair production via a Higgs boson versus the SM background.
+In this study, two circuit designs or \emph{Ansatz} are tested to demonstrate the feasibility of QML for the event classification task in HEP data analysis.
+The first choice is the circuit proposed in Ref.~\cite{Mitarai2018} and constructed using a time-evolution gate, denoted as $e^{-iHT}$, with the Hamiltonian $H$ of an Ising model with random coefficients and the series of $R_{X}$, $R_{Z}$ and $R_{X}$ gates, whose rotational parameters are updated during training.
+This layout is repeated three times after applying a unitary that encodes the classical input data as rotational parameters in the $R_{Y}$ and $R_{Z}$ gates. The second choice of VQC is based on the circuit proposed in Ref.~\cite{Havlek2019}, which uses a layer of Hadamard and $R_{Z}$ gates to prepare the input state, followed by an entangling layer sandwiched between two layers of rotational $R_{Y}$ and $R_{Z}$ gates with trainable parameters. 
+Measurement is performed on the first two and all the qubits using the Pauli Z operators for the first and second circuit designs, respectively.
+%The gates used for the first step are Hadamard and rotation gates with angles from the input data. Those used for the second step are single-qubit rotation and diagonal phase gate with the linear function, and where entanglement gate are Hadamard and CNOT gates. Finally, Pauli-Z operators are used as measurement gates to get the output values from the circuit, which are then compared with the corresponding input labels. 
+%The gates used in the second step are parameterized as to model input training data by iterating the first and third processes several times and tuning the parameters. The second step itself isn't repeated. The tuning of the parameters of the second step is performed with a classical computer by minimizing a cross-entropy cost function, which quantifies the difference between the input labels and the measured values.
+The VQC is trained by minimizing the cross-entropy cost function as implemented in the \texttt{scikit-learn} package \cite{scikit-learn} and using the \texttt{COBYLA} optimization algorithm \cite{Powell1994}. 
+
+The performance of the proposed VQCs is benchmarked against two classical ML algorithms: a BDT, as implemented on the Keras package \cite{chollet2015keras}, and a Deep Neural Network model based on a fully-connected feed-forward network composed of 2-6 hidden layers with 16-256 nodes each, implemented using the \texttt{Tensorflow} package \cite{tensorflow2015-whitepaper}.
+The hyperparameters in the classical models are chosen to match the capabilities of the quantum models, and both methods  are applied to the same task and dataset size. It has to be noted that this classification is based on a small number of discriminating variables. The total number of internal parameters is 12, 20, and 28 for the 3-, 5-, and 7-variable classification, respectively. Concerning benchmarking on hardware, only the circuit design based on single and two-qubit gates is tested on a quantum backend. The VQC is run on the 20-qubit IBM Q Network quantum computer. It is noteworthy that this VQC, in the present stage, does not perform better with a larger number of features.
+
+In Ref.~\cite{Belis2021}, a VQC approach is applied for the classification of $t\overline{t}H$ where a pair of top quarks are produced with a Higgs boson. 
+In this study, two Auto-Encoder NNs (see Section~\ref{sec:generative_models}) are used to reduce the dimension of the feature space, and thus, ease the classical input feature encoding into quantum states.
+This compressed representation is the input for the hybrid architectures introduced and the benchmark against non-quantum techniques. 
+%Consequently, the latent space features serve as the input of the quantum circuits used in the classifier models.
+
+A \textit{data re-uploading} technique, introduced in Ref.~\cite{Schuld21_Fourier,perezsalinas:2020reuploading}, is used in an effort to reduce the number of quantum registers needed to encode the classical data into a quantum state.
+In this approach, the quantum classification circuit comprises several repetitions of the traditional VQC scheme, each with its own classical inputs in the feature map and trainable parameters. 
+The latter study is implemented in circuits comprising different number of qubits. Using the data re-uploading technique, the feature map  based on one and two-qubit gates is applied to load the classical variables.
+%The same scheme is repeated to load the remaining four variables.
+Finally, the qubits are measured and used to classify the input.
+%The model is trained using the binary cross-entropy loss function and trained on a simulator.
+%Preliminary results indicate that the dimensionality reduction of the feature extraction step is not optimal and degrades the quality of the information fed to the VQC.
+%Nonetheless, an optimization of the VQC architecture and training process was ongoing at the time this manuscript was prepared. 
+Effectively, data re-uploading QNNs can be cast as partial Fourier series, where the size of the set of available frequencies grows linearly with the number of data encoding gates, while the coefficients are learned with the variational layers. In Ref. \cite{Kiss22_QNNFF}, a data re-uploading model is train to fit the potential energy surface and force field of small molecules. 
+
+The study in Ref.~\cite{2021Blance} is a VQC approach to classify $t\overline{t}$ events versus the rest of the SM processes, using only two kinematic features.
+An angle encoding scheme is used to prepare the two-qubit initial state.
+The trainable block of the VQC consists of two layers of single rotation gates, followed by two CNOT gates, entangling the qubits in the circuit.
+%For the first step, angle based gates are used to encode the data. The variational part is made of two layers with two qubits in each of the two layers. In each layer, a single qubit rotation gate is applied to both qubits, where three angles constitute the trainable parameters; the rotation gate is then followed by a CNOT gate in each qubit. 
+Finally, a Pauli $Z$ operator is applied on the first qubit, where the expectation value is taken.
+The circuit is run repeatedly to obtain an estimate of the latter, where the size of the training sample is relatively small (1500 events).
+Two different instantiations of the VQC are tested, where a classical and a quantum gradient descent are run and compared to the performance of NN with a gradient descent.
+The quantum gradient optimization shows a faster convergence than the traditional gradient descent optimization and the classical neural network.
+In terms of classification, the VQC is observed to perform better than the NN in high purity regimes, \textit{i.e.} when cutting on high values of the classifier's output.
+The VQC with a quantum gradient descent performs slightly better than the one with the classical descent, always in the high regimes.
+%advantage of variational quantum classifier lies in its smaller network structure, which allows to employ computationally more expensive optimisation algorithms, giving in turn rise to a faster learning rate
+
+In Ref.~\cite{2021Wu}, a VQC is applied to the analysis of Higgs boson production in association with a top-quark pair and a Higgs boson decay to two muons.
+The goal is to train a supervised learning model able to discriminate between two processes, the signal events, $H\rightarrow\mu^{+}\mu^{-}$ and the background events; namely, a $Z/\gamma^{*}\rightarrow\mu^{+}\mu^{-}$ interaction.
+A VQC-type model is proposed and trained based on thirteen kinematic variables associated with the process of interest.
+A pre-processing step to reduce the feature space dimensionality is employed using the Principal Component Analysis (PCA) method.
+A ten-qubit quantum circuit is set up using the variational circuit design in Ref.~\cite{Havlek2019}.
+Only half of the qubits are measured to reduce the potential errors associated with measurement.
+The circuit is trained through the noisy simulation of a ten-qubit system using the IBM's \emph{qasm$\_$simulator}.
+An error mitigation scheme is applied to correct measurement errors through a relation matrix between the ideal and noisy results, and applied to the noisy results. 
+The loss function is defined by the error probability of incorrect assignment compared to the exact solutions available for the training dataset.
+During the training, the loss function is minimized to penalize missasignment and to optimize variational parameters using the SPSA optimizer.
+The VQC performance is benchmarked against classical ML models, including a Support Vector Machine (SVM) constructed using the \emph{scikit-learn} package and a BDT set up using the \emph{XGBoost package} \cite{Chen:2016:XST:2939672.2939785}.
+A hyperparameter tuning was performed on the classical models. The authors report an agreement between the results obtained when training on hardware and noisy simulation setups when error mitigation techniques are applied.
+Furthermore, a similar performance is observed on models trained on simulated noisy settings, combined with error mitigation techniques and classical ML models.
+
+
+%%adding VQC for b-jet tagging at LHCb (Davide)
+In Ref.~\cite{Gianelle:2022unu}, a VQC approach has been used to identify the flavour of jets produced in proton-proton collisions at the LHCb experiment.
+The identification of jets plays an important role in physics at hadron colliders, and the ability to distinguish the flavour of the quark generating a jet is fundamental in order to search for New Physics processes and find possible deviations from the Standard Model.
+In this paper, jets initiated by $b$ or $\Bar{b}$ quarks are identified using a VQC, and its performance is compared with an exclusive algorithm used so far at LHCb, the so-called \emph{muon tagging} algorithm, which infers the jet flavour by means of the charge of the muon found inside the jet, and a standard Deep Neural Network (DNN).
+LHCb simulated data are analysed, and jet substructure information is used as input features for the classifiers; for each jet, five types of particles (muon, kaon, electron, pion, and proton) with the greatest $p_T$ inside the jet are chosen.
+For each type of particle, three variables are considered: the transverse momentum with respect to the jet axis ($p_{\mathrm{T}}^{\mathrm{rel}}$), the distance in the pseudorapidity-azimuthal plane to the jet axis ($\Delta R$) and the charge of the particle ($q$); a global variable, the weighted charge of the jet ($Q$), is also considered, accounting for a total of $16$ variables.
+Two circuit geometries have been studied: the Angle Embedding geometry, where $n$ input features are mapped to angles $\theta$ of rotational gates applied to $n$ different qubits, thus resulting in a $n$-qubit circuit, and the Amplitude Embedding geometry, where input features are embedded in the amplitudes of a state vector of a $\lceil\log_2{n}\rceil$-qubit state.
+The complexity of the circuit depends on the number of \emph{strongly entangling} layers, consisting of general rotational gates and CNOT \emph{entangling} gates, chosen in the variational part of the circuit.
+In order to understand the impact of the considered variables in the classification, two versions of the dataset have been used: the \emph{muon dataset}, where only variables coming from the muon inside the jet plus the jet charge $Q$ are used, and the \emph{complete dataset}, which uses all variables.
+In this way, for the \emph{muon dataset} the Angle Embedding (Amplitude Embedding) geometry is a circuit of $4$ ($2$) qubits, while for the \emph{complete dataset} the Angle Embedding (Amplitude Embedding) geometry uses $16$ ($4$) qubits.
+Results show that the Angle Embedding geometry works better than the Amplitude Embedding geometry, reaching the same performance of the DNN for the \emph{muon dataset} while for the \emph{complete dataset} the Angle Embedding classifier has slightly worse performance than the DNN.
+The study also shows that by increasing the number of strongly entangling layers, the classification accuracy increases up to a certain value where there is no further improvement, giving interesting suggestions on the optimal number of strongly entangling layers. Analysis of the number of training events shows that the quantum classifiers perform better than the DNN when using fewer training events while reaching similar performance when increasing the number of training events.
+Finally, the impact of noise on the circuit geometries has been considered using simulations that account for circuit noise contribution: no evident degradation in performance is found, suggesting that these circuits are rather robust and, in principle, can run on hardware.
+
+\subsubsection{Support vector machine}
+\label{sec:svm}
+
+Quantum Support Vector Machines (QSVMs)~\cite{Rebentrost2014} share many similarities with VQCs.
+Both systems encode the classical input states in a Hilbert space by applying unitary designs tailored to the application.
+While this encoding is conceptually equivalent in both approaches, the two models differ in how the quantum state is handled once it is prepared.
+VQCs can be formulated as quantum kernel methods~\cite{SchuldKernel}.
+
+The SVM algorithm maps $\vec{x}$ into a higher dimensional feature space, where it measures the similarity between any two data instances, denoted as ``kernel entries,'' $k(\vec{x_{i}}, \vec{x_{j}})$.
+The SVM algorithm then optimizes a hyper-plane that separates data points into two categories.
+A main limitation of the classical SVM algorithm is that evaluating kernel entries in a large feature space can be computationally expensive.
+Thus, the QSVM is expected to leverage the quantum state space as a direct representation of the feature space, giving rise to  kernel functions that are hard to evaluate classically.
+From this foundation, quantum feature maps can be designed and tested on practical datasets, potentially leading to better classification results than classical feature maps and kernels.
+Once a suitable quantum feature map is chosen, the kernel matrix element is constructed by sampling the probability of measuring $|0\rangle$: 
+%
+\begin{equation}
+    k(\vec{x_{i}}, \vec{x_{j}}) = |\langle 0^{\otimes n}|U^{\dagger}(\vec{x_{i}})U(\vec{x_{j}})|0^{\otimes n} \rangle|^{2}.
+\end{equation}
+%
+Another main difference with VQCs is that the loss function of a QSVM depends on the inner product of the feature vectors, \textit{i.e.}, the goal is to maximize
+%
+\begin{equation}
+    L(c_{1}...c_{n}) = \sum_{i=1}^{n}c_{i} - \frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}y_{i}c_{i}(\vec{x_{i}}\cdot\vec{x_{j}})y_{j}c_{j},
+\end{equation}
+%
+subject to $\sum_{i=1}^{n}c_{i}y_{i}=0$, and $0\leq c_{i} \leq \frac{1}{2n\lambda} \equiv C$ for all $i$.
+Here, $c_{i}$ are the independent variables of the loss, $\vec{x_{i}}$ and $\vec{x_{j}}$ are feature vectors of a given pair of data points, $i$ and $j$ and $y_{i},y_{j}$ their corresponding labels.
+Finally, $n$ is the number of encoded features, and $\lambda$ is a regularization parameter that tunes the trade-off between mis-classification and width of the SVM margin. 
+
+Furthermore, in QSVM-like circuit designs, all quantum registers need to be measured to construct the quantum kernel, whereas in VQCs this is not a requirement.
+
+The Higgs classification problem of Ref.~\cite{Belis2021} also studied a classification scheme based on the implementation of a QSVM.
+Again, auto-encoders are used to reduce the dimension of the feature space, as explained in Sec.~\ref{sec:vqc}.
+In terms of feature maps, two data embedding circuits are tested: 1. An amplitude encoding circuit with N qubits, capable of encoding $2^N$ features, for a 4-qubit and 6-qubit architecture; 2. An 8-qubit architecture, which is more suitable for an implementation on a NISQ device.
+The 4- and 8-qubit models have a similar performance to a classical SVM with a radial base function kernel.
+Likewise, the 6-qubit QSVM with amplitude encoding performs similar to an SVM with a linear kernel.
+
+In Ref.~\cite{2021WuSunGuan}, a QSVM model is used again for the discrimination of $t\overline{t}H$ events in the $H\rightarrow \gamma\gamma$ decay channel from non-resonant two-photon production events.
+Three classical kernels are considered to benchmark the classical SVM method: the linear kernel, the polynomial kernel, and the radial basis function (RBF) kernel.
+Both quantum and classical SVM models are trained using 15 kinematic variables resulting from the compression of the original 23 kinematic variables available in the dataset, by using a PCA method.
+The 20-qubit model is trained on a noise-less simulator and showed similar performance compared to the classical SVM. 
+When deployed on hardware, the system size is reduced to 15 qubits, and the authors report similar performance compared to the noiseless simulation. 
+
+Another implementation of a QSVM algorithm for classification is described in Ref.~\cite{Heredge2021}.
+Here, the authors designed and implemented a QSVM approach for the signal-background classification task in $B$ meson decays.
+Three different encodings were tested to study the impact of the choice of feature map in the classification performance.
+In particular, the Bloch encoding circuit, which the authors designed for encoding particle data, outperformed the other two and used fewer resources for the same task.
+When using a limited number of inputs, the QSVM outperformed classical methods in simulations.  
+
+In Ref.~\cite{Peters2021}, an extension to the method of machine learning based on quantum kernel methods is extended up to 17 hardware qubits requiring only nearest-neighbor connectivity.
+This circuit structure is used to prepare a kernel matrix for a classical SVM to learn patterns in 67-dimensional supernova data for which competitive classical classifiers fail to achieve 100$\%$ accuracy.
+Furthermore, the circuit design is justified based on its ability to produce large kernel magnitudes that can be sampled to high-statistical certainty with relatively short experimental runs.
+This experiment is, by far, the largest classification model deployed on hardware and demonstrates similar performance to non-quantum techniques for the classification of a HEP dataset.
+
+\subsubsection{Quantum Convolutional Neural Networks}
+\label{sec:qcnn}
+In Section~\ref{sec:vqc}, we introduced the concept of VQCs and compared the tunable parameters to the weights in a classical neural network.
+We now introduce the concept of quantum convolutional neural network (QCNN).
+QCNN is the framework that uses VQCs to perform the convolutional operations in a classical CNN.
+Convolutional filters or kernels are replaced with VQCs to harvest the expressive power granted by quantum entanglements.
+The quantum convolutional kernels will sweep through the input data and transform them into a representation vector of lower dimensions by performing measurements.
+A stack of VQCs will ensure features of varied length scales that are captured in different layers. 
+%
+In Ref.~\cite{chen2020quantum}, a QCNN framework for the classification of HEP events from the simulated data from the DUNE experiment is proposed.
+Based on the success of classical CNNs for the classification of images, a QCNN is proposed for the classification of neutrino events as detected in a Liquid Argon Time Projection Chamber (LArTPC).
+This technology allows for detecting neutrino events through high-resolution images of particle interactions within the detector volume as the ionized electrons drift towards the multiple sensing wire planes.
+The goal of the QCNN is to predict the types of different particles by analogy with those performed via classical CNN.
+The target labels correspond to the four possible particle types to be detected, an electron, a muon, a pion, or a proton.
+The authors report that the quantum model can learn faster and reach better testing accuracy with fewer training epochs, when using a similar number of parameters in the classical and quantum CNN benchmarks on noiseless simulations.
+%
+    
+In Ref.~\cite{chen2021hybrid}, a QCNN based technique aimed at understanding how QML models can provide advantages over classical models when dealing with sparse data, which is common in scientific data.
+This work introduces a hybrid quantum-classical graph convolutional neural network (QGCNN) framework applied to the same classification problem in Ref.~\cite{chen2020quantum}.
+This study compares the performance of a QGCNN to a classical multilayer perceptron and CNNs and reports that the 10-qubit quantum model requires fewer parameters to achieve comparable performance as the classical models.
+Furthermore, they compare the QGCNN model to the QCNN model proposed in Ref.~\cite{chen2020quantum}.
+Both quantum models can achieve similar performance, but the QGCNN requires half the number of parameters used in the QCNN, highlighting the importance of models tailored for sparse datasets.
+
+\subsubsection{Anomaly detection models} 
+\label{sec:qvae_classification}
+The search for new physics depends on our ability to separate Standard Model events from the background's much rarer and complex signal events.
+A new approach for finding events consistent with beyond-the-standard-model physics is through data-driven search, where no assumptions on the new physics scenario are made.
+While this allows for a search on a broader phase space, it requires a classification technique that can successfully learn and identify the important features in the background data to discriminate them from rare signal events which do not share the same properties.
+In classical ML, autoencoder architectures have been designed for this purpose~\cite{vaes_classical}.
+%
+Autoencoder architectures consist of an encoder step that compresses the feature space into a latent space with reduced dimensionality.
+Subsequently, the latent space is decoded into an output of the same dimensionality as the input feature space.
+The entire network is then trained such that the loss function, which evaluates how well the output resembles the input, is minimized.
+%
+Because quantum mechanics can generate patterns with properties beyond classical physics, a quantum computer should be able to recognize patterns beyond the capabilities of classical machine learning.
+Thus, the motivation for a quantum autoencoder is that such a model would allow us to efficiently perform the dimension reduction of quantum data.
+In classical architectures, the necessary compression and expansion of data in the encoding and decoding steps are manifestly non-unitary, which has to be addressed by the QAE using entanglement operations and reference states which disallow information to flow from the encoder to the decoder.
+A model capable of effectively reducing the dimension of a quantum state was initially proposed in Ref.~\cite{Romero2017}.
+%
+In the context of anomaly detection, the assumption is that the minimal dimension of the latent space for which the input features can still be reconstructed corresponds to the dimensionality of the information space required to describe the training sample, here, the SM background processes.
+If the signal is kinematically sufficiently different from the background samples, the loss function or reconstruction error will be larger for signal than for background events.
+%
+In Ref.~\cite{2021BlancePhotonic}, an alternative approach based on continuous-variable quantum computing is proposed.
+The authors use gaussian boson sampling to embed classical data into a feature vector and use an autoencoder scheme for model-independent searches through anomaly detection techniques.
+A continuous variable alternative to the classical $k$-means clustering algorithm is devised and denominated Q-means clustering, potentially scaling to large feature vectors more efficiently.
+The Q-means algorithm has a complexity in the order of $\log(N)$, with respect to the size $N$ of the feature vector.
+This represents an improvement from the classical $k$-means algorithm with a complexity in the order of $N$.
+The model is yet to be deployed in a continuous variable architecture, and the authors limit their implementation to discrete qubit quantum computing.
+%
+In Ref.~\cite{2021Ngairangbam}, the authors study quantum autoencoders based on VQCs for the problem of anomaly detection at the LHC.
+For a QCD $t\bar{t}$ background and a resonant heavy Higgs signal, they find that a simple quantum autoencoder outperforms dense classical autoencoders for the same input space. 
+%
+In Sec.~\ref{sec:quantum_gen_mods}, QVAEs are discussed in the context of generative tasks, although no application in HEP has been reported. 

@@ -1,0 +1,1145 @@
+
+
+
+
+\section{Detector requirements for the physics program} 
+\label{sec:requirements}
+
+The ILC accelerator design allows for one interaction region, equipped
+for two experiments. The two experiments are swapped into the
+Interaction Point within the so-called ``push-pull" scheme. The
+experiments have been designed to allow fast move-in and move-out from
+the interaction region, on a timescale of a few hours to a day. In
+2008 a call for letters of intent was issued to the
+community. Following a detailed review by an international detector
+advisory group, two experiments were selected in 2009 and invited to
+prepare more detailed proposals.  These  are the SiD detector and the ILD
+detector described in this section. Both prepared detailed and costed proposals which were
+scrutinised by the international advisory group and included in the
+2013 ILC
+Technical Design Report~\cite{Behnke:2013lya}.  These specific detector designs have been critical input to the design of the ILC itself. A future process is expected in which detector designs will be reconsidered, with optimisations of these two designs and alternative designs which are proposed. In this chapter the two TDR detector proposals are
+described.
+
+The ILC detectors are designed to make precision measurements on the Higgs boson,  $W$- and $Z$-boson, the top quark and other particles. The detector performance requirements are more ambitious than in the LHC experiments, as the experimental conditions are naturally very much more benign and because the detector collaborations have developed technologies specifically to take advantage of these more forgiving conditions. In particular, an $\ee$ collider provides much lower collision rates and events of much lower complexity than a hadron collider, 
+and detectors can be adapted to take advantage of this. The radiation levels at the ILC are equivalent to approximately $10^{11} n/cm^2/year$ of NIEL (Non Ionising Energy Loss) dose, very modest compared with the LHC, where NIEL doses of up $10^{16} n/cm^2$ are accumulated over the lifetime of the innermost tracking elements. One exception is the special forward calorimeter system very close to the
+beamline, where radiation exposure will be an issue. 
+
+
+
+The stringent requirement on the momentum resolution for charged particle tracks is driven by the need to  precisely reconstruct the $Z$-boson mass in the Higgs recoil analysis. This requirement translates into an asymptotic momentum resolution for high-momentum tracks that is nearly an order of magnitude better than achieved in the LHC experiments. It moreover requires that the detector material be kept to a minimum, to maintain excellent momentum resolution also for lower-momentum tracks.
+
+The identification of jets that originate from the fragmentation of bottom and charm quarks, known as flavour tagging, plays an important role in the scientific program of the ILC. An excellent separation of bottom and charm jets from each other and from gluon jets is crucial for the measurement of the Higgs couplings. This requires a vertex detector with a much improved performance in comparison to the pixel detectors installed at the previous generation of electron-positron colliders and the LHC. The relatively low radiation levels are particularly relevant for the design of the innermost vertex detector elements that can be located very close to the beam.
+
+At the same time, although they are studying electroweak particle
+production, it is essential that the ILC detectors have excellent
+performance for jets.   At an $\ee$ collider, $W$ and $Z$ bosons are
+readily observed in their hadronic decay modes, and the study of these
+modes plays a major role in most analyses.    To meet the requirements
+of precision measurements, the ILC detectors are optimized from the
+beginning to enable jet reconstruction and measurement using 
+the particle-flow algorithm (PFA). This drives the goal of $3\%$
+ jet mass resolution at energies above 100 GeV,  a resolution
+about twice as good as has been achieved in  the LHC
+ experiments.
+
+Finally, while the LHC detectors depend crucially on multi-level
+triggers that filter out only a small fraction of events for analysis,
+the  rate of interactions at the ILC is sufficiently low to allow
+running without a trigger.     The ILC accelerator design is based on
+trains of electron and positron bunches, with a repetition rate of
+5~Hz, and with 1312 bunches (and bunch
+collisions) per train. 
+The 199 ms interval between bunch trains provides ample time for a full
+readout of data
+ from the  previous train.  While there are background processes arising
+ from  beam-beam interactions, the detector occupancies arising from these 
+have been shown to be manageable.
+
+The combination of extremely precise tracking, excellent jet mass
+resolution, and triggerless running gives the ILC, at 250 GeV and at
+higher energies, a superb potential for discovery. 
+
+
+Quantitatively the requirements on the detectors may be summarised by the following points: 
+\begin{itemize}
+    \item {\bf Impact parameter resolution:}  An impact parameter resolution of 
+%    $ 5~\mu \mathrm{m} \oplus 10~\mu \mathrm{m} / [p~[{\mathrm{GeV}/c}]\sin^{3/2}\theta$] 
+   $ 5~\mu \mathrm{m} \oplus \frac{10~\mu \mathrm{m} \; \mathrm{GeV}/c}{ p\;\sin^{3/2}\theta}$  
+   has been defined as a goal, where $\theta$ is the angle between the particle and the beamline. 
+    \item {\bf Momentum resolution:} An inverse momentum resolution of $\Delta (1 / p) = 2 \times 10^{-5}~\mathrm{(GeV/c)}^{-1}$
+    % no need for [] in my opinion, we do not put it with \mu m above
+    asymptotically at high momenta should be reached. Maintaining excellent tracking efficiency and very good momentum resolution at lower momenta will be achieved by an aggressive design to minimise the detector's material budget.
+    \item {\bf Jet energy resolution:} Using the paradigm of particle flow, a jet energy resolution $\Delta E/ E = 3-4\%$ for light flavour jets should be reached. The resolution is defined in reference to light-quark jets, as the R.M.S. of the inner $90\%$ of the energy distribution. 
+    \item {\bf Readout:} The detector readout will not use any trigger, ensuring full efficiency for all possible event topologies.  The readout should provide precision signal measurements with high channel granularity and dynamic range.
+    \item {\bf Powering} To allow a continuous readout, while also minimizing the amount of inactive material in the detector, the power of major systems will be cycled between bunch trains. 
+\end{itemize}
+
+
+To meet these goals an ambitious R\&D program has
+ been pursued for more than a decade to develop and
+ demonstrate the needed technologies. The results of this program are
+ described in some detail in Ref.~\cite{janstrube_maximtitov_2021}. 
+ The two experiments proposed for
+ the ILC, SiD and ILD, utilise and 
+rely on the results from these R\&D efforts.
+
+Since the goals of SiD and ILD in terms of material budget, tracking
+performance, heavy-flavor tagging, and jet energy resolution are very 
+demanding, it is important to provide information about the level
+of detailed input that enters our performance estimates.   These are
+best
+discussed together with the event reconstruction and analysis
+framework that we will present in Chapter~\ref{chap:sim}.   In that
+section, we will present estimates of detector performance as
+illustrations at the successive stages of event analysis. 
+
+\section{The ILD Detector} 
+\label{ILD}
+
+
+
+
+The International Large Detector, ILD, is a proposal for a multi-purpose detector at the ILC. The design of ILD is the result of more than a decade of work by an international group of scientists and engineers. Throughout this time ILD has profited from and at the same time driven extensive technological developments which make the advanced ILD design possible. 
+
+The particle flow concept~\cite{ild:bib:PandoraPFA} plays a central role in the ILD design,
+% The ILD concept has been
+described in a number of documents. 
+The basic concept and its validation were extensivly discussed in the ILD Detector Baseline Document (DBD) in 2013~\cite{Behnke:2013lya}. ILD has recently, in 2020 published an update to the DBD, the Interim Design Report, IDR~\cite{ILDConceptGroup:2020sfq}.
+A three-dimensional image of the detector is shown in Figure~\ref{ild-fig-ILD}, together with an event display of a simulated top--anti-top event within it. 
+Detailed full-simulation studies~\cite{Behnke:2013lya,ILDConceptGroup:2020sfq} show that the ILD detector concept can reconstruct complex events with unprecedented precision, meeting all the requirements listed in section \ref{sec:requirements} above.
+
+
+\begin{figure}[tb]
+ %\epsfysize=9.0cm
+ \begin{center}
+ \begin{tabular}{lr}
+ \includegraphics[width=0.48\hsize,clip]{chapters/detectors/figures/ILD_all_110826.jpg} & 
+ \includegraphics[width=0.35\hsize]{chapters/detectors/figures/ttbar_500GeV_3dview-41.png}
+ \\
+ \end{tabular}
+\caption{Left: Three-dimensional rendering of the ILD detector. Right: Event display of a simulated hadronic decay of a $t \bar t$ event in ILD. The colors of the tracks show the results of the reconstruction, each color corresponding to a reconstructed particle.
+\label{ild-fig-ILD}}
+ \end{center}
+ \end{figure}
+
+%A quadrant view of the large detector model is shown in Figure \ref{fig:ILD}~(left), together with an event display in this detector of a top event Figure~\ref{fig:ILD}~(right).
+
+
+% \subsection{Requirements for the ILD detector}
+\subsection{Concept of the ILD Detector}
+The science which will be done at the ILC has been summarised earlier in this document. It is strongly dominated by the quest for ultimate precision in measurements of the properties of key particles like the Higgs boson, the weak gauge bosons, and, once the center-of-mass energy is beyond its production threshold, the top quark (see for example~\cite{Fujii:2017vwa} or \cite{ILCESU1} for recent summaries). 
+
+%A more detailed description of the ILD detector and its design philosophy is available in \cite{Behnke:2013lya}.
+
+The anticipated precision physics program drives the requirements for the detector. The reasoning resulted in the conceptual design of a particle flow detector have been discussed above. ILD thus has the rather starndard layout of a tracker and a claorimeter all inside a magnetic field, instrumentation down to rather low solid angles, and a powerful muon system surrounding the detector outside of the coil.
+
+ILD is different from in the specific choice which has been made for the central tracker. Here ILD chose a large volume hybrid tracking system, with a silicon tracking system with excellent position resolution, combined with a large gaseous tracker which promises excellent efficiency combined with low material, together with a highly granular calorimeter in both the electromagnetic and hadronic sections. To ease linking between the tracker and the calorimeter, the calorimeter is placed within the solenoid magnet which provides a 3.5~T field. This choice is driven by the need to provide extremely high efficiency tracking over a large momentum range. The low material budget in a gaseous tracker combined with a large number of three-dimensional space points give an excellent performance for a wide range of topologies and energies.
+
+A number of highly relevant physics processes require the precise reconstruction of exclusive final states containing heavy flavour quarks. This translates into the need for very precise reconstruction of the decay vertices of decaying particles, and thus implies a high resolution vertexing system close to the interaction region. 
+
+The ultimate performance of the detector system depends critically on the amount of material in the inner part of the ILD detector. The total material budget in front of the calorimeter should be below 10\% of a radiation length, for the barrel part of the detector acceptance. As a consequence, this requires that the coil be located outside of the calorimeter system. The main parameters of the ILD detector concept are summarised in Table~\ref{tab-ILD-size}.
+
+\begin{table}[t]
+
+    \centering
+    \begin{tabular}{llrrrr}
+    \hline
+    Barrel & Technology & $r_{in}$/mm & $r_{out}$/mm & $z_{max}$/mm &\\
+    \hline
+    VTX & Silicon pixel & 16& 60 & 125 &\\
+    SIT & Silicon pixel & 153& 303& 644&\\
+    TPC & Gas & 329 & 1770 & 2350  &\\
+    SET & Silicon strip& 1773& 1776 & 2300 & \\
+    \hline
+    ECAL & Silicon pads& 1805& 2028& 2350 &\\
+    HCAL & scintillator or RPC & 2058 & 3345 & 2350 &\\
+    Coil & 4 Tesla Solenoid & 3425 & 4175 & 2350 &\\
+    Muon & Scintillator& 4450 & 7755 & 4047  &\\
+    \hline\hline
+    Endcap & Technology & $z_{min}$/mm & $z_{max}$/mm & $r_{in}$/mm & $r_{out}$/mm\\
+    \hline
+    FTD 1 & Silicon pixel & 220 & 37 & - & 153\\
+    FTD 1 & Silicon strip& 645 & 2212 & - & 200\\
+    \hline
+    ECAL & Silicon pads & 2411 & 2635& 250 & 2096\\
+    HCAL & scintillator or RPC & 2650 & 3937 & 350 & 3226\\
+    Muon & Scintillator & 4072 & 6712 & 350& 7716 \\
+    \hline
+    BeamCal & GaAs pads & 3115 & 3315 & 18 & 140 \\
+    LumiCal& Silicon pads & 2412 & 2541 & 84& 194\\
+    LHCAL & Silicon pads & 2680 & 3160 & 130 & 315\\
+    \hline
+    \end{tabular}
+    \caption{Main parameters of the ILD detector for the barrel and the endcap part.}
+    \label{tab-ILD-size}
+
+\end{table}
+
+The whole detector should be operated without a hardware trigger to maximise the sensitivity to new physics signals. This in turn places stringent requirements on the readout electronics, in terms of both speed and power consumption. The integration of ILD is faced with the additional complexity to allow for a rapid movement of the detector in and out of the interaction region, the so-called push-pull scheme~\cite{Parker:2008zza}. 
+
+The ambitious requirements on the performance of the ILC detectors has sparked a broad R\&D program, as described above. ILD has traditionally maintained very close and collaborative relations with these R\&D collaborations. 
+
+The ILD concept from its inception has been open to new technologies. 
+No final decision on subdetector technologies has been taken, and in many cases several options are currently under consideration. ILD is actively inviting new groups to join the effort and propose new ideas or improvements to the current concept~\cite{Fujii:2020pxe}. 
+
+In the following paragraphs, the different components of the ILD concept are introduced and discussed. 
+
+\subsection{ILD vertexing system}
+The system closest to the interaction region is a pixel detector designed to reconstruct decay vertices of short lived particles with great precision. ILD has chosen a system consisting of three double layers of back-thinned pixel detectors. The innermost layer is only half as long as the others to reduce the exposure to background hits. Each layer will provide a spatial resolution around  {3}~$\mu\mathrm{m}$ at a pitch of about {17}~$\mu\mathrm{m}$, and a timing resolution per layer of around 2--4~$\mu\mathrm{s}${, possibly lower}. Current technological developments will most likely make it possible to resolve single bunch crossing. R\&D is ongoing to explore the option of a significantly better timing resolution. Since the layers are specifically designed with a very low material budget, of close to $0.15\%$ of a radiation length per layer, the vertex detector also serves as an efficient tracker for low momentum tracks, which due to the magnetic field do not reach the inner tracking system.
+
+ILD is exploring several technological options for the vertex detector, and has not yet decided on a baseline. 
+Some of the considered technologies are listed below.
+
+Over the last 10 years the CMOS pixel technology has matured close to a point where all the requirements (material budget, readout speed, granularity) needed for an ILC detector can be met. The technology has seen a first large scale use in the STAR vertex detector~\cite{ild:bib:VTXcps3}, and more recently in the upgrade of the ALICE {Inner Tracking System (ITS-2)}~\cite{ALICE:2013nwm}. 
+
+Other technologies under consideration for ILD are DEPFET, which is also currently being deployed in the Belle II vertex detector ~\cite{Luetticke:2017zpx}, fine pitch CCDs ~\cite{fineCCD}, and also less far developed technologies such as SOI (Silicon-on-insulator) and Chronopix~\cite{RDliaision}.
+
+Very light weight support structures have been developed, which bring the goal of 0.15\% of a radiation length per layer within reach.  Structures {that reach 0.21\% X$_0$ in most of the fiducial volume} are now used in the Belle II vertex detector~\cite{PLUME:2011rwc}. 
+
+In Figure~\ref{fig-btag} the purity of the flavour identification in ILD is shown as a function of its efficiency.
+The performance for b-jet identification is excellent, and charm-jet identification is also good, providing a purity of about 70\% at an efficiency of 60\%.
+ The system also allows the accurate determination of the charge of displaced vertices, and contributes strongly to the low-momentum tracking capabilities of the overall system, down to a few 10's of\,MeV. An important aspect of the system leading to superb flavour tagging is the small amount of material in the tracker. This is shown in Figure~\ref{fig-btag} (right).
+\begin{figure}
+    \centering
+    \includegraphics[width=0.3\hsize]{chapters/detectors/figures/ctag_performance.pdf}
+    \includegraphics[width=0.3\hsize]{chapters/detectors/figures/btag_performance.pdf}
+    \includegraphics[width=0.3\hsize]{chapters/detectors/figures/ILD_l5_v02_matbudget_tracker_85deg.pdf}
+    \caption{Flavour tag performance for the large and small ILD detector models.
+    Background rate as a function of the c-tagging (left) and b-tagging (middle) efficiency
+  for heavy quark and light flavour quark jets.
+  %Purity of the flavour tag as a function of the efficiency, for different flavours tagged.
+  Right: Material budget in ILD up to the calorimeter, in fraction of a radiation length .The different contributions are summed up to represent the cumulative radiation length at a given polar angle.(Figures from \cite{ILDConceptGroup:2020sfq})}
+    \label{fig-btag}
+\end{figure}  
+
+\subsection{ILD tracking system}
+
+ ILD has decided to approach the problem of charged particle tracking with a hybrid solution, which combines a high resolution time projection chamber (TPC) with a few layers of strategically placed Silicon strip or pixel detectors before and after the TPC. The technologies of the different tracking layers have not been decided yet. The baseline design calls for strips for the three intermediate tracking layers in front of the TPC and the external silicon tracker between the TPC and the ECAL. Recent advances in Silicon pixel technologies make it likely that the Silicon tracker part will be realised as a full pixel tracker. The layout of the inner tracking section is shown in Figure~\ref{fig:det:silicon}.
+ \begin{figure}[t!]
+\centering
+\includegraphics[width=0.5\hsize]{chapters/detectors/figures/ILD_silicon_trackers.jpg}
+\caption{Layout of the inner Silicon (SIT) and forward Silicon (FTD) trackers surrounding the vertex detector.}
+\label{fig:det:silicon}
+\end{figure}
+
+The time-projection chamber will fill a large volume about 4.6\,m in length, spanning radii from 33 to 180\,cm. In this volume the TPC provides up to 220 three dimensional points for continuous tracking with a single-hit resolution of better than 100~$\mu\mathrm{m}$ in $r \phi$, and about 1\,mm in $z$. This high number of points allows a reconstruction of the charged particle component of the event with high accuracy, including the reconstruction of secondaries, long lived particles, kinks, etc.. For momenta above 100\,MeV, and within the acceptance of the TPC, greater than 99.9\% tracking efficiency has been found in events simulated realistically with full backgrounds. At the same time the complete TPC system will introduce only about 10\% of a radiation length into the detector~\cite{Diener:2012mc}. 
+
+Inside and outside of the TPC volume a few layers of Silicon detectors provide high resolution points, at a point resolution of $10\mu \mathrm{m}$. In the forward direction, extending the coverage down to the beam-pipe, a system of two pixel disks (point resolution $5 \mu$m) and five strip disks (resolution $10 \mu$m, provide tracking coverage down to the beam-pipe. Combined with the TPC track, this will result in an asymptotic momentum resolution of $\delta p_t / p_t^2 = 2 \times 10^{-5}$ (GeV/c)$^{-1}$ for the complete system. Since the material in the system is very low, a significantly better resolution at low momenta can be achieved than is possible with a current Silicon-only tracker. The achievable resolution is illustrated in Figure~\ref{fig:momentumvsp}, where the $1/p_t$-resolution is shown as a function of the momentum of the charged particle. 
+
+\begin{figure}
+    \centering
+%    \begin{tabular}{c{0.45\hsize}c{0.55\hsize}}
+    \begin{tabular}{cc}
+    \includegraphics[width=.45\hsize]{chapters/detectors/figures/PResolution_IDR.png} &
+        \includegraphics[width=.49\hsize]{chapters/detectors/figures/Special_Combined_dEdx_TOF100_IDR.pdf}
+    \end{tabular}
+    \caption{ Left: Simulated resolution in $1/p_t$ as a function of the momentum for single muons. The different curves correspond to different polar angles. Right: Simulated separation power 
+%    (probability for a {particle} to be reconstructed as {another one})
+    between pions and kaons {and between kaons and protons}, from $dE/dx$ and from timing, assuming a 100~ps timing resolution of the first ECAL layers (Figures from \cite{ILDConceptGroup:2020sfq}).}
+    \label{fig:momentumvsp}
+\end{figure}
+
+The time projection chamber enables the identification of the particle type of the crossing particle through the measurement of the specific energy loss, $dE/dx$, for tracks at intermediate momenta~\cite{Hauschild:2000eg}. The achievable performance is shown in Figure~\ref{fig:momentumvsp} (right). ILD wants to achieve a goal of $5\%$ relative dE/dx resolution in the TPC.  Time of flight measurements can provide additional information, which is particularly effective in the low-momentum regime which is problematic for $dE/dx$. Figure~\ref{fig:momentumvsp} (right) {shows in addition the effect of including time information (resolution 100~ps) from the first ECAL layers.} 
+
+The design and performance of the TPC has been the subject of intense {{R\&D}} over the last 15 years~\cite{Fusayasu:2011sia, RDliaision}. A TPC based on the readout with micro-pattern gas detectors has been developed, and tested in several technological prototypes. The fundamental performance has been demonstrated, and solutions to construct a TPC with the required low mass have been developed. Most recently the performance of the specific energy loss, $dE/dx$, has been validated in test beam data. Based on these results, the TPC technology is sufficiently mature for use in the ILD detector, and can deliver the required performance (see e.g. \cite{Attie:2016yeu,Bouchez:2007pe}). 
+
+
+\subsection{ILD calorimeter- and muon  system}
+\label{sec:ILD-forward}
+A very powerful calorimeter system is essential to the performance of a detector designed for particle flow reconstruction. Particle flow stresses the ability to separate the individual particles in a jet, both charged and neutral. This puts the imaging capabilities of the system at a premium, and pushes the calorimeter development in the direction of a system with very high granularity in all parts of the system, both transverse to and along the shower development direction. A highly granular sampling calorimeter is the chosen solution to this challenge~\cite{Sefkow:2015hna}. The conceptual and technological development of the particle flow calorimeter have been largely done by the CALICE collaboration (for a review of recent CALICE results see {e.g.} \cite{Grenier:2017ewg,Ootani:2021qna}). 
+
+ILD has chosen a sampling calorimeter {equipped} with silicon diodes as one option for the electromagnetic calorimeter. Diodes with pads of about $(5 \times 5)$ mm$^2$ are used to sample a shower up to 30 times in the electromagnetic section.  {A self-supporting carbon-fiber-reinforced-polymer (CFRP) incorporating tungsten plates supports the detector elements while minimizing non-instrumented spaces}. In 2018 {beam tests of detection elements in stacks and chained together into long cassettes made important steps towards the demonstration of the large scale feasibility of this technology.
+Extended tests in 2021 and 2022, including a compact DAQ compatible with the ILD design, are expected to assess the performance with high energy particles.} A very similar system has been adopted by the CMS experiment for the upgrade of the endcap calorimeter, and will deliver invaluable information on the scalability and engineering details of such a system.
+ The implementation of precise timing probably mostly in the first calorimeter layers, and the expected performances for single particles are currently under study. Adding timing capabilities of around 100~ps resolution or better to the first layers of the calorimeter would contribute to the capabilities of the ILD detector to identify particle types, in particular at low energies (see Figure~\ref{fig:momentumvsp}(right)).
+
+As an alternative to the silicon based system, sensitive layers made from thin scintillator strips are also investigated. Orienting the strips perpendicular to each other has the potential to realize an effective cell size of $5\times 5$mm$^2$, with the number of read-out channels reduced by an order of magnitude compared to the all silicon case.  A fully integrated technological prototype with 32 layers has been constructed by a joined effort of the R\&D groups for the ILD Sc-ECAL and the CEPC-ECAL. It is currently under commissioning and will be tested in particle beam soon.
+
+For the hadronic part of the calorimeter of the ILD detector, two technologies are studied, based on either silicon photo multiplier (SiPM) on scintillator tile technology~\cite{Simon:2010mi} or resistive plate chambers~\cite{Baulieu:2015pfa}. The SiPM-on-tile option has a  moderate granularity, with $3 \times 3$ cm$^2$ tiles, and provides an analogue readout of the signal in each tile (AHCAL). The RPC technology has a better granularity, of $1 \times 1$ cm$^2$, but provides only 2-bit amplitude information (SDHCAL). For both technologies, significant prototypes have been built and operated. Both follow the engineering design anticipated for the final detector, and demonstrate thus not only the performance, but also the scalability of the technology to a large detector. As for the ECAL the SiPM-on-tile technology has been selected as baseline for part of the upgrade of the CMS hadronic end-cap calorimeter, and will thus see a major application in the near future.
+
+%The simulated particle flow performance is shown in Figure~\ref{fig:pflow}~(right).
+A rendering of ILD's barrel calorimeter is shown in Figure~\ref{ild-fig-CALO} (left). 
+\begin{figure}[th]
+    \centering
+    \begin{tabular}{lcr}
+    \includegraphics[width=0.51\hsize]{chapters/detectors/figures/ECal_insertion.jpg} & ~~~~ &
+    %%\includegraphics[width=0.30\hsize]{chapters/detectors/figures/LUMICAL_perf.jpg}\\
+    \includegraphics[width=0.33\hsize]{chapters/detectors/figures/ILD_LUMICAL.png}\\
+    \end{tabular}
+    \caption{Left: Three-dimensional rendering of the barrel calorimeter system, with one ECAL stave partially extracted. Right: Prototype module of the lumical calorimeter.}
+    \label{ild-fig-CALO}
+\end{figure}
+
+The iron return yoke of the detector, located outside of the coil, is instrumented to act as a tail catcher and as a muon identification system. Both RPC chambers and scintillator strips read out with SiPMs have been investigated as possible technologies for the system. Up to 14 active layers, located mostly in the inner half of the iron yoke 
+%(see Table~\ref{ild:tab:barrelpara} and 
+(see Figure~\ref{ild-fig-CALO} for more details) will be instrumented.  To minimize the number of readout channels a new readout scheme~\cite{Patent:WowenStrips}~\cite{ILDTalk:WowenStrips} has been  developed within the RPC readout option. In this scheme, pads and pixels are interconnected in a special way which allows a precise position measurement based on at least 3 strips under different direction, achieving a very good granularity with limited number of electronic channels.
+
+Three rather specific calorimeter systems are foreseen for the very forward region of the ILD detector~\cite{Abramowicz:2010bg}. LumiCal is a high precision fine sampling silicon tungsten calorimeter primarily designed to measure electrons from Bhabha scattering, and to precisely determine the integrated luminosity as discussed in Sec.~\ref{subsec:lumi_prec}. The LHCAL (Luminosity Hadronic CALorimeter) just outside the LumiCal extends the reach of the endcap calorimeter system down to smaller angles relative to the beam, and closes the gap between the inner edge of the ECAL endcap and the LumiCal.  Below the LumiCal acceptance, where background from beamstrahlung rises sharply, BeamCal, placed further downstream from the interaction point, provides added coverage and is used to provide fast feedback on the beam position at the interaction region. As the systems move close to the beam-pipe, the requirements on radiation hardness and on speed become more and more challenging. Indeed this very forward region in ILD is the only region where radiation hardness of the systems is a key requirement. A picture of a prototype of the Lumical calorimeter is shown in Figure~\ref{ild-fig-CALO}(right).
+
+\subsection{ILD detector integration and costing}
+From the beginning, one of the major goals of the ILD concept group was  to move the detector concept from a collection of technological ideas to a real detector that can actually be built, commissioned, and operated within given engineering and site-dependent constraints. 
+
+The main mechanical structure of the ILD detector is the iron yoke that consists of three barrel rings and two endcaps. The yoke provides the required shielding for radiation and magnetic fields and supports the cryostat for the detector solenoid and the barrel detectors, calorimeters and tracking system. 
+
+A common concept for the detector services such as cables, cooling, gases and cryogenics has been developed. The requirements are in many cases based on engineering prototypes of the ILD sub-systems. 
+
+The main detector solenoid is based on CMS experience and can deliver magnetic fields up to 4~T. A correction system for the compensation of the crossing angle of the ILC beam, the Detector Integrated Dipole, has been designed and can be integrated into the main magnet cryostat.
+
+The cost of the ILD detector has been estimated at the time of the ILD interim design report, IDR~\cite{ILDConceptGroup:2020sfq}. The total detector cost is about $379$~Million EUR in 2018 costs. The cost of the detector is dominated by the cost of the calorimeter system and the yoke, which together account for about $60\%$ of the total cost. A slightly smaller version of ILD, where the outer radius of ILD has been reduced by about 10\%, but the length of ILD remains unchanged, results in a reduction of the cost by about 50~Million EUR. 
+
+\subsection{Future developments of the ILD detector}
+The ILD detector group is actively investigating where new technologies might deliver significantly improved performance, expand the capabilities of the detector, or deliver equal performance at lower cost. 
+
+The fundamental design criteria of ILD - particle flow as a basis for a complete event reconstruction, excellent pattern recognition capabilities with high efficiency and coverage of the largest possible solid angle - are not at question and remain the basis of any design decisions. The studies on optimizing ILD summarised in the ILD IDR~\cite{ILDConceptGroup:2020sfq} have pointed out a number of areas of high potential where next-generation technologies might have a large impact. 
+
+Timing in a number of different sub-systems is one key development direction. Timing at the level of a few 10 ns is already part of the concept. Pushing this to below 100~ps will contribute significant additional capabilities in particle identification and in background reduction. Technologically this is a significant challenge. This option is explored in the tracking system, and in the calorimeter system.
+
+Timing capabilities in the silicon detectors might go hand in hand with in increased integration of functionality into the sensor. Moving to silicon systems with smaller feature size might allow the implementation of complex clustering or even tracking algorithms on individual pixels, which could change significantly the way these detectors are operated. 
+
+The current layout of the inner tracking system in ILD was optimized for acceptance, robustness towards background and low material budget. With new pixel technologies an all Pixel forward tracker with an optimized layout is an attractive option, which would also ease the transition from the current vertex detector to the forward tracker. 
+
+The further reduction of the material budget in the tracker remains a central goal of ILD. Experience from ongoing detector construction projects as the LHC upgrade detectors will provide valuable input, however, new approaches to support structures etc will be needed to really improve the situation further. 
+
+The current choice of ILD to implement a gaseous time projection chamber as central tracker remains a very attractive solution, where clear advantages have been demonstrated. The rapid development of silicon technologies on the other hand might open the way to find non-gaseous solutions which offer similar benefits. The combination of a gaseous detector with a highly granular silicon readout over large areas could point into a direction which will combine the best of both worlds. 
+
+The calorimeter continues to be an area of very active research, and many improvements to the current technologies are expected. The application of these technologies to the LHC detectors will provide very important input. 
+
+
+A few rather concrete examples of R\&D which could shape the development of ILD is summarised in the following section. 
+
+\subsubsection{New technologies in ILD}
+The CMOS detector technology is seeing rapid developments. Based on ever smaller feature size very small pixels might be realised, anticipated to provide a spatial resolution of $<$3$\mu$m. They also open the perspective of achieving large multi-reticular sensors, which may be exploited to suppress considerably the material budget of the detector layers, which may become nearly unsupported. The evolution of the CMOS technology also prepares for breakthroughs in terms of time resolution, with projections going well bellow 1ns. 
+
+Another relevant R\&D area is the possibility of including precise timing information of the individual signals in the calorimeter readout, turning the calorimeters into a 5D device. This can improve the shower reconstruction to identify the type of particles and also to reduce the noise. Like silicon and scintillator, RPC and, more precisely MRPC, are excellent fast timing detectors which can be exploited by equipping their readout electronics with fast timing capability. This R\&D is starting now, studies using silicon systems with integrated amplification and explorative studies of detectors based on 65~nm feature size are being setup.
+
+The general move to extremely large granularity comes at the prize of vast increase of the number of channels and the data volume to be handled and the power consumption of the system. Innovative ways to reduce the number of channels in areas of relatively low occupancies without sacrificing the individual precision will be an important challenge.
+
+
+\subsection{Science with ILD}
+ILD has been designed to operate with electron-positron collisions between 90 GeV and 1 TeV. The science goals of the ILC have been described in detail in \cite{ILCESU1}, 
+% and will not be repeated here. 
+{and results of numerous studies are reported in the following chapters of this document.}
+It should be pointed out that the analyses which have been performed within the ILD concept group are based on fully simulated events, using a realistic detector model and advanced reconstruction software, and in many cases include estimates of key systematic effects. This is particularly important when estimating the reach the ILC and ILD will have for specific measurements. Determining, for example, the branching ratios of the Higgs at the percent level depends critically on the detector performance, and thus on the quality of the event simulation and reconstruction. 
+
+In many cases 
+%  the performance used in the physics analyses has been tested against prototype experiments.
+  {the performance assumed in the detector simulation has been cross checked with prototype test results.}
+The key performance numbers for the vertexing, tracking and calorimeter systems are all based on results from test beam experiments. The particle flow performance, a key aspect of the ILD physics reach, could  not be fully verified in the absence of   {a large scale detector prototype}, but key aspects have been shown in experiments. This includes the single particle resolution for neutral and charged particles, the particle separation in jets, the linking power between tracking and calorimetry, and
+% key aspects of detailed shower analyses 
+  {detailed shower reconstruction} 
+important for particle flow. 
+
+While the physics case studies are based on the version of the ILD detector presented in the detector volume of the ILC DBD~\cite{ild-dbd}, ILD  initiated a systematic benchmarking effort to study the performance of the ILD concept, and to determine in particular the correlations between science objectives and detector performance. The list of benchmark   {processes} which   {have been studied} is given in Table \ref{tab-benchmark}. Even if the ILC will start operation at a center-of-mass energy of 250\,GeV, the ILD detector is being designed to meet the more challenging requirements of higher center-of-mass energies, since major parts of the detector, e.g.\ the coil, the yoke and the main calorimeters will not be replaced when upgrading the accelerator. Therefore, most of the detector benchmark analyses   {were} performed at a center-of-mass energy of 500\,GeV, and one benchmark even at 1\,TeV. The assumed integrated luminosities and beam polarization settings   {followed} the canonical running scenario~\cite{Barklow:2015tja}. 
+In addition to the well-established performance aspects of the ILD detector, the potential of new features not yet incorporated in the existing detector prototypes, e.g.\ time-of-flight information,   {have also been} evaluated. 
+
+The results of these studies   {were} published in the ILD Interim Design Report~\cite{ILDConceptGroup:2020sfq}. They form the basis for the definition of a new ILD baseline detector model, which   {has been} used for a new physics-oriented Monte-Carlo production for 250\,GeV.   {Sample production with} the most recent beam parameters of the accelerator~\cite{Evans:2017rvt} and significantly improved reconstruction algorithms is expected to lead to further improvements of the expected results of the precision physics program of the ILC~\cite{ILCESU1}.
+
+  {Further ILD performance and physics potential studies are ongoing. Special attention is paid to understanding of systematic effects.
+Significant reduction of systematic uncertainties is possible in combined analysis of different channels, in particular when combining data taken with different beam polarization settings. 
+}
+
+\begin{table}[thb!]
+    \centering
+    \begin{tabular}{|p{4cm}|p{5cm}|p {5cm}|}
+\hline
+{\bf    Measurement}     & {\bf Main physics question} & {\bf main issue addressed} \\
+\hline
+Higgs mass in $H\rightarrow b {\bar b}$         &  Precision Higgs mass determination &Flavour tag, jet energy resolution, lepton momentum resolution  \\
+\hline
+Branching ratio $H \rightarrow \mu^+\mu^-$ & Rare decay, Higgs Yukawa coupling to muons & High-momentum $p_t$ resolution, $\mu$ identification \\
+\hline
+Limit on $H \rightarrow$ invisible & Hidden sector / Higgs portal & Jet energy resolution, $Z$ or recoil mass resolution, hermeticity\\
+\hline
+Coupling between $Z$ and left-handed $\tau$ & Contact interactions, new physics related to 3rd generation & Highly boosted topologies, $\tau$ reconstruction, $\pi^0$ reconstruction \\
+\hline
+$WW$ production, $W$ mass & Anomalous triple gauge couplings, $W$ mass&  Jet energy resolution, leptons in forward direction \\
+\hline
+Cross section of $e^+e^- \rightarrow \nu \nu qqqq$ & Vector Bosons Scattering, test validity of SM at high energies&  $W/Z$ separation, jet energy resolution, hermeticity\\
+\hline
+Left-Right asymmetry in $e^+e^- \rightarrow \gamma Z$ & Full six-dimensional EFT interpretation of Higgs measurements &  Jet energy scale calibration, lepton and photon reconstruction \\
+\hline
+Hadronic branching ratios for $H\rightarrow b \bar b $ and $c \bar c$ & New physics modifying the Higgs couplings &  Flavour tag, jet energy resolution\\
+
+\hline
+$A_{FB}, A_{LR}$ from $e^+e^- \to b\bar{b}$ and $t \bar t \rightarrow b\bar{b} qqqq / b \bar{b} qql\nu$ & Form factors, electroweak coupling &  Flavour tag, PID, (multi-)jet final states with jet and vertex charge\\
+\hline
+
+Discovery range for low $\Delta M$ Higgsinos & Testing SUSY in an area inaccessible for the LHC& Tracks with very low $p_t$, ISR photon identification, finding multiple vertices\\
+\hline
+Discovery range for WIMPs in mono-photon channel & Invisible particles, Dark sector & Photon detection at all angles, tagging power in the very forward calorimeters\\
+\hline
+Discovery range for extra Higgs bosons in $e^+e^- \rightarrow Zh$ & Additional scalars with reduced couplings to the $Z$ & Isolated muon finding, ISR photon identification.\\
+\hline
+
+%\hline
+%\multicolumn{3}{|l|}{Running above the top threshold:}\\
+
+
+    \end{tabular}
+    \caption{table of benchmark reactions which are used by ILD to optimize the detector performance. The analyses are mostly conducted at 500\,GeV center-of-mass energy, to optimally study the detector sensitivty. The channel, the physics motivation, and the main detector performance parameters are given.}
+    \label{tab-benchmark}
+\end{table}
+
+\subsection{Integration of ILD into the experimental environment}
+ILD is designed to be able to work in a push-pull arrangement with another detector at a common ILC interaction region. In this scheme ILD sits on a movable platform in the underground experimental hall. This platform allows for a roll-in of ILD from the parking position into the beam and vice versa within a few hours. The detector can be fully opened and maintained in the parking position.
+
+The current mechanical design of ILD assumes an initial assembly of the detector on the surface, similar to the construction of CMS at the LHC. A vertical shaft from the surface into the underground experimental cavern allows ILD to be lowered in five large segments, corresponding to the five yoke rings.
+
+ILD is self-shielding with respect to radiation and magnetic fields to enable the operation and maintenance of equipment surrounding the detector, {e.g.} cryogenics. Of paramount importance is the possibility to operate and maintain the second ILC push-pull detector in the underground cavern during ILC operation.
+
+\subsection{The ILD Concept Group}
+The ILD collaboration initially started out as a fairly loosely organised group of scientists interested to explore the design of a detector for a linear collider like the ILC. With the delivery of the DBD in 2013, the group re-organised itself more along the lines of a traditional collaboration. The group imposed upon itself a set of by-laws which govern the functions of the group, and define rules for the membership of ILD. 
+% Daniel removed the following sentence, which is no longer correct in my understanding
+%Groups who want to become members of ILD must sign a memorandum of participation, a first step towards an eventual memorandum of understanding to construct ILD, as soon as the ILC has been approved. 
+
+In total 65 groups from 30 countries signed the letter of participation in 2015. At present (2021), 68 institutions are members, and a number of individuals have joined as guest members of ILD. A map indicating the location of the ILD member institutes is shown in Figure~\ref{ild-fig-membermap}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\hsize]{chapters/detectors/figures/ILD_members_map.pdf}
+    \caption{Map with the location of the ILD member institutes indicated.}
+    \label{ild-fig-membermap}
+\end{figure}
+
+\subsection{Conclusion and outlook}
+The ILD detector concept is a well developed integrated detector optimised for use at the electron-positron collider ILC. It is based on advanced detector technology, and driven by the science requirements at the ILC. Most of its major components have been fully demonstrated through prototyping and test beam experiments. The physics performance of ILD has been validated using detailed simulation systems. A community interested in building and operating ILD has formed over the last few years. It is already sizeable, encompassing 68 institutes from around the world. The community is ready to move forward once the ILC project receives approval. 
+
+%\section{References}
+
+%% MCruz Fixing bibliography problem ====
+%\bibliography{chapters/detectors/ILD.bib}
+%\printbibliography %Prints bibliography 
+%% ========
+
+
+\section{The SiD Detector} 
+\label{SiD}
+
+
+
+\subsection{Detector description and capabilities}
+\label{SiD-gen}
+
+The SiD detector concept is a general-purpose experiment designed to perform
+ precision measurements
+at the ILC. It satisfies the challenging detector requirements resulting from the full range of 
+ILC physics processes. SiD is based on the paradigm of particle flow, an algorithm by which
+the reconstruction of both charged and neutral particles is accomplished by an optimised
+combination of tracking and calorimetry. The net result is a significantly more precise jet
+energy measurement than that achieved via conventional methods and which results in a di-jet mass resolution good enough to distinguish
+between $W$s and $Z$s.
+The SiD detector (Fig.~\ref{fig:fig_sid})  is a compact detector based on a powerful silicon
+pixel vertex detector, silicon tracking, silicon-tungsten electromagnetic calorimetry, and
+highly segmented hadronic calorimetry. 
+SiD also incorporates a high-field solenoid, iron
+flux return, and a muon identification system. The use of silicon 
+sensors in the vertex, tracking,
+and calorimetry enables a unique integrated tracking system ideally suited to particle
+flow.
+
+The choice of silicon detectors for tracking and vertexing ensures that SiD is robust
+with respect to beam backgrounds or beam loss, provides superior charged particle momentum
+resolution, and eliminates out-of-time tracks and backgrounds. The main tracking
+detector and calorimeters are “live” only during a single bunch crossing, so beam-related
+backgrounds and low-pT backgrounds from $\gamma\gamma$ processes will be reduced to the minimum
+possible levels. The SiD calorimetry is optimised for excellent jet energy measurement
+using the particle flow technique.
+ The complete tracking and calorimeter systems are contained
+within a superconducting solenoid, which has a 5 T field strength, enabling the overall
+compact design. The coil is located within a layered iron structure
+that returns the magnetic flux and is instrumented to allow the
+identification of muons. 
+All aspects of SiD are the result of intensive and leading-edge research aimed at achieving
+performance at unprecedented levels. At the same time, the design represents a balance between cost
+and physics performance. Nevertheless, given advances in technologies it is now appropriate to consider updates to the SiD design as discussed below. First, we describe the baseline SiD design for which the key parameters are
+listed in  
+Table~\ref{tab:Ovw_sidparams}.
+%
+The design is expected to meet all the requirements listed in section \ref{sec:requirements} above.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[tb]
+  \begin{center}
+ \includegraphics[width=0.8\hsize]{chapters/detectors/figures/SiD.pdf}
+\caption{The SiD detector concept.
+\label{fig:fig_sid}}
+ \end{center}
+ \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}
+\begin{center}
+%\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{l l r r r}
+ \hline
+    \sid Barrel& Technology& In rad& Out rad& z extent \\
+    \hline
+    Vtx detector& Silicon pixels& 1.4& 6.0& $\pm \quad 6.25$ \\
+    Tracker& Silicon strips& 21.7& 122.1& $\pm \quad 152.2$ \\
+    ECAL& Silicon pixels-W& 126.5& 140.9& $\pm \quad 176.5$ \\
+    HCAL& Scint-steel& 141.7& 249.3& $\pm \quad 301.8$ \\
+    Solenoid& 5 Tesla SC & 259.1& 339.2& $\pm \quad 298.3$ \\
+    Flux return& Scint-steel& 340.2 & 604.2& $\pm \quad 303.3$ \\
+   \hline
+ \sid Endcap& Technology& In z& Out z& Out rad \\
+    \hline
+Vtx detector& Silicon pixels& 7.3& 83.4& 16.6 \\
+Tracker& Silicon strips& 77.0& 164.3& 125.5 \\
+ECAL& Silicon pixel-W& 165.7& 180.0& 125.0 \\
+HCAL& Scint-steel& 180.5& 302.8& 140.2 \\
+Flux return& Scint/steel& 303.3& 567.3& 604.2 \\
+LumiCal& Silicon-W& 155.7& 170.0& 20.0 \\
+BeamCal& Semicond-W& 277.5& 300.7& 13.5 \\
+    \hline
+\end{tabular}
+   \end{center}
+    \caption{Key parameters of the baseline SiD design. (All dimension
+are given in cm).}
+\label{tab:Ovw_sidparams}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Silicon-based tracking}
+The tracking system (Fig.~\ref{fig:fig_vxdtrk}) is a key element of the SiD detector concept. The
+particle flow algorithm requires excellent tracking with superb efficiency and
+two-particle separation. The requirements for precision measurements, in
+particular in the Higgs sector, place high demands on the momentum resolution at
+the level of $\delta (1/\pT)  \sim 2-5 \times 10^{-5}/$GeV/$c$.
+
+Highly efficient charged particle tracking is achieved using the pixel detector
+and main tracker to recognise and measure prompt tracks, in conjunction with the ECAL, which can
+identify short track stubs in its first few layers 
+to catch tracks arising from secondary decays of long-lived particles. With
+the choice of a 5~T solenoidal magnetic field, in part chosen to control the $\ee$-pair
+background, the design allows for a compact tracker design. 
+
+\begin{figure}[tb]
+ %\epsfysize=9.0cm
+ \begin{center}
+ \includegraphics[width=0.7\hsize]{chapters/detectors/figures/vxdtrk.pdf}
+ \end{center}
+\caption{r-z view of vertex detector and outer tracker.
+\label{fig:fig_vxdtrk}}
+  \end{figure}
+
+\subsection{Vertex detector}
+
+To unravel the underlying physics mechanisms of new observed processes, the
+identification of heavy flavours will play a critical role. One of the main
+tools for heavy flavour identification is the vertex detector. The physics goals
+dictate an unprecedented spatial three-dimensional point resolution and a very
+low material budget to minimise multiple Coulomb scattering. The running 
+conditions at the ILC impose the readout speed and radiation tolerance. 
+These requirements are normally in tension. High
+granularity and fast readout compete with each other and tend to increase the
+power dissipation. Increased power dissipation in turn leads to an increased
+material budget. The challenges on the vertex detector are considerable and
+significant R\&D is being carried out on both the development of the sensors and
+the mechanical support.
+The SiD vertex detector uses a barrel and disk layout. The barrel section
+consists of five silicon pixel layers with a pixel size of
+$20~\times~20~\micron^2$. The forward and backward regions each have four
+silicon pixel disks. In addition, there are three silicon pixel disks at a
+larger distance from the interaction point to provide uniform coverage for the
+transition region between the vertex detector and the outer tracker. This
+configuration provides for very good hermeticity with uniform coverage and
+guarantees excellent charged-track pattern recognition capability
+ and impact parameter resolution 
+over the full solid angle. 
+This enhances the capability of the integrated tracking system and, 
+in conjunction with the high magnetic field, makes for a very compact
+system, thereby minimising the size and costs of the calorimetry.
+
+To provide for a very robust track-finding performance the baseline 
+choice for the vertex detector has a sensor technology that provides
+time-stamping of each hit with sufficient precision to assign it to
+a particular bunch crossing. This significantly suppresses
+backgrounds. 
+
+%Several technologies are being developed. One of them is a CMOS-based
+%monolithic pixel sensor called Chronopixel. The main goal for the design is a
+%pixel size of about $10~\times~10~\micron^2$ with 99\% charged-particle
+% efficiency. Prototype devices have demonstrated that the concept works; 
+%what should be a fully functional chip is presently under test. More 
+%challenging is the 3D vertical integrated silicon technology, for which a full 
+%demonstration is also close.
+
+Several vertex detector sensor technologies are being developed.  One of these is a 
+monolithic CMOS pixel detector with time-stamping capability (Chronopixel~\cite{Sinev:2015iwr}),
+being developed in collaboration with SRI International. 
+The pixel size is about  $10~\times~10~\micron^2$ with a design goal of 99\% charged-particle
+ efficiency.
+The time-stamping feature of the design means each hit is accompanied by a time tag with sufficient precision to assign it to a particular bunch crossing of
+the ILC -- henc the name Chronopixel. This reduces the occupancy to negligible levels, even in the
+innermost vertex detector layer, yielding a robust vertex detector which operates at background
+levels significantly in excess of those currently foreseen for the ILC. Chronopixel differs from the
+similar detectors developed by other groups by its capability to record time stamps for two hits in
+each pixel while using standard CMOS processing for manufacturing. 
+Following a series of prototypes, the Chronopixel has been proven to be
+a feasible concept for the ILC. The three prototype versions
+were fabricated in 2008, in 2012, and in 2014.
+The main goal of the third prototype was to test possible solutions for a high capacitance problem
+discovered in prototype 2. The problem was traced to the TSMC 90 nm technology design rules,
+which led to an unacceptably large value of the sensor diode capacitance. Six different layouts
+for the prototype 3 sensor diode were tested, and the tests demonstrated that the high capacitance
+problem was solved.
+
+With prototype 3 proving that a Chronopixel sensor can be successful with all known problems solved, optimal sensor design would be the focus of future tests.
+The charge collection efficiency for different sensor diode options needs to be measured to determine
+the option with the best signal-to-noise ratio. Also, sensor efficiency for charged particles with sufficient energy to penetrate the sensor thickness and ceramic package, along with a trigger telescope measurement, needs to be determined. Beyond these fundamental measurements, a prototype of a few cm$^2$ with a final readout scheme would
+test the longer trace readout resistance, capacitance, and crosstalk.
+
+A more challenging approach is the 3D vertical integrated silicon technology, for which a full 
+demonstration is also close.
+
+
+
+
+Minimizing the support material is critical to the development of a high-performance 
+vertex detector. An array of 
+low-mass materials such as reticulated foams and silicon-carbide
+materials are under consideration. An alternative approach that is being pursued very actively is the
+embedding of thinned, active sensors in ultra low-mass media. This line of R\&D
+explores thinning active silicon devices to such a thickness that the silicon
+becomes flexible. The devices can then be embedded in, for example, Kapton
+structures, providing extreme versatility in designing and constructing a vertex
+detector.
+
+Power delivery must be accomplished without exceeding the material budget and
+overheating the detector.  The vertex detector 
+design relies on power pulsing during bunch trains to minimise heating 
+and uses forced air for cooling. 
+
+\subsection{Main tracker}
+The main tracker technology of
+choice is silicon strip sensors arrayed in five nested cylinders in the central
+region and four disks following a conical surface with an angle of 5 degrees
+with respect to the normal to the beamline in each of the end regions. The geometry of the endcaps
+minimises the material budget to enhance forward tracking. The detectors are
+single-sided silicon sensors, approximately 10 $\times$ 10 cm$^2$ with a readout
+pitch of 50~$\micron$. The endcaps utilise two sensors bonded back-to-back for
+small angle stereo measurements. With an outer cylinder radius of 1.25~m
+and a 5~T field, the charged track momentum resolution will be better than
+$\delta (1/\pT) = 5 \times 10^{-5} $/(GeV/$c$) for high momentum tracks with coverage down to polar angles of 10 degrees.
+A plot of the material budget as a function of polar angle is shown in Fig.~\ref{fig:sid_mat_budget}.
+
+%%%%%%%%%%%%%%%%
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.60\hsize]{./chapters/detectors/figures/SiD_material_budget_tracker.png}
+\end{center}
+\caption{Material in the SiD detector, in terms of fractions of a radiation length, as a function of the polar angle.}
+\label{fig:sid_mat_budget}
+\end{figure}
+%%%%%%%%%%%%%%%%%
+
+
+The all-silicon tracking approach has been extensively tested using full Monte-Carlo
+simulations including full beam backgrounds. Besides having an excellent momentum resolution
+it provides robust pattern recognition even in the presence of backgrounds and has a
+real safety margin, if the machine backgrounds will be worse than expected.
+
+\subsection{Main calorimeters}
+
+The SiD  baseline design incorporates the elements needed to
+successfully implement the PFA approach. This imposes a number of
+basic requirements on the calorimetry. The central calorimeter
+system must be contained within the solenoid in order to reliably associate
+tracks to energy deposits. The electromagnetic and hadronic sections
+must have imaging capabilities that allow both efficient
+track-following and correct assignment of energy clusters to tracks. These
+requirements imply that the calorimeters must be finely segmented both
+longitudinally and transversely. In order to ensure that no significant amount
+of energy can escape detection, the calorimetry must extend down to small
+angles with respect to the beampipe and must be sufficiently deep to prevent
+significant energy leakage. Since the average penetration depth of a hadronic
+shower grows with its energy, the calorimeter system must be designed for the
+highest-energy collisions envisaged.
+
+In order to ease detector construction the calorimeter mechanical design consists of a series of modules of
+manageable size and weight. The boundaries between
+modules are kept as small as possible to prevent significant non-instrumented
+regions. The detectors are designed to have excellent long-term stability and reliability,
+since access during the data-taking period will be extremely limited, if not
+impossible.
+
+The combined ECAL and HCAL systems consist of a
+central barrel part and two endcaps, nested inside the barrel. The entire barrel system is contained
+within the volume of the cylindrical superconducting solenoid. 
+
+%The
+%electromagnetic calorimeter has silicon active layers between tungsten absorber
+%layers. The active layers use 5$\times$5~mm$^2$ silicon pixels, which provide excellent spatial resolution.
+%The structure has 30 layers in total, the first 20 layers having a
+%thinner absorber than the last ten layers. This configuration is a 
+%compromise between cost, electromagnetic shower radius, sampling frequency, and
+%shower containment. The total depth of the electromagnetic calorimeter is 26
+%radiation lengths (\xo) and one nuclear interaction length. 
+
+SiD's reliance on particle flow calorimetry to obtain a jet energy resolution of  $\sim$3\% demands a highly segmented (longitudinally and laterally) electromagnetic calorimeter. It also calls for a minimized lateral electromagnetic shower size, by minimizing the Moliere radius to efficiently separate photons, electrons and charged hadrons.
+
+The SiD ECal design employs thirty longitudinal layers, the first twenty each with 2.50 mm tungsten alloy thickness and 1.25 mm readout gaps, and the last ten with 5.00 mm tungsten alloy.  The total depth is 26 radiation lengths, providing good containment of electromagnetic showers.
+
+Simulations have shown the energy resolution for electrons or photons
+to be well described by 0.17 / $\sqrt{E}$ $\oplus$ 0.009, degrading a
+bit  at higher energies due to changes in sampling fraction and a small leakage.
+
+The baseline design employs tiled, large, commercially produced silicon sensors (currently assuming 15 cm wafers). The sensors are segmented into pixels that are individually read out over the full range of charge depositions. The complete electronics for the pixels is contained in a single chip, the KPiX ASIC~\cite{Brau:2013yb}, which is bump bonded to the wafer. The low beam-crossing duty cycle ($10^{-3}$) allows reducing the heat load using power pulsing, thus allowing passive thermal management within the ECal modules.
+
+Bench tests of the KPiX bonded sensor  with a cosmic ray telescope trigger yielded 
+a Landau distribution with a peak of the signal at about 4 fC is consistent with our expectation for minimum-ionizing particles (MIP) passing through the fully-depleted 320 $\mu$m thick sensors. Crosstalk between channels has been managed and the 
+ noise distribution shows an RMS of 0.2 fC, well below the 4 fC MIP signal, and exceeding the ECal requirement.
+
+The overall mechanical structure of the ECal barrel has been designed for minimal uninstrumented gaps. Input power and signals are delivered with Kapton flex cables.
+The KPiX chip has an average power less than 20 mW, resulting in a
+total heat load  that is managed with a cold plate and water pipes routed 
+into the calorimeter.
+
+A first SiD ECal prototype stack of nine (of thirty) layers has been constructed and was exposed to a 12.1 GeV electron beam at the SLAC End Station Test Beam Facility. 
+This data collection demonstrated good measurements of multiple particle overlap and reconstruction of overlapping showers~\cite{Steinhebel:2017qze}.  Comparison of the deposited energy distribution in each of the nine layers also agrees well with simulations.
+An algorithm developed to count the number of incident electrons in each event was used to assess the ability of the calorimeter to separate two showers as a function of the separation of the showers, achieving 100\% for separations of $>$10 mm.
+
+
+
+The hadronic
+calorimeter has a depth of 4.5 nuclear interaction lengths, consisting of
+alternating steel plates and active layers. The baseline choice for the active
+layers is scintillator tiles read out via silicon photomultipliers. For this approach SiD is closely following the analog hadron calorimeter developments within the CALICE collaboration. In this context, the simulated HCAL energy resolution has been shown to reproduce well the results from the CALICE AHCAL prototype module exposed to pion beams.
+
+\subsection{Forward calorimeters}
+\label{subsub:det:forward}
+Two special calorimeters are foreseen in the very forward region: LumiCal for a precise luminosity measurement as discussed in Sec.~\ref{subsec:lumi_prec}, and BeamCal for the fast estimation of the collision parameters and tagging of forward-scattered beam particles. LumiCal and BeamCal are both compact cylindrical electromagnetic calorimeters centered on the outgoing beam, making use of semiconductor-tungsten technology. BeamCal is placed just in front of the final focus quadrupole and LumiCal is aligned with the electromagnetic calorimeter endcap. 
+
+LumiCal makes use of conventional silicon diode sensor readout. It is a precision device with challenging requirements on the mechanics and position control, and must achieve a small Moliere radius to reach its precision targets. Substantial work has been done to thin the silicon sensor readout planes within the silicon-tungsten assembly. Dedicated electronics with an appropriately large dynamic range is under development.
+
+BeamCal is exposed to a large flux of low-energy electron-positron pairs originating from beamstrahlung. These depositions, useful for a bunch-by-bunch luminosity estimate and the determination of beam parameters, require radiation hard sensors. The BeamCal has to cope with 100\% occupancies, requiring dedicated front-end electronics. A challenge for BeamCal is to identify sensors that will tolerate over one MGy of ionizing radiation per year. Sensor technologies under consideration include polycrystalline chemical vapor deposition (CVD) diamond (too expensive to be used for the full coverage), GaAs, SiC, Sapphire, and conventional silicon diode sensors. The radiation tolerance of all of these sensor technologies has been studied in a high-intensity electron beam. 
+
+For SiD, the main activities are the study of these radiation-hard sensors, development of the first version of the so-called Bean readout chip, and the simulation of BeamCal tagging for physics studies. SiD coordinates these activities through its participation in the FCAL R\&D Collaboration.
+
+\subsection{Magnet coil}
+
+The SiD superconducting solenoid is based on the CMS solenoid
+design philosophy and construction techniques, using a slightly modified CMS
+conductor as its baseline design. Superconducting strand count in the coextruded
+Rutherford cable was increased from 32 to 40 to accommodate the higher 5~T
+central field. 
+
+Many iron flux return configurations have been simulated in two
+dimensions so as to reduce the fringe field. An Opera 3D calculation with the Detector
+Integrated Dipole (DID) coil has been completed.
+Calculations of magnetic field with a 3D ANSYS program
+are in progress. These will have the capability to calculate forces and stress
+on the DID as well as run transient cases to check the viability of using the
+DID as a quench propagator for the solenoid. Field and force calculations with
+an iron endcap HCAL were studied. The field homogeneity improvement was found
+to be insufficient to pursue this option. 
+
+Conceptual DID construction and
+assembly methods have been studied. The solenoid electrical power system,
+including a water-cooled dump resistor and grounding, was established.
+Significant work has been expended on examining different conductor stabiliser
+options and conductor fabrication methods. This work is pursued as a cost- and
+time-saving effort for solenoid construction.
+
+\subsection{Muon system}
+The flux-return yoke is instrumented with position sensitive detectors to
+serve as both a muon filter and a tail catcher. The total area to be
+instrumented is very significant -- several thousand square meters. Technologies
+that lend themselves to low-cost large-area detectors are therefore under
+investigation. Particles arriving at the muon system have seen large amounts of
+material in the calorimeters and encounter significant multiple scattering
+inside the iron. Spatial resolution of a few centimetres is therefore
+sufficient. Occupancies are low, so strip detectors are possible. The SiD 
+baseline design uses scintillator technology, with RPCs as an alternative. 
+The scintillator technology uses extruded scintillator readout with wavelength 
+shifting fibre and SiPMs, and has been successfully demonstrated. 
+Simulation studies have shown that nine or more layers of sensitive detectors 
+yield adequate energy measurements and good muon detection efficiency and purity.
+The flux-return yoke itself has been optimised with respect to the
+uniformity of the central solenoidal field, the external fringe field,
+and ease of the iron assembly. 
+This was achieved by separating the  barrel and end sections of the
+yoke along a 30 degree line.
+
+\subsection{The machine-detector interface}
+A time-efficient implementation of the push-pull model of
+operation sets specific requirements and challenges for many detector and
+machine systems, in particular the interaction region (IR) magnets, the
+cryogenics, the alignment system, the beamline shielding, the detector design
+and the overall integration. The minimal functional requirements and interface
+specifications for the push-pull IR have been successfully developed and
+published~\cite{Parker:2009zz,Buesser:2012et}.  All further IR design
+work on both the detectors and machine sides are constrained by these 
+specifications.
+
+
+\subsection{R\&D issues for the SiD design}
+\label{SiD-RandD}
+
+\subsubsection{Monolithic Active Pixel Sensors}
+MAPS technology is being actively studied for the \sid~ tracking and electromagnetic calorimeter systems, with initial prototyping underway.
+For larger-scale objects like a full tracker or an ECAL sensor, larger structures than the usual full-reticle size (roughly 2.5 $\times$ {2.5}{cm$^2$}) units are required.
+Reticles would be stitched together with balcony circuitry on one or two (opposing) edges. 
+
+In terms of general MAPS R\&D required for \sid, mastering of the stitching technology is required, 
+as for such large areas - O($\sim${100}{m$^2$}) for the 
+tracker and  O($\sim${1000}{m$^2$}) for the ECAL - yield becomes an issue. The distribution of power and data over such a large area sensor will be a challenge 
+as well and dedicated R\&D is needed.
+
+Given the timescales involved for the construction of an ILC detector like \sid , with the mainstay of construction happening at the end of decade, 
+investment into new processes are needed, as the presently available processes will most likely not be available anymore. The most probable technology 
+for a next-generation MAPS process are the $\sim${65}{nm} CMOS processes that are just becoming available to the community. As CMOS processes use larger wafers 
+(ten or twelve inch wafers) as well as taking advantage of a fully industrial process, the move to MAPS also has clear advantages in terms of a cost reduction for both the 
+tracker and the ECAL.
+
+Simulation studies of electromagnetic showers have demonstrated that the ILC TDR level resolutions, and even better, can be achieved with a digital hit/no-hit threshold MAPS ECAL.~\cite{Brau:2021} The pixel structure of \SI{25}{\micro\meter} x \SI{100}{\micro\meter} is chosen to optimize tracking and ECAL applications.
+
+\subsubsection{Hadron Calorimeter}
+Extensions to and optimization of the hadron calorimeter design will also address the following:
+ \begin{itemize}
+\item inclusion of timing layers to assist the particle flow algorithm in separating the delayed shower components from slow neutrons from the prompt components.
+ 
+\item potential cost saving by making some of the outer layers thicker if there is no significant degradation in energy resolution.
+
+\item optimization of the boundary region between the ECAL and the HCAL and optimization of the first layers of the HCAL to best assist with the measurement of electromagnetic shower leakage into the HCAL.
+
+\item reconsideration of the effects of projective cracks between modules. There is some indication from earlier studies that projective cracks have no negative effect on energy resolution, but this needs further verification.
+
+\item exploration of alternative layouts for HCAL sectors in the end-caps.
+
+\item optimization of the boundary between the HCAL barrel and end-caps.
+
+\end{itemize}
+
+\subsubsection{Muon system}
+\begin{itemize}
+\item Optimization of number of instrumented layers, barrel and end-caps.
+\item Optimization of strip lengths, mainly for barrel system.
+\item Design for muon endcaps - twelve-fold geometry.
+\item Occupancies at inner radius of muon end-caps versus strip widths.
+\item Role of muon system as tail-catcher for HCAL. Consideration and implications of CALICE ECAL + HCAL + Tail-catcher test beam results.
+\item Potential for use of muon system in search for long-lived particles; timing and pointing capabilities.
+\end{itemize}
+ 
+\subsubsection{Forward Calorimeters}
+Tasks remaining for the forward calorimeters, with participation in the FCAL R\&D 
+Collaboration, include:
+
+\begin{itemize}
+\item LumiCal: complete development of large dynamic range readout electronics.
+
+\item LumiCal: develop and demonstrate the ability to position and maintain the position of the calorimeter, particularly at the inner 
+radius, in view of the steep dependence of the rate of Bhabha events on polar angle.
+
+\item BeamCal: continue the search for and testing of suiTable sensor technology(s) capable of sustained performance in the very high radiation environment.
+
+\item BeamCal: continue the study of recognizing single electron shower patterns for tagging for physics studies in the face of high radiation background.
+\end{itemize}
+
+
+\section{New Technologies for ILC Detectors} 
+\label{sec:detectortech}
+
+
+
+\subsection{Introduction}
+\label{sec:det-intro}
+
+
+The global particle-physics community continues to develop new ideas for improved sensors and detector systems. In this section, several promising new developments are briefly discussed. Some of these are new technologies that can be integrated in the existing detector concepts, others represent alternatives to the baseline choices made by ILD and SiD. 
+
+
+Since funding for detector R\&D is scarce, it is important that the global program covers the essential R\&D for the ILC. In Europe, CERN~\cite{Aglieri:2764386} and the ECFA detector R\&D panel~\cite{Detector:2784893} have published road maps for the effort in instrumentation. A large EU Horizon 2020 project, AIDA Innova~\cite{AIDAINNOVA}, unites the effort of seven European national laboratories, 30 universities and institutes and eight industrial partners. In the US, important directions for detector R\&D are outlined in the report of the Office of Science Workshop on Basic Research Needs for HEP Detector Research and Development~\cite{osti_1659761}. The "instrumentation frontier group" in the Snowmass process will draft a road map for detector R\&D in the US. 
+
+Especially important is the synergy with detector construction projects on the intermediate time scale. These projects can validate promising new ideas, with sufficient resources for complete engineering designs and extensive prototyping. The construction phase provides valuable lessons about their practicality in large-scale production. We envisage that projects such as the upgrades of the LHC experiments, and the construction of specialized experiments such as Mu3e and experiments at FAIR and the EIC can act as ``stepping stones" in the development of the optimal solutions for the ILC experiments. Smaller experiments, such as for example the LUXE experiment proposed at DESY, might provide an interesting platform to test specific technologies~\cite{Abramowicz:2021zja}.
+
+\subsection{Low-mass support structures for Silicon trackers}
+\label{sec:det-thinsilicon}
+ 
+
+
+The very strict performance requirements of the silicon tracking systems and vertex detectors has pushed the field to develop active and monolithic silicon sensors that can be thinned to 50 $\mu\mathrm{m}$ or less. To build a superb transparent tracking system this innovation in silicon sensors must be accompanied by important advances in the support structures and cooling systems that make a very important contribution to the material of today's state-of-the-art detector systems. Integrated support and cooling solutions are required to meet the very challenging material budget of the ILC experiments.
+
+An important step towards the integration of support structures was made by the DEPFET collaboration~\cite{DEPFET:2012apm}, with the development of the all-silicon ladder concept~\cite{Fischer:2007zzm}. In this ladder design, all on-detector electronics and power and signal lines are integrated on the silicon sensor itself. A robust and stiff mechanical structure is obtained by selective etching of the handle wafer, such that an integrated ``support frame" surrounds the thin sensor. The all-silicon ladder concept was proven in the Belle 2 vertex detector~\cite{Belle-II:2010dht}. Similar self-supporting all-silicon structures can be produced for CMOS active pixel sensors by stitching multiple reticles. The development of the CMOS multi-chip ladder is part of the R\&D for the upgrade of vertex detector envisaged in 2027 or 2028. 
+
+The PLUME collaboration has developed a double-sided CMOS ladder concept. The ladder
+design follows a classical approach: six sensors are connected to a low-mass flex-cable to
+form a module, then two modules are glued on both sides of a mechanical support to form
+the double-sided ladder. Most of the stiffness of this sandwich-type layer stems from the
+two modules rather than from the support, which serves essentially as a spacer and is made of a low-density open Silicon Carbide foam~\cite{Baudot:2012mg}. 
+
+A more aggressive approach is followed by the Mu3e experiment~\cite{Mu3e:2020gyw} that envisages a Kapton support structure for their thinned CMOS sensors. The ALICE upgrade of the Inner Tracking System~\cite{ALICE:2013nwm} envisage CMOS sensors thinned to approximately 50~$\mu\mathrm{m}$. Innovative solutions to the support structures are being pursued, including a study of large, stitched sensors that are thinned and bent to form cylindrical structures around the beam pipe. The experience gained in these construction projects can have important implications in the ILC vertex detector and tracker design.
+
+
+\subsection{Integrated micro-channel cooling}
+\label{sec:det-micro-channels}
+ 
+
+
+The cooling of these ultra-low-mass detector systems represents an important challenge.
+Cooling by a loosely guided gas flow has been demonstrated by the heavy flavour tagger in the STAR experiment~\cite{STAR:2002eio}. Gas-based cooling is also used to complement a traditional bi-phase cooling system in the Belle 2 pixel detector. The heat generated by the pixel sensors is effectively removed by a gas flow at several meters per second. Tests of the mechanical stability of prototypes in gas flows have been performed at CERN by ALICE and CLIC and at DESY by Belle 2. A facility is available for users at the University of Oxford under AIDA innova funding. The magnitude of vibrations induced by the gas flow in realistic prototypes can be kept at the level of a few $\mu\mathrm{m}$.
+
+Micro-channel cooling promises to bring down the material involved in traditional liquid or bi-phase cooling systems. The use of active silicon cooling plates has been pioneered by the NA62 experiment~\cite{NA62:2017rwk} that has operated the GigaTracker successfully for several years. Micro-channel cooling with evaporative $CO_2$ at pressures up to 60 bar is part of the Vertex Locator upgrade of the LHCb experiment. The production of VELO modules based on hybrid pixel detectors glued onto silicon micro-channel cooling plates produced at CEA-LETI was successfully completed in 2021~\cite{Francisco:2021tda}. Installation in the LHCb experiment was still ongoing at the time of writing. Integration of micro-channels directly in the active sensor wafer~\cite{Andricek:2016rsq, Mapelli:2712079} offers the best possible cooling contact, with a thermal Figure-of-merit close to 1~K/W. 
+
+Micro-channel cooling is being considered for FCC-ee~\cite{Barchetta:2021ibt}, where a vertex detector with fast read-out could be positioned close to the beam. In combination with a relatively high-temperature cooling system based on super-critical $CO_{2}$, it might offer a relatively low-mass solution, that brings better control of the temperature than can be achieved with a forced gas flow. The engineering and implications on the material budget need to be studied further.
+
+
+ 
+\subsection{Dual read-out calorimetry}
+\label{sec:det-dual-readout-calorimetry}
+
+
+
+The 20-year-long $R\&D$ program on Dual-Readout Calorimetry (DR, DRC) of the DREAM/RD52 collaboration~\cite{DRC_Wigmans,RD52_emshow,RD52_emperf,RD52_hadperf,RD52_MC,RD52_PID,RD52_SiPM,IDEA_SiPM} has shown that  the effects of the fluctuations in the EM fraction of hadronic showers can be canceled by the independent readout of scintillation (S) and \v{C}erenkov (C) light. The DR fibre-sampling approach achieves a high sampling frequency leading to a competitive EM energy resolution $\sim 10\%/\sqrt{E}$. Application of the DR  procedure gives a stochastic term of the hadronic resolution close to or even below $30\%/\sqrt{E}$ with a small constant term. Test beam results also show excellent particle-ID performance.
+
+
+The advancements in solid-state light sensors such as SiPMs have opened the way for highly granular fibre-sampling detectors with the capability to resolve the shower angular position at the mrad level or even better.
+In the present design 1-mm diameter fibres are placed at a distance  of 1.5-2 mm (center to center) in a metal absorber. Brass, copper, iron and lead are currently under study. The lateral segmentation could then reach the mm level, largely enhancing the resolving power for close-by showers with a significant impact on $\pi^0$ and $\tau$ reconstruction quality. In addition the high Photon Detection Efficiency of SiPMs provide high light yields, thus reducing the effect of photon statistics.
+Readout ASICs providing time information with $\sim$~100 ps resolution may allow the reconstruction of the shower position with $\sim$~5 cm of longitudinal resolution.
+
+The large number and density of channels call for an innovative readout architecture for efficient information extraction. Both charge-integrating and waveform-sampling ASICs are available on the market and candidates for tests have been identified: the Weeroc Citiroc 1A charge integrator and the Nalu Scientific system-on-chip digitisers.  A first implementation of a scalable readout system has been tested with a calorimeter prototype on particle beams. Looking further ahead, digital SiPMs (dSiPMs) could provide significant simplification of the readout architecture, but the technology is still in an early $R\&D$ phase.
+
+The performance of a 4$\pi$  DR calorimeter for an FCC-ee experiment has been studied with full GEANT4 simulation with good results on key physics processes.  This is now the baseline choice for the IDEA~\cite{IDEA_tb1} detector concept. Significant performance improvements have also been shown using deep-learning algorithms. Studies of the potential addition of a dual-readout crystal calorimeter in front find superb EM resolution, while maintaining the hadronic performance and even improving it by applying simple particle flow algorithms~\cite{Lucchini_2020}. A more detailed description is found in Ref.~\cite{Aleksa:2021ztd}.
+
+\subsection{Crystal electromagnetic calorimetry}
+
+
+
+As noted above, the CALICE and RD52/DREAM collaborations have demonstrated that both designs can achieve a jet energy resolution of 3-4\% for jets expected from $W/Z\to qq$ decays~\cite{Sefkow:2015hna,Antonello:2021tsz}. However, the EM energy resolution is expected to be $\sim 15\%/\sqrt{E}$ for Particle Flow  and $\sim 10\%/\sqrt{E}$ for DREAM, largely because of the small sampling fractions. These resolutions are significantly worse than those of crystal ECALs~\cite{L3BGO:1993tta,CMS:2013lxn}. Thus, it is interesting to study the combination of the DREAM fiber HCAL with a crystal ECAL.   This can potentially  maintain or even improve the jet energy resolution while attaining the EM resolution of $<3\%/\sqrt{E}$~\cite{Lucchini:2020bac}. A consortium of US teams is leading this R\&D.
+
+
+
+\subsection{Liquid Argon calorimetry}
+
+
+
+Noble-liquid calorimeters have been successfully used in many high-energy collider experiments, such as ATLAS, D0 or H1. They feature high energy resolution, excellent linearity, uniformity, stability, and radiation hardness. These properties make a noble-liquid calorimeter an appealing candidate for an experiment at the next-generation Higgs factories, especially in the case of a program of high precision physics at the $Z$ pole where an excellent control of the systematic uncertainties is required to match statistical precisions as low as $10^{-5}$.
+
+A design of a highly granular sampling noble liquid calorimeter was first proposed in the context of a FCC-hh experiment~\cite{Aleksa:2019pvl}, and is now being revisited and optimised for a Higgs factory machine. In the central region, it consists of a cylindrical stack of 1536 lead absorbers (2mm thick), readout electrodes (1.2mm thick) and liquid argon active gaps, arranged radially but azimuthally inclined by $\sim 50^o$ with respect to the radial direction. This design allows for reading out the signals without creating any gaps in the acceptance, high sampling frequency, uniformity in $\phi$, and can be build with very good mechanical precision to minimise the constant term of the energy resolution. The use of liquid krypton as active material and of tungsten absorbers is being studied as it could result in a more compact design with better shower separation.
+
+The use of readout electrodes allows to optimise the granularity of each of the 11 longitudinal compartments for the needs of particle-flow reconstruction and particle-ID. A total number of a few million cells can be achieved by using seven-layer PCBs, where the outermost layers provide the high voltage field in the noble-liquid gap, and next layers are signal pads, connected to the central layer where traces bring the signals to the outer edges of the electrodes. The trade-offs between granularity, noise and cross-talk in the design of the PCBs are being studied.
+
+The expected noise levels assuming readout electronics outside the cryostat should allow
+the tracking of single particles and yield a total noise of about 50\,MeV for an
+electromagnetic cluster. The alternative of using cold readout electronics placed inside
+the cryostat is also studied as it would achieve a much lower noise, and could simplify
+the design of the feedthroughs. R\&D on high-density feedthroughs is indeed ongoing to
+allow the analogue readout of millions of channels without any performance degradation.
+A reduction of the amount of dead material in front of the calorimeter can be achieved
+thanks to the progress on 'transparent' cryostats using carbon or sandwiches of
+materials.
+
+Better estimates of the expected performance (using the calorimeter alone and with particle-flow reconstruction), and answers on the feasibility of the designs of the PCBs, the readout electronics and the feedthroughs, will be available in the next months and years.
+
+\subsection{Digital pixel calorimetry}
+
+
+Initial proof-of-concept demonstrations of the use of digital electromagnetic calorimetry (DECAL) were made in the framework of ILC detector development \cite{Ballin:2008db,Ballin:2009yv,Dauncey:2010zz}.  The first proof-of-principle of a DECAL was made in the context of the ALICE experiment forward calorimeter proposal (FoCal) \cite{ALICE:2020mso}, with the design and fabrication of a multiple-layer prototype and corresponding measurements, proving the viability of the concept \cite{deHaas:2017fkf}.
+
+The fundamental principle underlying a DECAL is to measure energy by counting the number of charged shower particles using very high transverse granularity sampling layers.  To avoid saturation effects and ensure competitive resolution and linearity, binary-readout CMOS pixels are used; these must be sufficiently small that the double-hit probability is negligible even in the core of high-energy electromagnetic showers.  The small pixel size also has clear benefits in dense particle environments for pattern recognition algorithms such as particle flow, e.g.\ \cite{Brient:2001fow}.
+
+Digital calorimeters use a sandwich structure of silicon and tungsten layers, with Monolithic Active Pixel Sensors (MAPS) being a natural choice in terms of granularity and cost.
+%% , e.g.\ the use of the TPAC sensors \cite{Dauncey3} for . 
+The proof-of-principle prototype \cite{deHaas:2017fkf}, also called EPICAL-1, required a total sensor area of almost 400~cm$^2$, and therefore the  PHASE2/MIMOSA23 chip from IPHC \cite{Winter:2010zz} with a pixel size of $30 \times 30 \, \mu \mathrm{m}^2$ was used for this R\&D.
+%, despite being too slow for use in an experiment, 
+
+Current R\&D is performed using a second generation DECAL prototype, the EPICAL-2, which has an active area of approx.\ $3\times 3$~cm$^{2}$ per sensitive layer. These comprise state-of-the-art ALPIDE sensors, developed for the ALICE ITS and MFT \cite{AglieriRinella:2017lym}, which have a similar pixel size to the MIMOSA.  Measurements with this prototype have been performed with cosmic muons in the lab, and with test beams at both DESY in 2020 and the CERN SPS in 2021. This prototype has performed extremely well, surpassing the performance of EPICAL-1. The substantial experience with two prototypes using sensors from different developers and foundries has reliably demonstrated that the technology is a very good candidate for future calorimeters.
+
+Full analysis of data from EPICAL-1 and preliminary results from EPICAL-2 show:
+\begin{enumerate}
+\item CMOS MAPS sensors work reliably in the high particle density environment of high-energy electromagnetic showers;
+\item there are no substantial saturation effects due to shower particle overlap in the pixels up to energies of at least a few hundred GeV;
+\item the energy resolution from test beam results at DESY is very similar to that from state-of-the-art in analogue silicon-tungsten calorimeters;
+\item  the single-shower position resolution is of the order of the pixel size or better.  
+\end{enumerate}
+The data obtained with EPICAL-2 will improve the understanding of the detection process and allow the development of improved reconstruction algorithms, including the correction of possible residual saturation effects.
+
+While the work discussed above concentrates on a small scale prototype to further develop the new technology, parallel R\&D activities are ongoing to solve the challenges related to scaling this up to a reasonable size. A very similar detector concept using the same technology is the basis for a development of a proton CT scanner for medical applications \cite{Alme2020}---this addresses the development of large area pixel sensor layers for use in a calorimeter, including full connectivity and services.
+
+
+\subsection{Low gain avalanche detectors}
+\label{sec:det-timing}
+
+
+
+Low-Gain Avalanche Diode (LGAD) sensors~\cite{Pellegrini:2014lki} are a promising technology that, due to their intrinsic signal amplification, could significantly reduce the sensor substrate thickness and hence the material budget of the Silicon tracking systems of the ILC experiments. The large signal-to-noise ratio and short rise time of the LGAD signal make them also suitable for the precise time stamping of charged particles~\cite{Sadrozinski:2016xxe,Cartiglia:2016voy}. A tracker system based on these technologies could provide high-precision tracking and a timing resolution of the order of tens of picoseconds that would significantly enhance particle-identification capabilities, in particular for low-momentum charged-particle tracks.
+
+
+LGADs are the current reference technology for timing detectors for charged particles in preparation for the high-luminosity upgrades of the LHC experiments. Large-area timing detectors based on this technology are envisaged for the CMS~\cite{Butler:2019rpu} and ATLAS~\cite{Allaire:2018bof} HL-LHC upgrades.
+
+The adaptation of LGAD technology to the requirements of a high-precision tracking system for the ILC detectors involves two main challenges with respect to the current state of the art: high fill factor and large area detector fabrication. Dedicated R \& D activities are being carried out to address these challenges on the basis of specialized developments of the LGAD concept: inverted LGAD (iLGAD~\cite{Pellegrini:2014lki,Curras:2019aky}, trench-isolated LGAD (TI-LGAD~\cite{paternoster}), and AC-coupled LGADs (AC-LGAD or RSD~\cite{Mandurrino:2019csy}). 
+
+
+%[1] G.Pellegrini and et al., Recent technological developments on LGAD and iLGAD detectors for tracking and timing applications, Nucl. Inst. Meth. A 831 (2016) 24{28.
+%[2] G. Paternoster and et al., Trench-Isolated Low Gain Avalanche Diodes (TI-LGADs), IEEE Electr. Device L. 41 (2020) no. 6, 884.
+
+%[3] M. Mandurrino and et al., Demonstration of 200-, 100-, and 50- um Pitch Resistive AC-Coupled Silicon Detectors (RSD) With 100% Fill-Factor for 4D Particle Tracking, IEEE Electr. Device L. 40 (2019) no. 11, 1780.
+
+\subsection{New sensor technologies for highly compact electromagnetic calorimeters }
+
+
+%The preferred technology for luminometers for future electron-positron Colliders are highly compact and finely grained sandwich calorimeters, used to measure precisely the number of low-angle Bhabha scattering events. A small Moliere radius is essential to match the requirements on performance and keep the fiducial volume small. Tungsten will serve as absorber material. Essential is to keep the gaps for sensor planes small. Ultra-thin GaAs detector planes have been developed, with pad sizes of 5$\times$5 mm$^2$ and read-out traces integrated on the sensor.  
+
+The luminosity is a key parameter of any collider. For electron-positron colliders Bhabha scattering at small angles is the gauge process to approach a precision
+of 10${-3}$ or better. To count Bhabha events compact electromagnetic calorimeters are the preferred technology. A small Moliere radius is of advantage, in particular in the presence of background. In addition, it keeps the size of the calorimeters small, and allows to define precisely the fiducial volume, important for the precision of the measurement. Tungsten is an absorber material with a very small Moliere radius. To instrument the calorimeter with sensors, gaps between tungsten plates have to be foreseen. In order to keep the Moliere radius near that of tungsten, these gaps must be very small, requiring thin assembled sensor planes. For this purpose GaAs sensors with aluminum traces integrated on the sensors are developed. These traces connect the sensor pads with bonding pads on the edge of the sensor. A flexible Kapton PCB with copper traces is bonded to the sensor and feeds the signals to the FE ASICs.     
+
+GaAs sensors are made of single crystals. High resistivity of $10^9 \Omega {\rm m}$ is reached by compensation with chromium. The pads are $4.7 \times 4.7$~mm$^2$, with $0.3$~mm gap between pads. Pads consist of a $0.05 \micron$ vanadium layer, covered with a $1 \micron$ aluminum, made with electron beam evaporation and magnetron sputtering. The back-plane is made of nickel and aluminum of $0.02$ and $1 \micron$ thickness, respectively. 
+The sensors are $550 \micron$ thick with overall sizes of $51.9 \times 75.6$~mm$^2$.  The active area is $74.7 \times 49.7$~mm$^2$ leading to $15\times 10$ pads without guard rings. 
+The signals from the pads are routed to bond pads on the top edge of the sensor      
+by aluminum traces implemented on the sensor itself, thus avoiding the presence of a flexible PCB fanout.
+The traces are made of $1 \micron$ thick aluminum film deposited on the silicon dioxide passivation layer by means of magnetron sputtering. 
+A prototype sensor is shown in Fig.~\ref{ECAL_GAAS_pic} (left).
+\begin{figure}[htb]
+\begin{center}
+    \includegraphics[width=0.45\columnwidth]{./chapters/detectors/figures/ECAL_GAAS_pic.png}
+    \hfill
+    \includegraphics[width=0.45\columnwidth]{./chapters/detectors/figures/ECAL_GAAS_cut.png}
+    \caption{Left: Picture of a GaAs sensor. The bond pads are visible on top of the sensor, Right: Cross-profile of a GaAs sensor. The aluminum traces are positioned between the pads, on the top of the passivation layer.}
+    \label{ECAL_GAAS_pic}
+  \hspace{0.025\textwidth}
+  \end{center}
+\end{figure}
+
+Details on the sensor structure can be seen in the cross-profile shown in Fig.~\ref{ECAL_GAAS_pic} (right).
+More details on the aluminum traces are illustrated in Fig.~\ref{ECAL_traces_detail}(left).
+\begin{figure}[ht!]
+\begin{center}
+    \includegraphics[width=0.35\columnwidth]{./chapters/detectors/figures/ECAL_traces_detail.png}
+    \hfill
+    \includegraphics[width=0.55\columnwidth]{./chapters/detectors/figures/ECAL_GaAs_leakage}
+    \caption{Left: Picture of the surface of a GaAs sensor. The aluminum traces are positioned between the pads, on the top of the passivation layer, Right: The leakage current of a pad as a function of the bias voltage, measured at $20^\circ$C.}
+    \label{ECAL_traces_detail}
+\end{center}
+\end{figure}
+
+Using several prototype sensors, the leakage current of all pads was measured as a function of the bias voltage. A typical example is shown in Fig.~\ref{ECAL_traces_detail}(right). At a bias voltage of 100~V the leakage current amounts to about 50~nA.
+\begin{figure}[htb]
+\begin{center}
+    \includegraphics[width=0.6\columnwidth]{./chapters/detectors/figures/ECAL_signal_distribution.pdf}
+ \caption{Distribution of signals measured with the GaAs pad sensors in an electron beam of 5~GeV.}
+   \label{ECAL_signal}
+\end{center}
+\end{figure}
+
+The implementation of the aluminum traces is a new technology. The response to relativistic electrons was measured in a test-beam of 5~GeV at DESY. A clear signal was observed, as can be seen in Fig.~\ref{ECAL_signal}
+
+The first results from test-beam measurements are very promising. detailed studies on homogeneity of the response, and cross talk are still ongoing. Currently these sensors are the baseline option for the electromagnetic calorimeter of the LUXE experiment.
+
+\subsection{Single crystal sapphire sensors for charged particle detection }
+
+
+
+For the operation in a harsh radiation environment, typical for near-beam detectors at LHC or free electron lasers like FLASH and XFEL, extremely radiation hard sensors are needed. In the past often CVD grown diamond sensors are used in such environment.
+%\cite[1, 2]. 
+Regardless of the excellent radiation hardness and low leakage current at room temperature, the application of diamond sensors is limited due to high cost, relatively small size and low manufacturing rate. As an alternative we suggest using sapphire sensors. Optical grade single crystal sapphire is industrially grown in practically unlimited amounts and the wafers are of large size and low cost. Sapphire sensors have been used so far in cases where the signal is generated by simultaneous hits of many particles, i.e., in the beam halo measurement at at FLASH, XFEL and the CMS experiment at the LHC. It was found that the time characteristics of signals from sapphire sensors are similar to the ones from CVD diamond sensors
+%\cite[2]. 
+The radiation hardness of sapphire sensors was studied in a low
+energy electron beam up to an absorbed dose of 12~MGy. 
+%\cite[3]. 
+
+A key parameter of the measurements is the Charge collection efficiency, CCE, defined as the ratio of the measured to the expected signal charge\footnote{The CCE corresponds to the effective drift path of charge carriers released by an ionising particle in the electric field in the sensor volume.} The expected signal is determined from the energy loss on 5~GeV electrons in sapphire, and the energy needed to create an electron-hole pair.
+The  detector is composed of metallized sapphire plates of 10×10 mm$^2$ area and 525~$\micron$ thickness. The total thickness of this detector amounts to 14\% of a radiation length. Since the response is depending on the direction with respect to the plane axis of the particles crossing it, interesting fields of applications are beam-halo rate or low angle scattering measurements. Basic characteristics, like the dependence of the CCE on the applied voltage and position resolved sensor response. More details can be found in Ref.~\cite{Karacheban:2015jga}.
+
+Sapphire is a crystal of aluminum oxide, Al$_2$O$_3$3. Wafers were obtained from the CRYSTAL company. 
+%\cite[4]. 
+Single crystal ingots were produced using the Czochralski method and
+cut into wafers of 525~$\micron$ thickness. Contamination of other elements are on the level of a few ppm. The wafer was cut into quadratic sensors. Each sensor has dimensions $10 \time 10 \time 0.525$~mm$^3$, metallized on both sides with consecutive layers of Al, Pt and Au of 50~nm, 50~nm and 200~nm thickness, respectively.
+
+To enhance the signal size, the orientation of the sapphire plates
+in the test beam measurements was chosen to be parallel to the beam direction. In addition, this orientation leads to a direction sensitivity. Only particles crossing fully the sensor parallel to the surface create the maximum signal. A stack of eight plates were assembled together, as shown in Fig.~\ref{sapphire_stack} (left).
+\begin{figure}[ht!]
+\begin{center}
+    \includegraphics[width=0.45\columnwidth]{./chapters/detectors/figures/Sapphire_sensor.png}
+    \includegraphics[width=0.45\columnwidth]{./chapters/detectors/figures/Sapphire_stack.png}
+    \caption{Left: Picture of a metallised sapphire sensor, Right: Schematic view of the sapphire sensor stack, consisting of 8 sensors.The direction of the beam electrons is indicated by the arrow and represents the z-coordinate. The y coordinate is perpendicular to the sensor plane.}
+    \label{sapphire_stack}
+  \hspace{0.025\textwidth}
+  \end{center}
+\end{figure}
+The leakage current of the sensors was measured as a function of the bias voltage. It amounts to less that 10~pA at 1000~V. 
+
+In a first measurement sensors were exposed to a high-intensity electron
+beam at the linear accelerator DALINAC at TU Darmstadt. The beam energy was
+8.5~MeV. The response of the sensors was measured
+as the signal current. The relative drop of the signal current, interpreted as the relative drop
+of the charge collection efficiency, CCE, is about 30\% of the initial CCE after a dose of 12~MGy.
+
+The stack, as shown in Fig.~\ref{sapphire_stack} (left), was studied in a 5~GeV electron beam at DESY. The trajectory of each beam electron was precisely measured in a pixel telescope before and after the stack. The impact point on the stack was predicted with a precision of better that 10$\mu$m, and the scattering angle with a precision better that 50 $\mu$rad.
+Several millions of triggers were recorded at several bias voltages.
+Firstly, an electron tomographic picture of the stack was taken, as shown in Fig.~\ref{sapphire_stack_image}.
+\begin{figure}[t]
+\begin{center}
+    \includegraphics[width=0.45\columnwidth]{./chapters/detectors/figures/Sapphire_stack_image.jpg}
+    \caption{Image of the stack using electron tomography}
+    \label{sapphire_stack_image}
+  \hspace{0.025\textwidth}
+  \end{center}
+\end{figure}
+In this Figure the density of impact points is shown only for beam electrons deflected by an angle larger than 0.5~mrad. The position of the 5 sensor plates is clearly visible.  
+
+The signals from the sapphire sensors are amplified and digitised. An example of signals averaged over several triggers is shown in Fig.~\ref{sapphire_analog_signal} (left) for bias voltages of 550 V and 950 V.
+\begin{figure}[t]
+\begin{center}
+    \includegraphics[width=0.45\columnwidth]{./chapters/detectors/figures/Sapphire_analog_signal.jpg}
+    \hfill
+    \includegraphics[width=0.45\columnwidth]{./chapters/detectors/figures/Sapphire_cce.png}
+    \caption{Left: Digitised analog signals for bias voltages of 550 (red) and 950~V (black) as a function of the time, Right: The CCD measured for all sensor plates a function of the bias voltage.}
+    \label{sapphire_analog_signal}
+  \hspace{0.025\textwidth}
+  \end{center}
+\end{figure}
+
+In almost cases a linear rise of the CCE is observed, reaching at 950~V e.g. for plane 1 a value of 10.5\%. The measured CCE varies from sample-to-sample reflecting variation of the substrate quality. As can be seen, 5 out of the 8 sensor plates have a relatively high and similar CCE of about 7-10\%, while three other plates have lower and different CCE values. 
+The CCE was also measured as a function of the local y coordinate and described by a linear model of electron and hole drift taking into account recombination, trapping and space charges leading to a polarization field. As a result, the  drift length of electrons is more than 10 times larger then the one of holes at the same field strength. About 50\% of the produced electron-hole pairs recombine immediately. 
+
+
+
+
+\subsection{Other novel sensor technologies}
+
+The Snowmass contributed paper ~\cite{Hoeferkamp:2022qwg} describes additional
+novel sensor technologies the might have important advantages for future 
+$\ee$ experiments.
+Drivers of the technologies include radiation hardness, excellent position, vertex, and timing resolution, simplified integration, and optimized power, cost, and material.  We describe these briefly in this section.  These technologies are at different R \& D stages, from early research to final operating scale; please see the individual references for more
+details.
+
+
+
+{\bf Silicon sensors with 3D technology:}
+Silicon sensors with 3D technology~\cite{Parker2019} have electrodes oriented perpendicular to their wafer surfaces.  Due to the short drift lengths, 
+these are very promising for compensation of lost signal in high radiation environments and for separation of pileup events by precision timing. New 3D geometries involving p-type trench electrodes spanning the entire length of the detector, separated by lines of segmented n-type electrodes for readout, promise improved uniformity, timing resolution, and radiation resistance relative to established devices operating effectively at the LHC. Present research aims for operation with adequate signal-to-noise ratio at fluences approaching  $10^{18}n_{\rm eq}/{\rm cm}^2$ with timing resolution on the order of 10 ps.
+
+
+{\bf 3D diamond detectors:}
+The 3D technology is also being realized in diamond substrates~\cite{Tsung:2012gz}, where column-like electrodes are placed inside the detector material by use of a 130 fs laser with wavelength 800 nm. When focussed to a 2 micron spot, the laser has energy density sufficient to convert diamond into an electrically resistive mixture of different carbon phases. The drift distance an electron-hole pair must travel to reach an electrode can be reduced below the mean free path without reducing the number of pairs created. Initial tests have shown that after $3.5 \times 10^{15}$ n/cm$^2$, a 3D diamond sensor with $50~\mu{\rm m} \times 50~\mu{\rm m}$ cells collects more charge than would be collected by a planar device and shows less damage due to the shorter drift distance. 
+
+{\bf Beyond CMOS: submicron pixels for vertexing:}
+A pixel architecture named DoTPiX~\cite{Fourches2017} has been proposed on the principle of a single n-channel MOS transistor, in which a buried quantum well gate performs two functions---as a hole-collecting electrode and as a channel current modulation gate. The quantum well gate is made with a germanium layer deposited on a silicon substrate. The active layers are of the order of 5 microns below the surface, permitting detection of minimum ionizing particles. This technology is intended to achieve extremely small pitch size to enable trigger-free operation without multiple hits in a future linear collider, as well as simplified reconstruction of tracks with low transverse momentum near the interaction point. The necessary simulations have been made to assess the functionality of the proposed device. The next step is to find out what is the best process to obtain the functionality and to reach some required specifications.
+
+{\bf Thin film detectors:}
+Thin film detectors~\cite{Metcalfe:2014nma} have the potential to be fully integrated, while achieving large area coverage and low power consumption with low dead material and low cost. Thin film transistor technology uses crystalline growth techniques to layer materials, such that monolithic detectors may be fabricated by combining layers of thin film detection material with layers of amplification electronics using vertical integration.
+
+
+{\bf Scintillating quantum dots in GaAs for charged particle detection:}   Lastly, a technology is under development in which a novel ultra-fast scintillating material employs a semiconductor stopping medium with embedded quantum dots~\cite{Oktyabrsky:2016ard}. The candidate material, demonstrating very high light yield and fast emission, is a GaAs matrix with InAs quantum dots. The first prototype detectors have been produced, and pending research goals include demonstration of detection performance with minimum ionizing particles, corresponding to signals of about 4000 electron-hole pairs in a detector of 20 micron thickness. A compatible electronics solution must also be developed. While the radiation tolerance of the device is not yet known, generally quantum dot media are among the most radiation hard semiconductor materials.
+
+These sensor technologies and others still to be developed offer the promise of still
+higher performance in the ILC detectors.  We encourage further development, with 
+new collaborators, in all of these directions.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{chapters/detectors/figures/RICH4ILC.pdf}
+\caption{Proposed gaseous RICH detector addition to SiD/ILD~\cite{CairoVavra}.}
+\label{fig:RICH} 
+\end{figure}
+
+
+
+\subsection{Gaseous RICH detector for particle ID at ILC}
+\label{sec:RICH4ILC}
+
+Particle ID can be important for some ILC analysis, in particular, the measurement of $\Gamma(H\to s\overline{s}$ described in Sec.~\ref{sec:Hhadronic}.  Here we describe a  possible RICH detector for $\pi/K$ separation  up to 25 GeV/c~\cite{CairoVavra}. It is well known that a gaseous RICH detector is the only way to reach $\pi/K$ separation up to 30-40 GeV/c. The detector concept is shown in Fig.~\ref{fig:RICH}. An initial choice for the RICH detector thickness is 25 cm active length to minimize magnetic field smearing effects. The RICH detector uses spherical mirrors and SiPMT  photon detectors. The design in the figure resembles the SLD CRID gaseous RICH detector; however, introducing SiPMT-based design improves the performance substantially. Although we have selected a specific type of SiPMT to make our estimates, we believe that the photon detector technology will improve over the next 15 years, both in terms of noise performance, timing capability, pixel size and detection efficiency. The overall aim is to make this RICH detector with as low mass as possible in order not to degrade the calorimeter
+performance. This requires for mirrors made of beryllium and a structure made of low mass carbon-composite material. Another important aspect is to make the RICH detector depth as thin as possible to reduce the cost of the calorimeter. 
+

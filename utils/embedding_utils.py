@@ -3,6 +3,7 @@ import os
 from tenacity import retry, stop_after_attempt, wait_random_exponential
 import openai
 
+from key import openai_api_key
 
 def sliding_window(text, window_size, stride):
     tokens = text.split()
@@ -20,7 +21,10 @@ def embedding_with_backoff(**kwargs):
 
 def get_embedding(text, model="text-embedding-ada-002", api_key=None):
     if api_key is None:
-        openai.api_key = os.environ.get("OPENAI_API_KEY")
+        # try:
+        #     openai.api_key = os.environ.get("OPENAI_API_KEY")
+        # except:
+            openai.api_key = openai_api_key["OPENAI_API_KEY"]
     else:
         openai.api_key = api_key
     text = text.replace("\n", " ")
