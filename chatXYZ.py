@@ -9,7 +9,8 @@ import io
 from utils.embedding_utils import get_embedding
 from tenacity import retry, stop_after_attempt, wait_random_exponential
 
-from key import openai_api_key
+
+from config import openai_api_key, MODEL
 
 
 n_relevant_chunks = 3
@@ -38,7 +39,7 @@ def completion_with_backoff(**kwargs):
     return openai.ChatCompletion.create(**kwargs)
 
 
-def answer_question(chunk, question, api_key=None, model="gpt-3.5-turbo", max_tokens=300, temperature=0.25):
+def answer_question(chunk, question, api_key=None, model="gpt-3.5-turbo", max_tokens=512, temperature=0.25):
     """Return answer to query given context chunk."""
 
     if api_key is None:  # Use system API key
@@ -102,7 +103,7 @@ def run(query, api_key=None):
         query_embedding = get_embedding(query, api_key=api_key)
         ranked_indices = semantic_search(np.array(query_embedding), embeddings)
         most_relevant_chunk = " ".join(df_text.loc[ranked_indices[:n_relevant_chunks], "text_chunks"].values.flatten())
-        answer = answer_question(most_relevant_chunk, query, api_key)
+        answer = answer_question(most_relevant_chunk, query, api_key, model=MODEL)
         answer.strip("\n")
         return answer
 
@@ -125,6 +126,6 @@ def run_test(query, victim, api_key=None):
         query_embedding = get_embedding(query, api_key=api_key)
         ranked_indices = semantic_search(np.array(query_embedding), embeddings)
         most_relevant_chunk = " ".join(df_text.loc[ranked_indices[:n_relevant_chunks], "text_chunks"].values.flatten())
-        answer = answer_question(most_relevant_chunk, query, api_key)
+        answer = answer_question(most_relevant_chunk, query, api_key, model=MODEL)
         answer.strip("\n")
         return answer

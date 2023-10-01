@@ -1,6 +1,10 @@
 from flask import Flask, request, render_template
-from chatjesset import run
+from chatXYZ import run, run_test
 import logging
+
+# API Key
+from config import openai_api_key
+
 
 log_handler = logging.StreamHandler()
 log_formatter = logging.Formatter("%(asctime)s - %(message)s")
@@ -28,15 +32,15 @@ def index():
                 if api_key == "":  # API key is not provided in user mode; show error
                     result = f"Please enter your OpenAI API Key!"
                 elif api_key != "":  # If API key provided in user mode; use it
-                    result = run(query, api_key=api_key)
+                    result = run_test(query, api_key=api_key, victim="Oppie")
             elif api_key_mode == "system":  # API key is not required in system mode; use system key
-                api_key = None
-                result = run(query, api_key=api_key)
+                api_key = openai_api_key["OPENAI_API_KEY"]
+                result = run_test(query, api_key=api_key, victim="Oppie")
                 logger.info(f"User input: {query}")  # Using logger
             else:
                 raise NotImplementedError("Please set api_key_mode to either 'user' or 'system'.")
         except Exception as e:
-            result = f"Whoops something didn't quite work! Perhaps too many people are trying to ask me questions at the moment. Please try again later."
+            result = f"Ah, it seems something terrible has happened. Perhaps too many people are trying to ask me questions at the moment, or the test has gone wrong. Error: {e}"
         return render_template("index.html", result=result, query=query, show_api_key_box=SHOW_API_KEY_BOX)
     else:
         return render_template("index.html", show_api_key_box=SHOW_API_KEY_BOX)

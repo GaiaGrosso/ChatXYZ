@@ -3,7 +3,7 @@ import os
 from tenacity import retry, stop_after_attempt, wait_random_exponential
 import openai
 
-from key import openai_api_key
+from config import openai_api_key
 
 def sliding_window(text, window_size, stride):
     tokens = text.split()

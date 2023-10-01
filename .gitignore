@@ -159,24 +159,24 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Database
-data/papers
-data/videos
-.DS_Store
+# # Database
+# data/papers
+# data/videos
+# .DS_Store
 
-# Deployment file; copy in app_deploy.yaml
-app.yaml
+# # Deployment file; copy in app_deploy.yaml
+# app.yaml
 
-# Text chunks and embeddings
-data/db/text_chunks.csv
-data/db/df_text.csv
-data/db/embeddings.npy
+# # Text chunks and embeddings
+# data/db/text_chunks.csv
+# data/db/df_text.csv
+# data/db/embeddings.npy
 
-# Prompts
-data/db/system_prompt.txt
-data/db/context_prompt.txt
-data/db/*prompt.txt
+# # Prompts
+# data/db/system_prompt.txt
+# data/db/context_prompt.txt
+# data/db/*prompt.txt
 
 
 # OPENAI API KEY
-key.py
+config.py

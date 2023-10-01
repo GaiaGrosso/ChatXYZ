@@ -41,28 +41,32 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
-    <link rel="icon" type="image/png" href="static/favicon.png">
-    <title>ChatJesseT</title>
+    <link rel="icon" type="image/jpg" href="static/iaifi-logo-black-noborder-hires.jpg">
+    <title>OpenAImer</title>
 
     <style>
+
+        
+
         body {
             font-family: 'Lato', sans-serif;
-            color: #333;
+            color: #4e4e4e;
+            /* background-color: #4e4e4e; */
             margin-top: 15px;
         }
 
         a {
-            color: maroon;
+            color: darkred;
             text-decoration: none;
         }
 
         a:hover {
-            color: maroon;
+            color: darkred;
             text-decoration: underline;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
         }
 
         .query-box {
@@ -104,7 +108,7 @@
         }
 
         .btn-maroon {
-            background-color: maroon;
+            background-color: darkred;
             color: white;
         }
 
@@ -118,58 +122,137 @@
 </head>
 
 <body>
-    <form method="POST" class="query-box">
-        <div class="container">
-            <h1>
-                <a href="{{ url_for('home') }}">OppenhAImer</a>
-            </h1>
-            <p>Type your question below.
-            </p>
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" name="query" id="query" class="form-control" autocomplete="off">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-maroon">Ask</button>
-                    </div>
-                </div>
-            </div>
-            <div id="result">
-                <img src="static/oppie.png">
-                <div id="loading-indicator" style="display: none;">
-                    <img src="static/energyflowanimation.gif" alt="Thinking..." width="100">
-                </div>
-                <div>
-                    {% if result %}
-                    <p><span class="query">Question:</span><em>{{ query }}</em></p>
-                    <p>{{ result | safe }}</p>
-                    {% else %}
-                    <p>Welcome to OppenhAImer! <br> Please enter your question above, and I'll do my best to answer it.
-                    </p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="api-key-form">
-                {% if show_api_key_box %}
 
-                <div class="form-group">
-                    <input type="text" name="api_key" id="api_key" class="form-control" autocomplete="off"
-                        placeholder="OpenAI API Key">
-                </div>
-                {% endif %}
+    <!-- Header -->
+
+    <!-- Title with red line underneath -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1><a>OpenAI-mer</a></h1>
+                <hr style="border-top: 1px solid darkred;">
             </div>
-            <footer style="font-size: 0.7em;">
-                &copy; 2023. (Un)Official <a href="https://iaifi.org/" target="_blank">IAIFI</a> product. No NSF funds
-                were
-                harmed in
-                the development of ChatJesseT.
-                <br> <em>Disclaimer:</em> The output of ChatJesseT is produced by giant inscrutable matrices and
-                does not
-                reflect
-                the opinions of the real Jesse Thaler.
-                <!-- With apologies to Jesse Thaler. -->
-            </footer>
         </div>
-    </form>
+
+    <!-- Picture of oppenheimer to the left, and form to enter prompt to the right -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="static/oppie.png" alt="Oppenheimer" style="width: 100%;">
+            </div>
+            <div class="col-sm-8">
+       
+                <!-- Form to enter prompt -->
+                <form method="POST" class="query-box">   
+                    </h1>
+                    <p>Please, pose your question below.
+                    </p>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" name="query" id="query" class="form-control" autocomplete="off">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-maroon">Ask</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div>
+
+                        <!-- Wrap the result in a box that looks like a speech bubble from the left -->
+                            {% if result %}
+
+                        <div class="speech-bubble" style="background-color: darkred; position: relative; color: white">
+                            <p><span class="query"></span><em>{{ query }}</em></p>
+                            <div style="position: absolute; right: -15px; top: 10px; width: 0; height: 0; border-top: 25px solid transparent; border-bottom: 25px solid transparent; border-left: 25px solid darkred;"></div>
+                        </div>
+
+                        <div class="speech-bubble">
+                            <p>{{ result | safe }}</p>
+                            {% else %}
+                            <p>Welcome, colleague! I am OpenAI-mer. <br> Please ask me anything above, and I'll do my best to answer it.
+                            </p>
+                            {% endif %}
+
+                            <!-- Loading indicator -->
+                            <div id="loading-indicator" style="display: none;">
+                                <div class="spinner-border text-danger" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div style="position: absolute; left: -15px; top: 10px; width: 0; height: 0; border-top: 25px solid transparent; border-bottom: 25px solid transparent; border-right: 25px solid #eee;"></div>
+                        </div>
+
+                        <style>
+                            .speech-bubble {
+                                position: relative;
+                                background-color: #eee;
+                                border-radius: 10px;
+                                padding: 10px;
+                                margin: 10px;
+                            }
+                            /* .speech-bubble:after {
+                                content: '';
+                                position: absolute;
+                                left: 0;
+                                top: 50px;
+                                width: 0;
+                                height: 0;
+                                border: 25px solid transparent;
+                                border-right-color: #eee;
+                                border-left: 0;
+                                border-top: 0;
+                                margin-top: -20px;
+                                margin-left: -25px;
+                            } */
+            
+                        </style>
+
+
+                      
+                    </div>
+
+
+                </form>
+
+             
+
+            </div>
+
+    <!-- Red Line with text below explaining who OpenAI-mer and Openhiemer is, and how the model works, with plenty of hyperlinks -->
+    <!-- Same space -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <hr style="border-top: 1px solid darkred;">
+                <p style="font-size: 1em;">My name is OpenAI-mer. I am based off of the real life theoretical physicist <a href="https://en.wikipedia.org/wiki/J._Robert_Oppenheimer" target="_blank">J. Robert Oppenheimer</a>, who is most famous for his work on quantum mechanics and black holes, and his role in the Manhattan Project, the US government's effort to build the first atomic bomb. I am a product of the <a href="https://iaifi.org/" target="_blank">Institute for Artificial Intelligence and Fundamental Interactions</a>, or IAIFI, a collaboration of scientists working together on the intersection of physics and machine learning.</p>
+                <p style="font-size: 1em;">I am powered by <a href="https://openai.com/blog/openai-api/" target="_blank">OpenAI's GPT-4 API</a>, a powerful language model. I am trained using text from <a href="https://en.wikipedia.org/wiki/J._Robert_Oppenheimer" target="_blank">Wikipedia</a>, <a href="https://inspirehep.net/" target="_blank">INSPIRE-HEP</a>, and various biographies. If you have any questions or comments or would like to learn more, please email me at <a href="mailto:rikab@mit.edu">iaifi@mit.edu</a>!</p>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Footer at the bottom -->
+
+    <footer style="font-size: 0.7em; position: fixed; bottom: 0; left: 0; width: 100%;">
+        &copy; 2023. (Un)Official <a href="https://iaifi.org/" target="_blank">IAIFI</a> product.
+        <br> <em>Disclaimer:</em> The output of OpenAI-mer is produced by giant inscrutable matrices and
+        does not
+        reflect
+        the opinions of neither IAIFI nor the real J. Robert Oppenheimer.
+        <!-- With apologies to Jesse Thaler. -->
+    </footer>
+    <style>
+        footer {
+            text-align: center;
+            background-color: #f2f2f2;
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+
+
     <script>
         const form = document.querySelector('.query-box');
         const submitButton = document.querySelector('#submit-button');
