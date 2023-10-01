@@ -1,51 +1,33 @@
-# [ChatJesseT](https://chatjesset.com/)
+# [OpenAI-mer]
 
-Created for April Fools' 2023 as a Flask app using OpenAI embeddings and chat completion. Uses the `gpt-3.5-turbo` model by default. With apologies to [Jesse Thaler](https://jthaler.net/).
+Created for the Cambridge Science Festival 2023.
 
-![Screenshot of deployed website.](static/cjt_1.png)
+![Screenshot of deployed website.](static/screenshot.png)
 
 ## Setup
 
+0. Clone this directory.
+
 1. `requirements_test.txt` contains the full Python environment used for development and testing. `requirements.txt` contains the more minimal version for deploying the Flask app. Set up an environment accordingly.
 
-2. Set the OpenAI key (for embedding and chat completion calls):
+With pip, this can be done as follows:
 ```
-export OPENAI_API_KEY="sk-xxx..."
+pip install -r requirements_test.txt
 ```
 
-3. Set a system prompt at `data/db/system_prompt.txt` and a context 
-prompt at `data/db/context_prompt.txt`. The former will guide the general 
-characteristics of the chatbot, while the later will give a stronger 
-immediate signal. These are hidden from the repo for now for comedic 
-purposes.
 
-4. To create text chunks and embeddings, run [`notebooks/01_data_collection.ipynb`](notebooks/01_data_collection.ipynb) and [`notebooks/02_embedding.ipynb`](notebooks/02_embedding.ipynb).
+2. Set the OpenAI key (for embedding and chat completion calls) and model. This must be done by creating a file, `config.py`, in the main directory, with the following contents:
+```
+openai_api_key = {"OPENAI_API_KEY" : "sk-XYZ"}
+MODEL = "gpt-4"
+```
+where `sk-XYZ` is your OpenAI API key. The model can be any of the models listed [here](https://beta.openai.com/docs/api-reference/completions/create). The default is `gpt-4`.
 
-5. For local testing, simply do
+
+3. To run locally, simply run in your terminal in the main directory:
 ```
 python main.py
 ```
-and navigate to `http://127.0.0.1:8080/`. If loading text chunks and embeddings locally (rather than from cloud storage), uncomment the relevant lines in the `run()` function in [chatjesset.py](chatjesset.py).
+and navigate to `http://127.0.0.1:8080/`. 
 
-## Deployment 
-
-The site is deployed via Google App Engine (GAE).
-
-1. See [here](https://cloud.google.com/appengine/docs/standard/python3/runtime) and [here](https://cloud.google.com/docs/authentication/provide-credentials-adc#how-to) for preliminary steps necessary for Google Cloud / App Engine deployment. 
-
-2. Upload the text chunks and embeddings to Google Cloud for more efficient data loading; this can be done by manually uploading to the remote bucket specified in the `run()` function in [chatjesset.py](chatjesset.py). If loading text chunks and embeddings locally (rather than from cloud storage), uncomment the relevant lines in the `run()` function in [chatjesset.py](chatjesset.py).
-
-3. Copy `app_deploy.yaml` to `app.yaml` and edit with the OpenAI API Key and other GAE info, like instance types.
-
-4. Deploy website through the Google App Engine with
-```
-gcloud app deploy
-```
-and navigate to the remote URL via
-```
-gcloud app browse
-```
-
-## Credit
-
-Rikab Gambhir and Cari Cesarotti for prompt engineering. Loading animation from [EnergyFlow](https://energyflow.network/examples/#animation_examplepy).
+4. If it is necessary to make adjustments to OpenAI-mer's personality on the fly, this can be done by editing the `data/Oppie/db/system_prompt.txt` file and `data/Oppie/db/context_prompt.txt`. These file contains a list of strings, each of which is a prompt for the chatbot. After editing, go back to step 3.
