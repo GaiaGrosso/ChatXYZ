@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FVJHK7DLV9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-FVJHK7DLV9');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="{{ url_for('static', filename='MarieCurie.jpg') }}">
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="400">
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                tags: 'ams'
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            startup: {
+                ready: () => {
+                    MathJax.startup.defaultReady();
+                }
+            }
+        };
+    </script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link rel="icon" type="image/jpg" href="static/iaifi-logo-black-noborder-hires.jpg">
+    <title>OpenAImer</title>
+
+    <style>
+
+        
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: black;
+            /* background-color: #4e4e4e; */
+            margin-top: 15px;
+        }
+
+        a {
+            color: #66c2a4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #66c2a4;
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .query-box {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        #result {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        #result img {
+            width: 120px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        #result p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        #result .query {
+            font-weight: bold;
+            display: inline;
+        }
+
+        #result em {
+            font-style: italic;
+            display: inline;
+            margin-left: 5px;
+        }
+
+        #result p:first-child {
+            margin-bottom: 10px;
+        }
+
+        .btn-maroon {
+            background-color: #66c2a4;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #66c2a4;
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <!-- Title with red line underneath -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1><a>mar<font color="#66c2a4">AI</font>  curie</a></h1>
+                <hr style="border-top: 1px solid #66c2a4;">
+            </div>
+        </div>
+
+    <!-- Picture of victim to the left, and form to enter prompt to the right -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="static/MarieCurie.jpg" alt="Marie Curie" style="width: 100%;">
+            </div>
+            <div class="col-sm-8">
+       
+                <!-- Form to enter prompt -->
+                <form method="POST" class="query-box">   
+                    </h1>
+                    <p>Please, pose your question below.
+                    </p>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" name="query" id="query" class="form-control" autocomplete="off">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-maroon">Ask</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div>
+
+                        <!-- Wrap the result in a box that looks like a speech bubble from the left -->
+                            {% if result %}
+
+                        <div class="speech-bubble" style="background-color: #66c2a4; position: relative; color: white">
+                            <p><span class="query"></span><em>{{ query }}</em></p>
+                            <div style="position: absolute; right: -15px; top: 10px; width: 0; height: 0; border-top: 25px solid transparent; border-bottom: 25px solid transparent; border-left: 25px solid #66c2a4;"></div>
+                        </div>
+
+                        <div class="speech-bubble">
+                            <p>{{ result | safe }}</p>
+                            {% else %}
+                            <p>Welcome, colleague! I am marAI curie. <br> Please ask me anything above, and I'll do my best to answer it.
+                            </p>
+                            {% endif %}
+
+                            <!-- Loading indicator -->
+                            <div id="loading-indicator" style="display: none;">
+                                <div class="spinner-border text-danger" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div style="position: absolute; left: -15px; top: 10px; width: 0; height: 0; border-top: 25px solid transparent; border-bottom: 25px solid transparent; border-right: 25px solid #eee;"></div>
+                        </div>
+
+                        <style>
+                            .speech-bubble {
+                                position: relative;
+                                background-color: #eee;
+                                border-radius: 10px;
+                                padding: 10px;
+                                margin: 10px;
+                            }
+                            /* .speech-bubble:after {
+                                content: '';
+                                position: absolute;
+                                left: 0;
+                                top: 50px;
+                                width: 0;
+                                height: 0;
+                                border: 25px solid transparent;
+                                border-right-color: #eee;
+                                border-left: 0;
+                                border-top: 0;
+                                margin-top: -20px;
+                                margin-left: -25px;
+                            } */
+            
+                        </style>
+
+
+                      
+                    </div>
+
+
+                </form>
+
+             
+
+            </div>
+
+    <!-- Red Line with text below explaining who the victim is, and how the model works, with plenty of hyperlinks -->
+    <!-- Same space -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <hr style="border-top: 1px solid #66c2a4;">
+                <p style="font-size: 1em;">My name is marAI curie. I am based off of the real life physicist and chemist <a href="https://en.wikipedia.org/wiki/Marie_Curie" target="_blank">Marie Curie</a>, and I am most famous for my pioneering research on radioactivity, which lead me to be the first woman to win a Nobel Prize, the first person to win a Nobel Prize twice, and the only person to win a Nobel Prize in two scientific fields. I am a product of the <a href="https://iaifi.org/" target="_blank">Institute for Artificial Intelligence and Fundamental Interactions</a>, or IAIFI, a collaboration of scientists working together on the intersection of physics and machine learning.</p>
+                <p style="font-size: 1em;">I am powered by <a href="https://openai.com/blog/openai-api/" target="_blank">OpenAI's GPT-4 API</a>, a powerful language model. I am trained using text from <a href="https://en.wikipedia.org/wiki/Marie_Curie" target="_blank">Wikipedia</a>, scientific articles, and various biographies. If you have any questions or comments or would like to learn more, please email me at <a href="mailto:iaifi@mit.edu">iaifi@mit.edu</a>!</p>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Footer at the bottom -->
+
+    <footer style="font-size: 0.7em; position: fixed; bottom: 0; left: 0; width: 100%;">
+        &copy; 2024. (Un)Official <a href="https://iaifi.org/" target="_blank">IAIFI</a> product.
+        <br> <em>Disclaimer:</em> The output of marAI curie is produced by giant inscrutable matrices and
+        does not reflect the opinions of either IAIFI or the real Marie Curie.
+        <!-- With apologies to Jesse Thaler. -->
+    </footer>
+    <style>
+        footer {
+            text-align: center;
+            background-color: #edf8fb;
+	    color: black;
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+
+
+    <script>
+        const form = document.querySelector('.query-box');
+        const submitButton = document.querySelector('#submit-button');
+        const loadingIndicator = document.querySelector('#loading-indicator');
+        const resultContent = document.querySelector('#result-content');
+
+        form.addEventListener('submit', (event) => {
+            loadingIndicator.style.display = 'block';
+            resultContent.style.display = 'none';
+            submitButton.disabled = true;
+        });
+
+        function showResultContent() {
+            loadingIndicator.style.display = 'none';
+            resultContent.style.display = 'block';
+            submitButton.disabled = false;
+        }
+    </script>
+
+</body>
+
+</html>
