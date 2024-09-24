@@ -16,7 +16,7 @@ from config import openai_api_key, MODEL
 n_relevant_chunks = 3
 # storage_client = storage.Client()
 
-victim  = "Oppie"
+victim  = "MarieCurie"
 with open(f"./data/{victim}/db/system_prompt.txt") as f:
     """Load system prompt."""
     system_prompt = " ".join(line.rstrip() for line in f)
